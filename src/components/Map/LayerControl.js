@@ -1,4 +1,4 @@
-import {LayersControl, LayerGroup, GeoJSON, CircleMarker} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, CircleMarker} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./TileLayers";
 import PlaygroundPolygons from "./PlaygroundPolygons";
 import React, {Component, useEffect, useState} from "react";
@@ -26,6 +26,15 @@ componentDidMount() {
     console.log(this.state)
 }
 
+reverse_coords(coords) {
+    console.log(coords)
+    let reversed_coords = []
+    for (let i = 0; i < coords.length; i++) {
+        reversed_coords.push([coords[i][1], coords[i][0]])
+    }
+    console.log(reversed_coords)
+    return reversed_coords    }
+
 render() {
     if (this.state.data === null) {
         return null
@@ -44,10 +53,15 @@ render() {
                 <LayerGroup>
                     {
                         this.state.data.features.map((data) => {
-                             const geojson = data.geometry
-                             const playground_name = data.name
+                             const geom = this.reverse_coords(data.geometry.coordinates)
+                             const polygon_key = data.properties.site_id + '-polygon'
+                            // todo: change geojson to polygon
+                            // todo: transfer centroid inference
+                            // todo: transfer marker
                             return (
-                                <GeoJSON key={playground_name} data={geojson}/>
+                                <Polygon key={polygon_key}
+                                         pathOptions={ {fillColor: 'orange'} }
+                                         positions={geom} />
                             )
                         })
                     }
