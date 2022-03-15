@@ -1,14 +1,21 @@
-import {LayersControl, LayerGroup, Polygon, CircleMarker} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, CircleMarker, Marker} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./TileLayers";
 import PlaygroundPolygons from "./PlaygroundPolygons";
 import React, {Component, useEffect, useState} from "react";
 import apiQuery from "../../apiQuery";
+import L from "leaflet";
 
 export default class LayerControl extends Component {
 
 state = {data: null}
 params = {}
-
+centroids = []
+markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+parkIcon = new L.Icon({
+    iconUrl: this.markerIcon,
+    iconRetinaUrl: this.markerIcon,
+    iconAnchor: [15, 40]
+})
 constructor(props) {
     super(props)
 
@@ -26,14 +33,26 @@ componentDidMount() {
     console.log(this.state)
 }
 
-reverse_coords(coords) {
-    console.log(coords)
+reverseCoordinates(coords) {
     let reversed_coords = []
     for (let i = 0; i < coords.length; i++) {
         reversed_coords.push([coords[i][1], coords[i][0]])
     }
-    console.log(reversed_coords)
-    return reversed_coords    }
+    return reversed_coords
+}
+
+findMeanCenter(coords) {
+    let xx = []
+    let yy = []
+    for (let i = 0; i < coords.length; i++) {
+        xx.push(coords[i][0])
+        yy.push(coords[i][1])
+    }
+
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+    return [average(xx), average(yy)]
+}
 
 render() {
     if (this.state.data === null) {
@@ -41,32 +60,54 @@ render() {
     }
         return (
         <LayersControl position="topright">
-            <LayersControl.BaseLayer checked name="mapbox/streets">
+            <LayersControl.BaseLayer checked name="Street Map">
                 <StreetLayer/>
             </LayersControl.BaseLayer>
 
-            <LayersControl.BaseLayer name="esri/world-imagery">
-                <SatelliteLayer/>
+            <LayersControl.BaseLayer name="Land Map">
+                <SatelliteLayer />
             </LayersControl.BaseLayer>
 
-            <LayersControl.Overlay checked name={'Playgrounds'}>
+            <LayersControl.Overlay checked name={'Playground Outlines'}>
                 <LayerGroup>
                     {
                         this.state.data.features.map((data) => {
-                             const geom = this.reverse_coords(data.geometry.coordinates)
-                             const polygon_key = data.properties.site_id + '-polygon'
-                            // todo: change geojson to polygon
-                            // todo: transfer centroid inference
-                            // todo: transfer marker
+                            const polygonKey = data.properties.site_id + '-polygon'
+                            const polygonGeom = this.reverseCoordinates(data.geometry.coordinates)
+
+                            const centroid = this.findMeanCenter(polygonGeom)
+                            const pointKey = data.properties.site_id + '-point'
+                            this.centroids.push({'pointKey': pointKey, 'geom': centroid})
+
+                            const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
                             return (
-                                <Polygon key={polygon_key}
-                                         pathOptions={ {fillColor: 'orange'} }
-                                         positions={geom} />
+                                <Polygon key={polygonKey}
+                                         pathOptions={pathOptions}
+                                         positions={polygonGeom} />
                             )
                         })
                     }
                 </LayerGroup>
             </LayersControl.Overlay>
+
+            <LayersControl.Overlay checked name={'Playground Markers'}>
+                <LayerGroup>
+                    {
+                        this.centroids.map((centroid) => {
+                            console.log(centroid)
+                            return (
+                                <Marker key={centroid.pointKey}
+                                        icon={this.parkIcon}
+                                        position={centroid.geom}>
+                                 POPUP HERE
+                                </Marker>
+                            )
+                        })
+                    }
+                </LayerGroup>
+
+            </LayersControl.Overlay>
+
         </LayersControl>
     )
 }}
