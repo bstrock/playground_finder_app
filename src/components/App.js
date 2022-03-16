@@ -7,39 +7,25 @@ import LayerControl from "./Map/LayerControl";
 import ButtonAppBar from "./NavBar/Navbar";
 import axios from 'axios'
 import apiQuery from "../apiQuery";
+import { render } from "react-dom";
+import TodoComponent from "./components/TodoComponent";
+import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import blue from "material-ui/colors/blue";
 
 function App() {
 
-    const [lat, lon, radius] = [44.855, -93.46, 10]
-    const equipment = [
-        'diggers',
-        'ladders',
-        'toddler_swings',
-        'standard_swings',
-        'accessible_swings',
-        'tire_swings',
-        'seesaws',
-        'climbers',
-        'spinners',
-        'bridges',
-        'tunnels',
-        'slides',
-        'thematic',
-        'ropes',
-        'fire_poles',
-        'staircases',
-        'musical',
-        'play_towers',
-        'telephones',
-        'binoculars',
-        'tactile'
-    ];
+    const theme = createMuiTheme({
+      palette: {
+        primary: blue,
+        type: "light" // Switching the dark mode on is a single property value change.
+      }
+    });
 
-    const listItems = equipment.map((eq) =>
-        <li>{eq}</li>
-    );
+    const [lat, lon, radius] = [44.855, -93.46, 10]
 
     return (
+      <MuiThemeProvider theme={theme}>
+
         <>
             <Title/>
             <MapContainer style={{height: "100vh"}}
@@ -54,7 +40,9 @@ function App() {
 
             </MapContainer>
 
-        </>
+            </>
+        </MuiThemeProvider>
+
     );
 }
 
