@@ -1,21 +1,23 @@
 import {LayersControl, LayerGroup, Polygon, CircleMarker, Marker} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./TileLayers";
-import PlaygroundPolygons from "./PlaygroundPolygons";
-import React, {Component, useEffect, useState} from "react";
+import React, {Component} from "react";
 import apiQuery from "../../apiQuery";
 import L from "leaflet";
+import Popup from './Popup'
 
 export default class LayerControl extends Component {
-
 state = {data: null}
 params = {}
 centroids = []
+
 markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+
 parkIcon = new L.Icon({
     iconUrl: this.markerIcon,
     iconRetinaUrl: this.markerIcon,
     iconAnchor: [15, 40]
 })
+
 constructor(props) {
     super(props)
 
@@ -74,10 +76,10 @@ render() {
                         this.state.data.features.map((data) => {
                             const polygonKey = data.properties.site_id + '-polygon'
                             const polygonGeom = this.reverseCoordinates(data.geometry.coordinates)
-
+                            console.log(data)
                             const centroid = this.findMeanCenter(polygonGeom)
                             const pointKey = data.properties.site_id + '-point'
-                            this.centroids.push({'pointKey': pointKey, 'geom': centroid})
+                            this.centroids.push({'pointKey': pointKey, 'geom': centroid, 'data': data.properties})
 
                             const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
                             return (
@@ -94,12 +96,14 @@ render() {
                 <LayerGroup>
                     {
                         this.centroids.map((centroid) => {
-                            console.log(centroid)
                             return (
                                 <Marker key={centroid.pointKey}
                                         icon={this.parkIcon}
                                         position={centroid.geom}>
-                                 POPUP HERE
+
+                                    <Popup key={centroid.pointKey.replace('-point', '-popup')}
+                                           data={centroid.data} />
+
                                 </Marker>
                             )
                         })
