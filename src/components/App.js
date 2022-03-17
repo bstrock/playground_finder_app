@@ -4,11 +4,6 @@ import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import Title from "./Title";
 import LayerControl from "./Map/LayerControl";
-import ButtonAppBar from "./NavBar/Navbar";
-import axios from 'axios'
-import apiQuery from "../apiQuery";
-import { render } from "react-dom";
-import TodoComponent from "./components/TodoComponent";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
 import blue from "material-ui/colors/blue";
 

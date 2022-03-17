@@ -19,10 +19,6 @@ render() {
         console.log('null render')
         return null
         }
-    return (
-    <Card sx={{ minWidth: 275 }}>
-
-    </Card>
-  )
+    return null
     }
 }
