@@ -1,9 +1,10 @@
-import {LayersControl, LayerGroup, Polygon, CircleMarker, Marker} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./TileLayers";
 import React, {Component} from "react";
 import apiQuery from "../apiQuery";
 import L from "leaflet";
-import Popup from './Popup'
+import InfoBox from './InfoBox'
+import 'leaflet/dist/leaflet.css';
 
 export default class LayerControl extends Component {
 state = {data: null}
@@ -15,7 +16,8 @@ markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&si
 parkIcon = new L.Icon({
     iconUrl: this.markerIcon,
     iconRetinaUrl: this.markerIcon,
-    iconAnchor: [15, 40]
+    iconAnchor: [15, 40],
+    popupAnchor: [0, 0]
 })
 
 constructor(props) {
@@ -101,8 +103,9 @@ render() {
                                         icon={this.parkIcon}
                                         position={centroid.geom}>
 
-                                    <Popup key={centroid.pointKey.replace('-point', '-popup')}
-                                           data={centroid.data} />
+                                    <Popup>
+                                        <InfoBox data={centroid.data} />
+                                    </Popup>
 
                                 </Marker>
                             )

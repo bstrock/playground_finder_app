@@ -1,5 +1,6 @@
 import React from "react";
 import '../App.css'
+import '../index.css'
 import {MapContainer} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import Title from "./Title";
@@ -29,12 +30,12 @@ function App() {
                           zoom={12.5}
                           zoomControl={true}>
 
-                <LayerControl latitude={lat}
-                              longitude={lon}
-                              radius={radius}
-                />
+                    <LayerControl latitude={lat}
+                                  longitude={lon}
+                                  radius={radius}
+                    />
 
-            </MapContainer>
+                </MapContainer>
 
             </>
         </ThemeProvider>
