@@ -18,14 +18,6 @@ function App() {
         primary: green,
         type: "light" // Switching the dark mode on is a single property value change.
       },
-        overrides: {
-            MuiBox: {
-                root: {
-                    margin: "0px",
-                    padding: "0px"
-                }
-            }
-        }
     });
 
     const [lat, lon, radius] = [44.855, -93.46, 10]
