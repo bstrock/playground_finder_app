@@ -8,6 +8,8 @@ import LayerControl from "./Map/LayerControl";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
+import { withStyles } from "@material-ui/core/styles";
+
 
 function App() {
 
@@ -15,7 +17,15 @@ function App() {
       palette: {
         primary: green,
         type: "light" // Switching the dark mode on is a single property value change.
-      }
+      },
+        overrides: {
+            MuiBox: {
+                root: {
+                    margin: "0px",
+                    padding: "0px"
+                }
+            }
+        }
     });
 
     const [lat, lon, radius] = [44.855, -93.46, 10]
