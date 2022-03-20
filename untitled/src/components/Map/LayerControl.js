@@ -20,6 +20,8 @@ parkIcon = new L.Icon({
     popupAnchor: [0, 0]
 })
 
+pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
+
 constructor(props) {
     super(props)
 
@@ -78,15 +80,13 @@ render() {
                         this.state.data.features.map((data) => {
                             const polygonKey = data.properties.site_id + '-polygon'
                             const polygonGeom = this.reverseCoordinates(data.geometry.coordinates)
-                            console.log(data)
                             const centroid = this.findMeanCenter(polygonGeom)
                             const pointKey = data.properties.site_id + '-point'
                             this.centroids.push({'pointKey': pointKey, 'geom': centroid, 'data': data.properties})
 
-                            const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
                             return (
                                 <Polygon key={polygonKey}
-                                         pathOptions={pathOptions}
+                                         pathOptions={this.pathOptions}
                                          positions={polygonGeom} />
                             )
                         })

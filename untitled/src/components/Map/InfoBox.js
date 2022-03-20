@@ -13,6 +13,7 @@ import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import ParkCard from "./ParkCard";
 
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -48,12 +49,7 @@ function a11yProps(index) {
 
 export default function InfoBox(props) {
     const [value, setValue] = React.useState(0);
-    const avatar = () => {
-        return (
-            <Avatar>
-            <DirectionsCarIcon />
-        </Avatar>)
-    }
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -70,7 +66,7 @@ export default function InfoBox(props) {
                       allowScrollButtonsMobile
                       value={value}
                       onChange={handleChange}
-                      aria-label="Vertical tabs example">
+                      aria-label="info-box-tabs">
                     <Tab label="Info" {...a11yProps(0)} />
                     <Tab label="Reviews" {...a11yProps(1)} />
                     <Tab label="Equipment" {...a11yProps(2)} />
