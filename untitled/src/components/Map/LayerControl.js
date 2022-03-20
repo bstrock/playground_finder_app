@@ -87,6 +87,7 @@ render() {
                             const polygonGeom = this.reverseCoordinates(data.geometry.coordinates)
                             const centroid = this.findMeanCenter(polygonGeom)
                             const pointKey = data.properties.site_id + '-point'
+                            data.properties.centroid = centroid
                             this.centroids.push({'pointKey': pointKey, 'geom': centroid, 'data': data.properties})
 
                             return (

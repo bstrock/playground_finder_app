@@ -1,12 +1,14 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import {Avatar, Card, CardActions, CardContent, CardHeader, Divider} from "@mui/material";
+import {Avatar, Card, CardActions, CardContent, CardHeader, Divider, Tooltip} from "@mui/material";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import IconButton from '@mui/material/IconButton'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import NaturePeopleIcon from "@mui/icons-material/NaturePeople";
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+
 export default function ParkCard(props) {
 
     const avatar = () => {
@@ -16,13 +18,17 @@ export default function ParkCard(props) {
         </Avatar>)
     }
 
-    const center = [null, null]
-
-    const directions = {
-        walk: `https://www.google.com/maps/dir/Current+Location/${center.lat},${center.lon}`,
-        bike: `https://www.google.com/maps/dir/Current+Location/${center.lat},${center.lon}`,
-        drive: `https://www.google.com/maps/dir/Current+Location/${center.lat},${center.lon}`
+    const openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
     }
+
+    const onClickUrl = (url) => {
+        return () => openInNewTab(url)
+    }
+
+    const [lat, lon] = props.data.centroid
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${lat},${lon}&travelmode=`
 
     console.log('info box')
     console.log(props.data)
@@ -52,24 +58,37 @@ export default function ParkCard(props) {
                 <Divider />
 
                 <CardActions sx={ {align: 'center', justifyContent: 'center'} }>
+                    <Tooltip title="Walk There!">
+                        <IconButton sx={ {color: 'black'} }
+                                    size={'large'}
+                                    onClick={onClickUrl(url + 'walking')}>
+                            <DirectionsWalkIcon color={'primary'} />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton sx={ {color: 'black'} }
-                                size={'large'}
-                                href={directions.walk}>
-                        <DirectionsWalkIcon />
-                    </IconButton>
+                    <Tooltip title="Bike There!">
+                        <IconButton sx={ {color: 'black'} }
+                                    size={'large'}
+                                    onClick={onClickUrl(url + 'bicycling')}>
+                            <DirectionsBikeIcon color={'primary'} />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton sx={ {color: 'black'} }
-                                size={'large'}
-                                href={directions.bike}>
-                        <DirectionsBikeIcon />
-                    </IconButton>
+                    <Tooltip title="Bus There!">
+                        <IconButton sx={ {color: 'black'} }
+                                    size={'large'}
+                                    onClick={onClickUrl(url + 'transit')}>
+                            <DirectionsBusIcon color={'primary'} />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton sx={ {color: 'black'} }
-                                size={'large'}
-                                href={directions.drive}>
-                        <DirectionsCarIcon />
-                    </IconButton>
+                    <Tooltip title="Drive There!">
+                        <IconButton sx={ {color: 'black'} }
+                                    size={'large'}
+                                    onClick={onClickUrl(url + 'driving')}>
+                            <DirectionsCarIcon color={'primary'} />
+                        </IconButton>
+                    </Tooltip>
 
                 </CardActions>
                 <Divider />
