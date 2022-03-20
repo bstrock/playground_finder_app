@@ -11,6 +11,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import IconButton from '@mui/material/IconButton'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import ParkCard from "./ParkCard";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -59,8 +60,6 @@ export default function InfoBox(props) {
     console.log('info box')
     console.log(props.data)
 
-    const photo = `../../images/${props.data.site_id}.jpg`
-
     return (
         <Box sx={ { bgcolor: 'paper.background'} }>
 
@@ -81,47 +80,8 @@ export default function InfoBox(props) {
             </Tabs>
         </Box>
 
-            <TabPanel value={value}
-                      index={0}>
-                <Card sx={ { display: 'block'} }
-                      variant={'outlined'}>
-                    <CardContent sx={{ backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'}}>
-                        <CardHeader sx={ {borderBottom: 1, borderColor: 'divider', textAlign: 'center'} }
-                                    title={props.data.site_name}
-                                    component={'headline'}/>
-                        <CardMedia sx={ {display: 'block', mb: 2} }
-                                   component="img"
-                                   height="100%"
-                                   image={require ("../../images/" + props.data.site_id + ".jpg")}
-                                   alt={props.data.site_name + ' photo'}/>
-                        <Typography align={'center'}
-                                    variant={'h6'}>
-                            {props.data.addr_street1}
-                        </Typography>
-                        <Typography align={'center'}
-                                    variant={'subtitle1'}>
-                            {`${props.data.addr_city}, ${props.data.addr_state} ${props.data.addr_zip}`}
-                        </Typography>
-
-                        <Divider />
-
-                        <CardActions sx={ {align: 'center', justifyContent: 'center'} }>
-                            <IconButton sx={ {color: 'black'} }
-                                size={'large'}>
-                                <DirectionsWalkIcon />
-                            </IconButton>
-                            <IconButton sx={ {color: 'black'} }
-                                        size={'large'}>
-                                <DirectionsBikeIcon />
-                            </IconButton>
-                            <IconButton sx={ {color: 'black'} }
-                                        size={'large'}>
-                                <DirectionsCarIcon />
-                            </IconButton>
-                        </CardActions>
-                        <Divider />
-                    </CardContent>
-                </Card>
+            <TabPanel value={value} index={0}>
+                <ParkCard data={props.data} />
             </TabPanel>
 
             <TabPanel value={value} index={1}>
