@@ -1,4 +1,4 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./TileLayers";
 import React, {Component} from "react";
 import apiQuery from "../apiQuery";
@@ -10,7 +10,6 @@ export default class LayerControl extends Component {
 state = {data: null}
 params = {}
 centroids = []
-
 markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
 
 parkIcon = new L.Icon({
@@ -21,15 +20,16 @@ parkIcon = new L.Icon({
 })
 
 pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
-
-constructor(props) {
+json = require('./ep_boundary.json'); //(with path)
+boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}
+    constructor(props) {
     super(props)
-
     this.params = {
         latitude: props.latitude,
         longitude: props.longitude,
         radius: props.radius
     }
+    console.log(this.epJSON)
 }
 
 componentDidMount() {
@@ -73,6 +73,11 @@ render() {
             <LayersControl.BaseLayer name="Land Map">
                 <SatelliteLayer />
             </LayersControl.BaseLayer>
+
+            <LayersControl.Overlay checked name={'EP Boundary'}>
+                <GeoJSON data={this.json}
+                         pathOptions={this.boundaryPathOptions}/>
+            </LayersControl.Overlay>
 
             <LayersControl.Overlay checked name={'Playground Outlines'}>
                 <LayerGroup>
