@@ -28,7 +28,7 @@ export default function ParkCard(props) {
     }
 
     const [lat, lon] = props.data.centroid
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${lat},${lon}&travelmode=`
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
 
     console.log('info box')
     console.log(props.data)
@@ -45,13 +45,13 @@ export default function ParkCard(props) {
                 <CardMedia sx={ {display: 'block', mb: 2} }
                            component="img"
                            height="80%"
-                           image={require ("../../images/" + props.data.site_id + ".jpg")}
+                           image={require ("../../../images/playgrounds/" + props.data.site_id + ".jpg")}
                            alt={props.data.site_name + ' photo'}/>
 
-                <Typography align={'center'} variant={'h6'}>
+                <Typography align={'center'} variant={'subtitle1'}>
                     {props.data.addr_street1}
                 </Typography>
-                <Typography align={'center'} variant={'subtitle1'}>
+                <Typography align={'center'} variant={'subtitle2'}>
                     {`${props.data.addr_city}, ${props.data.addr_state} ${props.data.addr_zip}`}
                 </Typography>
 

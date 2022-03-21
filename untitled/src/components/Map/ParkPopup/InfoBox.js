@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import ParkCard from "./ParkCard";
+import EquipmentCard from "./EquipmentCard";
 
 
 function TabPanel(props) {
@@ -73,7 +74,7 @@ export default function InfoBox(props) {
                     <Tab label="Amenities" {...a11yProps(3)} />
                     <Tab label="Sports" {...a11yProps(4)} />
                     <Tab label="Reports" {...a11yProps(5)} />
-            </Tabs>
+                </Tabs>
         </Box>
 
             <TabPanel value={value} index={0}>
@@ -83,9 +84,11 @@ export default function InfoBox(props) {
             <TabPanel value={value} index={1}>
                 Item Two
             </TabPanel>
+
             <TabPanel value={value} index={2}>
-                Item Three
+                <EquipmentCard data={props.data} />
             </TabPanel>
+
             <TabPanel value={value} index={3}>
                 Item Four
             </TabPanel>

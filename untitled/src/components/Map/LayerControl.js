@@ -1,9 +1,9 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON} from 'react-leaflet'
-import {StreetLayer, SatelliteLayer} from "./TileLayers";
+import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers";
 import React, {Component} from "react";
 import apiQuery from "../apiQuery";
 import L from "leaflet";
-import InfoBox from './InfoBox'
+import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css';
 
 export default class LayerControl extends Component {
@@ -20,7 +20,7 @@ parkIcon = new L.Icon({
 })
 
 pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}
-json = require('./ep_boundary.json'); //(with path)
+json = require('../../data/ep_boundary.json'); //(with path)
 boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}
     constructor(props) {
     super(props)
