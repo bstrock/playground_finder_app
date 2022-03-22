@@ -38,6 +38,7 @@ export default function BasicTable(props) {
     console.log(rows)
 
     return (
+        <>
         <TableContainer style={ {maxHeight: 300} } component={Paper}>
             <Table sx={ { minWidth: 50 } } stickyHeader aria-label="simple table">
                 <TableHead>
@@ -62,5 +63,6 @@ export default function BasicTable(props) {
                 </TableBody>
             </Table>
         </TableContainer>
+        </>
     );
 }
