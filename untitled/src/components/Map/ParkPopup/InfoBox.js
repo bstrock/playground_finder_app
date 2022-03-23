@@ -4,15 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import CardMedia from '@mui/material/CardMedia';
-import {Avatar, Card, CardActions, CardContent, CardHeader, Divider} from "@mui/material";
-import Button from "@mui/material/Button";
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import IconButton from '@mui/material/IconButton'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import ParkCard from "./ParkCard";
-import EquipmentCard from "./EquipmentCard";
+import TableCard from "./EquipmentCard";
 
 
 function TabPanel(props) {
@@ -82,18 +75,19 @@ export default function InfoBox(props) {
             </TabPanel>
 
             <TabPanel value={value} index={1}>
-                Item Two
+                Reviews Will Go Here
             </TabPanel>
 
             <TabPanel value={value} index={2}>
-                <EquipmentCard data={props.data} />
+                <TableCard data={props.data} whichOne={'equipment'} />
             </TabPanel>
 
             <TabPanel value={value} index={3}>
-                Item Four
+                <TableCard data={props.data} whichOne={'amenities'} />
             </TabPanel>
+
             <TabPanel value={value} index={4}>
-                Item Five
+                <TableCard data={props.data} whichOne={'sports_facilities'} />
             </TabPanel>
             <TabPanel value={value} index={5}>
                 Item Six

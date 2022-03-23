@@ -67,7 +67,7 @@ render() {
         return (
         <LayersControl position="topright">
             <LayersControl.BaseLayer checked name="Street Map">
-                <StreetLayer/>
+                <StreetLayer />
             </LayersControl.BaseLayer>
 
             <LayersControl.BaseLayer name="Land Map">
