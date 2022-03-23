@@ -46,7 +46,8 @@ export default function InfoBox(props) {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-    };
+    }
+
     console.log('info box')
     console.log(props.data)
 
@@ -75,25 +76,23 @@ export default function InfoBox(props) {
             </TabPanel>
 
             <TabPanel value={value} index={1}>
-                Reviews Will Go Here
-            </TabPanel>
-
-            <TabPanel value={value} index={2}>
                 <TableCard data={props.data} whichOne={'equipment'} />
             </TabPanel>
 
-            <TabPanel value={value} index={3}>
+            <TabPanel value={value} index={2}>
                 <TableCard data={props.data} whichOne={'amenities'} />
             </TabPanel>
 
-            <TabPanel value={value} index={4}>
+            <TabPanel value={value} index={3}>
                 <TableCard data={props.data} whichOne={'sports_facilities'} />
             </TabPanel>
-            <TabPanel value={value} index={5}>
-                Item Six
+
+            <TabPanel value={value} index={4}>
+                Reviews Will Go Here
             </TabPanel>
-            <TabPanel value={value} index={6}>
-                Item Seven
+
+            <TabPanel value={value} index={5}>
+                Reports Will Go Here
             </TabPanel>
         </Box>
     );
