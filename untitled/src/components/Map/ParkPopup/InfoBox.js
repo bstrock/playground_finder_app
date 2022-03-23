@@ -6,51 +6,56 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ParkCard from "./ParkCard";
 import TableCard from "./EquipmentCard";
+import {Component} from "react";
 
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+export default class InfoBox extends Component {
+    state = {value: 0, data: null}
+    //const [value, setValue] = React.useState(0);
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={ { p: 0 } }>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
-    };
-}
-
-export default function InfoBox(props) {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    handleChange = (event, newValue) => {
+        this.setState({value: newValue, data: this.state.data})
     }
 
-    console.log('info box')
-    console.log(props.data)
+    TabPanel(props) {
+        const { children, value, index, ...other } = props;
 
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`vertical-tabpanel-${index}`}
+                aria-labelledby={`vertical-tab-${index}`}
+                {...other}
+            >
+                {value === index && (
+                    <Box sx={ { p: 0 } }>
+                        <Typography>{children}</Typography>
+                    </Box>
+                )}
+            </div>
+        );
+    }
+
+    a11yProps(index) {
+        return {
+            id: `vertical-tab-${index}`,
+            'aria-controls': `vertical-tabpanel-${index}`,
+        };
+    }
+
+    constructor(props) {
+        super(props)
+        this.TabPanel.propTypes = {
+            children: PropTypes.node,
+            index: PropTypes.number.isRequired,
+            value: PropTypes.number.isRequired,
+        };
+
+        this.state.data = props.data
+    }
+
+    render() {
     return (
         <Box sx={ { bgcolor: 'paper.background'} }>
 
@@ -59,41 +64,41 @@ export default function InfoBox(props) {
                       variant="scrollable"
                       scrollButtons
                       allowScrollButtonsMobile
-                      value={value}
-                      onChange={handleChange}
+                      value={this.state.value}
+                      onChange={this.handleChange}
                       aria-label="info-box-tabs">
-                    <Tab label="Info" {...a11yProps(0)} />
-                    <Tab label="Reviews" {...a11yProps(1)} />
-                    <Tab label="Equipment" {...a11yProps(2)} />
-                    <Tab label="Amenities" {...a11yProps(3)} />
-                    <Tab label="Sports" {...a11yProps(4)} />
-                    <Tab label="Reports" {...a11yProps(5)} />
+                    <Tab label="Info" {...this.a11yProps(0)} />
+                    <Tab label="Equipment" {...this.a11yProps(1)} />
+                    <Tab label="Amenities" {...this.a11yProps(2)} />
+                    <Tab label="Sports" {...this.a11yProps(3)} />
+                    <Tab label="Reviews" {...this.a11yProps(4)} />
+                    <Tab label="Reports" {...this.a11yProps(5)} />
                 </Tabs>
         </Box>
 
-            <TabPanel value={value} index={0}>
-                <ParkCard data={props.data} />
-            </TabPanel>
+            <this.TabPanel value={this.state.value} index={0}>
+                <ParkCard data={this.state.data} />
+            </this.TabPanel>
 
-            <TabPanel value={value} index={1}>
-                <TableCard data={props.data} whichOne={'equipment'} />
-            </TabPanel>
+            <this.TabPanel value={this.state.value} index={1}>
+                <TableCard data={this.state.data} whichOne={'equipment'} />
+            </this.TabPanel>
 
-            <TabPanel value={value} index={2}>
-                <TableCard data={props.data} whichOne={'amenities'} />
-            </TabPanel>
+            <this.TabPanel value={this.state.value} index={2}>
+                <TableCard data={this.state.data} whichOne={'amenities'} />
+            </this.TabPanel>
 
-            <TabPanel value={value} index={3}>
-                <TableCard data={props.data} whichOne={'sports_facilities'} />
-            </TabPanel>
+            <this.TabPanel value={this.state.value} index={3}>
+                <TableCard data={this.state.data} whichOne={'sports_facilities'} />
+            </this.TabPanel>
 
-            <TabPanel value={value} index={4}>
+            <this.TabPanel value={this.state.value} index={4}>
                 Reviews Will Go Here
-            </TabPanel>
+            </this.TabPanel>
 
-            <TabPanel value={value} index={5}>
+            <this.TabPanel value={this.state.value} index={5}>
                 Reports Will Go Here
-            </TabPanel>
+            </this.TabPanel>
         </Box>
     );
-}
+}}
