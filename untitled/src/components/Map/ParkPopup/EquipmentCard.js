@@ -39,9 +39,11 @@ export default function TableCard(props) {
 
 
                 <Box >
+                    <>
                     <Divider />
                     <AssetTable data={props.data[props.whichOne]} whichOne={props.whichOne} />
                     <Divider />
+                    </>
                 </Box>
 
             </CardContent>
