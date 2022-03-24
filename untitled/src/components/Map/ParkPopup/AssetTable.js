@@ -80,7 +80,7 @@ export default function AssetTable(props) {
             <Table sx={ { minWidth: 50 } } stickyHeader aria-label="simple table">
 
                 <TableHead>
-                    <TableRow >
+                    <TableRow>
                         <TableCell sx={ {fontWeight: 800, backgroundColor: '#157719', color: 'white'} }>
                             {headers[props.whichOne][0]}
                         </TableCell>

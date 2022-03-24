@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import {Avatar, Card, CardActions, CardContent, CardHeader, Divider, Tooltip} from "@mui/material";
+import {Avatar, Card, CardActions, CardContent, CardHeader, Divider, Fade, Tooltip} from "@mui/material";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import IconButton from '@mui/material/IconButton'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
@@ -34,13 +34,16 @@ export default function ParkCard(props) {
     console.log(props.data)
 
     return (
-        <Card sx={ { display: 'block', minHeight: 350, maxHeight: 400} } variant={'outlined'}>
-            <CardContent sx={ { p: 1, minHeight: 350, backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'} }>
-
+        <Card sx={ { display: 'block', minHeight: 350, maxHeight: 395} } variant={'outlined'}>
                 <CardHeader sx={ {borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1} }
                             title={props.data.site_name}
-                            titleTypographyProps={{fontSize: '1.2rem'}}
+                            titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
                             avatar={avatar()}/>
+            <Fade in={true} timeout={700}>
+
+            <CardContent sx={ { p: 1, minHeight: 350, backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'} }>
+
+
 
                 <CardMedia sx={ {display: 'block', mb: 2} }
                            component="img"
@@ -93,6 +96,8 @@ export default function ParkCard(props) {
                 </CardActions>
                 <Divider />
             </CardContent>
+            </Fade>
+
         </Card>
     );
 }

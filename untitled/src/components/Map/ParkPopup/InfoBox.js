@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import ParkCard from "./ParkCard";
 import TableCard from "./EquipmentCard";
 import {Component} from "react";
+import Fade from '@mui/material/Fade';
 
 
 export default class InfoBox extends Component {
     state = {value: 0, data: null}
-    //const [value, setValue] = React.useState(0);
 
     handleChange = (event, newValue) => {
         this.setState({value: newValue, data: this.state.data})
@@ -53,11 +53,12 @@ export default class InfoBox extends Component {
         };
 
         this.state.data = props.data
+
     }
 
     render() {
     return (
-        <Box sx={ { bgcolor: 'paper.background'} }>
+        <Box sx={ { height: '500px', bgcolor: 'paper.background'} }>
 
             <Box sx={ {flexGrow: 1, bgcolor: 'paper.background', display: "block"} }>
                 <Tabs sx={ { justifyContent: 'left', borderBottom: 1, borderColor: 'divider'} }

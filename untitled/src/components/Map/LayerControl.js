@@ -5,6 +5,8 @@ import apiQuery from "../apiQuery";
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css';
+import {LinearProgress} from "@mui/material";
+import Box from "@mui/material/Box";
 
 export default class LayerControl extends Component {
 state = {data: null}
@@ -62,8 +64,12 @@ findMeanCenter(coords) {
 
 render() {
     if (this.state.data === null) {
-        return null
-    }
+            return (
+                <Box sx={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                    <LinearProgress variant={'indeterminate'} />
+                </Box>
+            );
+        }
         return (
         <LayersControl position="topright">
             <LayersControl.BaseLayer checked name="Street Map">
