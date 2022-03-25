@@ -3,40 +3,41 @@ import '../App.css'
 import '../index.css'
 import {MapContainer} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import Title from "./Title";
 import LayerControl from "./Map/LayerControl";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import {ThemeProvider, createTheme} from "@mui/material/styles";
 import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
-import { withStyles } from "@material-ui/core/styles";
-
+import SearchButton from "./FilterButton";
+import LocationMarker from "./Map/LocationMarker";
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import L from "leaflet";
 
 function App() {
 
     const theme = createTheme({
-      palette: {
-        primary: green,
-        type: "light" // Switching the dark mode on is a single property value change.
-      },
+        palette: {
+            primary: green,
+            type: "light" // Switching the dark mode on is a single property value change.
+        },
     });
 
     const [lat, lon, radius] = [44.855, -93.46, 10]
 
     return (
-      <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+            <>
+                <Navbar/>
 
-        <>
-            <Navbar />
-            <MapContainer style={{height: "90vh"}}
-                          center={[lat, lon]}
-                          zoom={12.5}
-                          zoomControl={true}>
-
+                <MapContainer style={{height: "90vh"}}
+                              center={[lat, lon]}
+                              zoom={11.5}
+                              zoomControl={true}>
+                    <LocationMarker />
+                    <SearchButton/>
                     <LayerControl latitude={lat}
                                   longitude={lon}
                                   radius={radius}
                     />
-
                 </MapContainer>
 
             </>

@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
       <>
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{bgcolor: 'green'}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -22,8 +22,8 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Eden Prairie Playground Finder
+          <Typography variant="h6" component="div" sx={{ flexGrow: 2, color: 'white' }}>
+            EP Playground Finder
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

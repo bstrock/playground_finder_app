@@ -36,8 +36,6 @@ export default function TableCard(props) {
 
             <CardContent sx={{ minHeight: 350, p: 1, backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'}}>
 
-
-
                 <Box >
                     <>
                     <Divider />

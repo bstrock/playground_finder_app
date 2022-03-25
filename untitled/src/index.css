@@ -17,3 +17,8 @@ code {
   height: 100%;
   width: 100vw;
 }
+
+.leaflet-touch .leaflet-bar {
+  border: 0;
+  background-clip: padding-box;
+}
