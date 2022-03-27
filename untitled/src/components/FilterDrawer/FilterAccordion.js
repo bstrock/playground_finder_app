@@ -7,8 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DistanceSlider from "./DistanceSlider";
 import {Divider} from "@mui/material";
 import Box from "@mui/material/Box";
+import CheckboxList from "./EquipmentCheckboxList";
+import EquipmentCheckboxList from "./EquipmentCheckboxList";
 
-export default function FilterAccordion() {
+export default function FilterAccordion(props) {
     const [expanded, setExpanded] = React.useState(false);
     const [distValue, setDistValue] = React.useState(5);
 
@@ -17,6 +19,44 @@ export default function FilterAccordion() {
     };
 
     const updateDistVal = (val) => setDistValue(val)
+    const equipList = [
+        'Bouncers',
+        'Bridges',
+        'Cooperative',
+        'Climbers',
+        'Diggers',
+        'Ladders',
+        'Musical',
+        'Sensory',
+        'Slides',
+        'Spinners',
+        'Accessible Swings',
+        'Standard Swings',
+        'Toddler Swings'
+    ]
+
+    const amenitiesList = [
+        'Beach',
+        'Benches',
+        'Concessions',
+        'Grills',
+        'Picnic Tables',
+        'Indoor Restroom',
+        'Shelter',
+        'Sun Shades'
+    ]
+
+    const sportsFacilities = [
+        'Baseball Diamond',
+        'Basketball Court',
+        'Hockey Rink',
+        'Horseshoes',
+        'Skate Park',
+        'Soccer Field',
+        'Tennis Court',
+        'Volleyball'
+    ]
+
 
     return (
         <>
@@ -65,14 +105,41 @@ export default function FilterAccordion() {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-                        varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-                        laoreet.
-                    </Typography>
+                    <EquipmentCheckboxList data={equipList} />
                 </AccordionDetails>
             </Accordion>
+
+            {/* AMENITIES SELECTION ACCORDION PANEL */}
             <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2bh-content"
+                    id="panel2bh-header">
+                    <Typography sx={ { width: '33%', flexShrink: 1 } } variant={'h6'}>
+                        Amenities
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <EquipmentCheckboxList data={amenitiesList} />
+                </AccordionDetails>
+            </Accordion>
+
+            {/* SPORTS FACILITIES SELECTION ACCORDION PANEL */}
+            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2bh-content"
+                    id="panel2bh-header">
+                    <Typography sx={ { width: '33%', flexShrink: 1 } } variant={'h6'}>
+                        Sports Facilities
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <EquipmentCheckboxList data={sportsFacilities} />
+                </AccordionDetails>
+            </Accordion>
+
+            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel5')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3bh-content"
@@ -92,21 +159,7 @@ export default function FilterAccordion() {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel4bh-content"
-                    id="panel4bh-header"
-                >
-                    <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                        amet egestas eros, vitae egestas augue. Duis vel est augue.
-                    </Typography>
-                </AccordionDetails>
-            </Accordion>
+
             </Box>
         </>
     );

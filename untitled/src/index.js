@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import Title from "./components/Title";
+import Title from "./components/NavBar/Title";
 
 import reportWebVitals from './reportWebVitals';
 

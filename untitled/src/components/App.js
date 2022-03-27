@@ -7,29 +7,27 @@ import LayerControl from "./Map/LayerControl";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
-import SearchButton from "./FilterButton";
 import LocationMarker from "./Map/LocationMarker";
-import PersonPinIcon from '@mui/icons-material/PersonPin';
-import L from "leaflet";
-import FilterDrawer from "./FilterDrawer";
+import FilterDrawer from "./FilterDrawer/FilterDrawer";
 
 function App() {
+    // here's the entrypoint for our app
 
     const theme = createTheme({
         palette: {
             primary: green,
-            type: "light" // Switching the dark mode on is a single property value change.
+            type: "light"
         },
     });
 
+    // starting position for the map and API query
     const [lat, lon, radius] = [44.855, -93.46, 10]
 
     return (
         <ThemeProvider theme={theme}>
             <>
-                <Navbar/>
-
-                <MapContainer style={{height: "90vh"}}
+                <Navbar />
+                <MapContainer style={{height: "94vh"}}
                               center={[lat, lon]}
                               zoom={11.5}
                               zoomControl={true}>
@@ -37,13 +35,10 @@ function App() {
                     <FilterDrawer />
                     <LayerControl latitude={lat}
                                   longitude={lon}
-                                  radius={radius}
-                    />
+                                  radius={radius}/>
                 </MapContainer>
-
             </>
         </ThemeProvider>
-
     );
 }
 

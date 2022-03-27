@@ -7,12 +7,20 @@ import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css';
 import {LinearProgress} from "@mui/material";
 import Box from "@mui/material/Box";
+import LocationMarker from "./LocationMarker";
+import FilterDrawer from "../FilterDrawer/FilterDrawer";
 
 export default class LayerControl extends Component {
     // CLASS PROPERTIES
     state = {data: null}
     params = {}  // stores query parameters passed into constructor
     centroids = []  // holds xy points generated from playground polygons
+
+    keySets = {
+        equipment: new Set(),
+        amenities: new Set(),
+        sports_facilities: new Set()
+    }
 
     markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
 
@@ -36,8 +44,9 @@ export default class LayerControl extends Component {
         longitude: props.longitude,
         radius: props.radius
     }
+    this.keyPromoter = props.keyPromoter
     console.log(this.epJSON)
-}
+    }
 
     componentDidMount() {
         // When component mounts, send query to API to get playground data, then set state
@@ -127,10 +136,11 @@ export default class LayerControl extends Component {
                                 return (
                                     <Polygon key={polygonKey}
                                              pathOptions={this.pathOptions}
-                                             positions={polygonGeom} />
+                                             positions={polygonGeom}/>
                                 )
                             })
                         }
+
                     </LayerGroup>
                 </LayersControl.Overlay>
 
@@ -157,6 +167,7 @@ export default class LayerControl extends Component {
                         }
                     </LayerGroup>
                 </LayersControl.Overlay>
+                <LocationMarker />
             </LayersControl>
         )
     // that was fun!

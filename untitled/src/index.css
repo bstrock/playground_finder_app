@@ -24,6 +24,7 @@ code {
 }
 
 .MuiDrawer-paper {
-  width: 30%;
+  width: 60%;
   align-items: center;
+  overflow-y: hidden
 }
