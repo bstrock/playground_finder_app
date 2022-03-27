@@ -10,10 +10,13 @@ import Box from "@mui/material/Box";
 
 export default function FilterAccordion() {
     const [expanded, setExpanded] = React.useState(false);
+    var [distValue, setDistValue] = React.useState(5)
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
+
+    const updateDistVal = (val) => setDistValue(val)
 
     return (
         <>
@@ -21,18 +24,25 @@ export default function FilterAccordion() {
 
             <Divider sx={{mb: 3}} variant={'middle'}/>
 
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header">
-                    <Typography variant={'h6'}>
-                        Distance
+            <Accordion expanded={expanded === 'panel1'}
+                       onChange={handleChange('panel1')}>
+
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel1bh-content"
+                                  id="panel1bh-header">
+                    <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
+                        Distance:
+                    </Typography>
+                    <Typography sx={{ml: 1, width: '15%', alignContent: 'center'}} variant={'h6'}>
+                        {` ${distValue} `}
+                    </Typography>
+                    <Typography sx={{flexShrink: 1}} variant={'h6'}>
+                        Miles
                     </Typography>
 
                 </AccordionSummary>
                 <AccordionDetails>
-                    <DistanceSlider />
+                    <DistanceSlider handleValueUpdate={updateDistVal}/>
                 </AccordionDetails>
             </Accordion>
 

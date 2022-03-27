@@ -8,7 +8,7 @@ function valuetext(value) {
     return `${value} mi.`;
 }
 
-export default function DistanceSlider() {
+export default function DistanceSlider(props) {
 
     return (
         <Box sx={{ width: 'auto', mt: 2}}>
@@ -22,6 +22,7 @@ export default function DistanceSlider() {
                 marks
                 min={.5}
                 max={5}
+                onChange={ (event) => props.handleValueUpdate(event.target.value) }
             />
 
         </Box>
