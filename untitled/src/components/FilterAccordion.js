@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 
 export default function FilterAccordion() {
     const [expanded, setExpanded] = React.useState(false);
-    var [distValue, setDistValue] = React.useState(5)
+    const [distValue, setDistValue] = React.useState(5);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -20,16 +20,23 @@ export default function FilterAccordion() {
 
     return (
         <>
+            {/* This box contains the Accordion */}
             <Box sx={ {width: 'auto'} }>
 
             <Divider sx={{mb: 3}} variant={'middle'}/>
 
+            {/* DISTANCE SLIDER ACCORDION PANEL */}
             <Accordion expanded={expanded === 'panel1'}
                        onChange={handleChange('panel1')}>
 
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}
                                   aria-controls="panel1bh-content"
                                   id="panel1bh-header">
+
+                    {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE
+                        3 components are used to ensure decimal change doesn't move miles label and cause flicker
+                        ie:     2 miles -> 2.5 miles
+                        thus:   2   miles -> 2.5 miles */}
                     <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
                         Distance:
                     </Typography>
@@ -39,22 +46,22 @@ export default function FilterAccordion() {
                     <Typography sx={{flexShrink: 1}} variant={'h6'}>
                         Miles
                     </Typography>
-
                 </AccordionSummary>
+
+                {/* SLIDER GOES HERE- TAKES IN UPDATE CALLBACK FUNCTION */}
                 <AccordionDetails>
                     <DistanceSlider handleValueUpdate={updateDistVal}/>
                 </AccordionDetails>
             </Accordion>
 
+            {/* EQUIPMENT SELECTION ACCORDION PANEL */}
             <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2bh-content"
-                    id="panel2bh-header"
-                >
-                    <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>
-                        You are currently not an owner
+                    id="panel2bh-header">
+                    <Typography sx={ { width: '33%', flexShrink: 1 } } variant={'h6'}>
+                        Equipment
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>

@@ -47,11 +47,4 @@ function App() {
     );
 }
 
-/*
-<ul>
-    {listItems}
-</ul>
-
-*/
-
 export default App;
