@@ -11,6 +11,7 @@ import SearchButton from "./FilterButton";
 import LocationMarker from "./Map/LocationMarker";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import L from "leaflet";
+import FilterDrawer from "./FilterDrawer";
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
                               zoom={11.5}
                               zoomControl={true}>
                     <LocationMarker />
-                    <SearchButton/>
+                    <FilterDrawer />
                     <LayerControl latitude={lat}
                                   longitude={lon}
                                   radius={radius}

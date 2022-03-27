@@ -22,3 +22,8 @@ code {
   border: 0;
   background-clip: padding-box;
 }
+
+.MuiDrawer-paper {
+  width: 30%;
+  align-items: center;
+}

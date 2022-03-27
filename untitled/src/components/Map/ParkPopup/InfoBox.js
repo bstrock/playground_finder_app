@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import ParkCard from "./ParkCard";
 import TableCard from "./EquipmentCard";
 import {Component} from "react";
-import Fade from '@mui/material/Fade';
 
 
 export default class InfoBox extends Component {
