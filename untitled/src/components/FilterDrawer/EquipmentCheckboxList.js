@@ -23,9 +23,9 @@ export default function EquipmentCheckboxList(props) {
     };
 
     return (
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
             {
-                props.data.map( (item) => {
+                props.data.map((item) => {
                     const labelId = `checkbox-list-label-${item}`
                     return (
                         <ListItem key={`${item}-checkbox`}
@@ -37,7 +37,7 @@ export default function EquipmentCheckboxList(props) {
                                               checked={checked.indexOf(item) !== -1}
                                               tabIndex={-1}
                                               disableRipple
-                                              inputProps={{ 'aria-labelledby': labelId }}/>
+                                              inputProps={{'aria-labelledby': labelId}}/>
                                 </ListItemIcon>
                                 <ListItemText id={labelId} primary={item} primaryTypographyProps={{variant: 'title'}}/>
                             </ListItemButton>

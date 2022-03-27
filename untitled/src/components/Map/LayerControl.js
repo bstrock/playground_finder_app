@@ -36,16 +36,16 @@ export default class LayerControl extends Component {
     boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
 
     constructor(props) {
-    super(props)
+        super(props)
 
-    // establish centerpoint for API query
-    this.params = {
-        latitude: props.latitude,
-        longitude: props.longitude,
-        radius: props.radius
-    }
-    this.keyPromoter = props.keyPromoter
-    console.log(this.epJSON)
+        // establish centerpoint for API query
+        this.params = {
+            latitude: props.latitude,
+            longitude: props.longitude,
+            radius: props.radius
+        }
+        this.keyPromoter = props.keyPromoter
+        console.log(this.epJSON)
     }
 
     componentDidMount() {
@@ -86,23 +86,23 @@ export default class LayerControl extends Component {
         All layers and overlays descend from this container. */
 
         if (this.state.data === null) {
-                /* here we display a loading bar while the API data is being fetched */
-                return (
-                    <Box sx={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                        <LinearProgress variant={'indeterminate'} />
-                    </Box>
-                );
-            }
+            /* here we display a loading bar while the API data is being fetched */
             return (
+                <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+                    <LinearProgress variant={'indeterminate'}/>
+                </Box>
+            );
+        }
+        return (
             /* LAYERS CONTROL MAIN STRUCTURE */
             <LayersControl position="topright">
                 {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
                 <LayersControl.BaseLayer checked name="Street Map">
-                    <StreetLayer />
+                    <StreetLayer/>
                 </LayersControl.BaseLayer>
 
                 <LayersControl.BaseLayer name="Land Map">
-                    <SatelliteLayer />
+                    <SatelliteLayer/>
                 </LayersControl.BaseLayer>
 
                 {/* BASE LAYERS - EDEN PRAIRIE BOUNDARY POLYGON */}
@@ -158,7 +158,7 @@ export default class LayerControl extends Component {
 
                                         {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
                                         <Popup>
-                                            <InfoBox data={centroid.data} />
+                                            <InfoBox data={centroid.data}/>
                                         </Popup>
 
                                     </Marker>
@@ -167,8 +167,9 @@ export default class LayerControl extends Component {
                         }
                     </LayerGroup>
                 </LayersControl.Overlay>
-                <LocationMarker />
+                <LocationMarker/>
             </LayersControl>
         )
-    // that was fun!
-}}
+        // that was fun!
+    }
+}
