@@ -11,7 +11,7 @@ import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
 export default function FilterAccordion() {
 
-
+    // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
         'Bridges',
@@ -50,33 +50,62 @@ export default function FilterAccordion() {
         'Volleyball'
     ]
 
+    // tracks state of the drawer element (closed vs. open)
     const [expanded, setExpanded] = useState(false);
+
+    // tracks value of the slider, so it can be displayed in accordion description
     const [distValue, setDistValue] = useState(5);
 
+    // tracks individual check boxes for filter criteria by category
     const [checkedEquipment, setCheckedEquipment] = useState(equipList)
     const [checkedAmenities, setCheckedAmenities] = useState(amenitiesList)
     const [checkedSports, setCheckedSports] = useState(sportsList)
 
+    // tracks whether all boxes in a category are checked (also if no boxes are checked)
+    const [allEquipmentChecked, setAllEquipmentChecked] = useState(true)
     const [allAmenitiesChecked, setAllAmenitiesChecked] = useState(true)
+    const [allSportsChecked, setAllSportsChecked] = useState(true)
 
+    // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    // event handler to update display of slider distance value
     const updateDistVal = (val) => setDistValue(val)
 
+    // event handler to update state of checked value lists
     const updateCheckedEquipment = (val) => setCheckedEquipment(val)
     const updateCheckedAmenities = (val) => setCheckedAmenities(val)
     const updateCheckedSports = (val) => setCheckedSports(val)
+
+    // the useEffect calls here allow the checkbox in the accordion summary to track the state of the checked boxes within
+    // react literally insists on doing all of this...I tried to shorten up, trust
+    useEffect( () => {
+            if (checkedEquipment.length  === equipList.length) {
+                setAllEquipmentChecked(true)
+            } else if (checkedEquipment.length === 0) {
+                setAllEquipmentChecked(false)
+            }
+        }, [equipList, checkedEquipment]
+    )
 
     useEffect( () => {
         if (checkedAmenities.length  === amenitiesList.length) {
             setAllAmenitiesChecked(true)
         } else if (checkedAmenities.length === 0) {
             setAllAmenitiesChecked(false)
-        }
-    }, [amenitiesList, checkedAmenities]
+            }
+        }, [amenitiesList, checkedAmenities]
+    )
 
+    useEffect( () => {
+            if (checkedSports.length  === sportsList.length) {
+                setAllSportsChecked(true)
+            } else if (checkedSports.length === 0) {
+                setAllSportsChecked(false)
+            }
+        }, [sportsList, checkedSports]
     )
 
     return (
@@ -124,6 +153,12 @@ export default function FilterAccordion() {
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Equipment
                         </Typography>
+                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                  size={'medium'}
+                                  onClick={e => e.stopPropagation()}
+                                  checked={checkedEquipment.length === equipList.length}
+                                  indeterminate={checkedEquipment.length > 0 && checkedEquipment.length < equipList.length} />
+
                     </AccordionSummary>
                     <AccordionDetails>
                         <EquipmentCheckboxList data={equipList} updateFunc={updateCheckedEquipment}/>
@@ -142,12 +177,9 @@ export default function FilterAccordion() {
                         </Typography>
                         <Checkbox sx={{ml: '5rem'}} edge={'start'}
                                   size={'medium'}
-                                  onClick={e => {
-                                      e.stopPropagation()
-                                  }}
+                                  onClick={e => e.stopPropagation()}
                                   checked={checkedAmenities.length === amenitiesList.length}
-                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}
-                        />
+                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}/>
 
                     </AccordionSummary>
 
@@ -166,30 +198,14 @@ export default function FilterAccordion() {
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Sports
                         </Typography>
+                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                  size={'medium'}
+                                  onClick={e => e.stopPropagation()}
+                                  checked={checkedSports.length === sportsList.length}
+                                  indeterminate={checkedSports.length > 0 && checkedSports.length < sportsList.length}/>
                     </AccordionSummary>
                     <AccordionDetails>
                         <EquipmentCheckboxList data={sportsList} updateFunc={updateCheckedSports}/>
-                    </AccordionDetails>
-                </Accordion>
-
-                <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel5')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel3bh-content"
-                        id="panel3bh-header"
-                    >
-                        <Typography sx={{width: '33%', flexShrink: 1}}>
-                            Advanced settings
-                        </Typography>
-                        <Typography sx={{color: 'text.secondary'}}>
-                            Filtering has been entirely disabled for whole web server
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                            amet egestas eros, vitae egestas augue. Duis vel est augue.
-                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
