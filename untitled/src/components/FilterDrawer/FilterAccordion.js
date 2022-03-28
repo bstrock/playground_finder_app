@@ -5,19 +5,13 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DistanceSlider from "./DistanceSlider";
-import {Divider} from "@mui/material";
+import {Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
+import {useEffect, useState} from "react";
+export default function FilterAccordion() {
 
-export default function FilterAccordion(props) {
-    const [expanded, setExpanded] = React.useState(false);
-    const [distValue, setDistValue] = React.useState(5);
 
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
-    const updateDistVal = (val) => setDistValue(val)
     const equipList = [
         'Bouncers',
         'Bridges',
@@ -45,7 +39,7 @@ export default function FilterAccordion(props) {
         'Sun Shades'
     ]
 
-    const sportsFacilities = [
+    const sportsList = [
         'Baseball Diamond',
         'Basketball Court',
         'Hockey Rink',
@@ -56,6 +50,34 @@ export default function FilterAccordion(props) {
         'Volleyball'
     ]
 
+    const [expanded, setExpanded] = useState(false);
+    const [distValue, setDistValue] = useState(5);
+
+    const [checkedEquipment, setCheckedEquipment] = useState(equipList)
+    const [checkedAmenities, setCheckedAmenities] = useState(amenitiesList)
+    const [checkedSports, setCheckedSports] = useState(sportsList)
+
+    const [allAmenitiesChecked, setAllAmenitiesChecked] = useState(true)
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    const updateDistVal = (val) => setDistValue(val)
+
+    const updateCheckedEquipment = (val) => setCheckedEquipment(val)
+    const updateCheckedAmenities = (val) => setCheckedAmenities(val)
+    const updateCheckedSports = (val) => setCheckedSports(val)
+
+    useEffect( () => {
+        if (checkedAmenities.length  === amenitiesList.length) {
+            setAllAmenitiesChecked(true)
+        } else if (checkedAmenities.length === 0) {
+            setAllAmenitiesChecked(false)
+        }
+    }, [amenitiesList, checkedAmenities]
+
+    )
 
     return (
         <>
@@ -104,7 +126,7 @@ export default function FilterAccordion(props) {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={equipList}/>
+                        <EquipmentCheckboxList data={equipList} updateFunc={updateCheckedEquipment}/>
                     </AccordionDetails>
                 </Accordion>
 
@@ -114,12 +136,24 @@ export default function FilterAccordion(props) {
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
                         id="panel2bh-header">
+
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Amenities
                         </Typography>
+                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                  size={'medium'}
+                                  onClick={e => {
+                                      e.stopPropagation()
+                                  }}
+                                  checked={checkedAmenities.length === amenitiesList.length}
+                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}
+                        />
+
                     </AccordionSummary>
+
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={amenitiesList}/>
+                        <EquipmentCheckboxList data={amenitiesList}
+                                               updateFunc={updateCheckedAmenities}/>
                     </AccordionDetails>
                 </Accordion>
 
@@ -134,7 +168,7 @@ export default function FilterAccordion(props) {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={sportsFacilities}/>
+                        <EquipmentCheckboxList data={sportsList} updateFunc={updateCheckedSports}/>
                     </AccordionDetails>
                 </Accordion>
 
@@ -144,7 +178,7 @@ export default function FilterAccordion(props) {
                         aria-controls="panel3bh-content"
                         id="panel3bh-header"
                     >
-                        <Typography sx={{width: '33%', flexShrink: 0}}>
+                        <Typography sx={{width: '33%', flexShrink: 1}}>
                             Advanced settings
                         </Typography>
                         <Typography sx={{color: 'text.secondary'}}>

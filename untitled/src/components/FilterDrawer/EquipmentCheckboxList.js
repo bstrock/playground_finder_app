@@ -7,20 +7,21 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function EquipmentCheckboxList(props) {
-    const [checked, setChecked] = React.useState([0]);
+    const [checked, setChecked] = React.useState(props.data)
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+        const newChecked = [...checked]
 
         if (currentIndex === -1) {
-            newChecked.push(value);
+            newChecked.push(value)
         } else {
             newChecked.splice(currentIndex, 1);
         }
 
-        setChecked(newChecked);
-    };
+        setChecked(newChecked)
+        props.updateFunc(newChecked)
+    }
 
     return (
         <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
@@ -28,8 +29,7 @@ export default function EquipmentCheckboxList(props) {
                 props.data.map((item) => {
                     const labelId = `checkbox-list-label-${item}`
                     return (
-                        <ListItem key={`${item}-checkbox`}
-                                  disablePadding>
+                        <ListItem key={`${item}-checkbox`} disablePadding>
                             <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
                                 <ListItemIcon>
                                     <Checkbox edge="start"
