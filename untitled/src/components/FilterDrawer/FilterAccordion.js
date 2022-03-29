@@ -11,6 +11,7 @@ import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
 export default function FilterAccordion() {
 
+
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -51,10 +52,10 @@ export default function FilterAccordion() {
     ]
 
     // tracks state of the drawer element (closed vs. open)
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false)
 
     // tracks value of the slider, so it can be displayed in accordion description
-    const [distValue, setDistValue] = useState(5);
+    const [distValue, setDistValue] = useState(5)
 
     // tracks individual check boxes for filter criteria by category
     const [checkedEquipment, setCheckedEquipment] = useState(equipList)
@@ -68,7 +69,7 @@ export default function FilterAccordion() {
 
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
+        setExpanded(isExpanded ? panel : false)
     };
 
     // event handler to update display of slider distance value
@@ -112,17 +113,17 @@ export default function FilterAccordion() {
         <>
             {/* This box contains the Accordion */}
             <Box sx={{width: 'auto'}}>
-
                 <Divider sx={{mb: 3}} variant={'middle'}/>
 
+                {/***********************************/}
                 {/* DISTANCE SLIDER ACCORDION PANEL */}
-                <Accordion expanded={expanded === 'panel1'}
-                           onChange={handleChange('panel1')}>
+                {/***********************************/}
 
+                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}
                                       aria-controls="panel1bh-content"
-                                      id="panel1bh-header">
-
+                                      id="panel1bh-header"
+                    >
                         {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE
                             3 components are used to ensure decimal change doesn't move miles label and cause flicker
                             ie:     2 miles -> 2.5 miles
@@ -144,34 +145,57 @@ export default function FilterAccordion() {
                     </AccordionDetails>
                 </Accordion>
 
+                {/***************************************/}
                 {/* EQUIPMENT SELECTION ACCORDION PANEL */}
+                {/***************************************/}
+
                 <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
-                        id="panel2bh-header">
+                        id="panel2bh-header"
+                    >
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Equipment
                         </Typography>
                         <Checkbox sx={{ml: '5rem'}} edge={'start'}
                                   size={'medium'}
-                                  onClick={e => e.stopPropagation()}
+                                  onClick={e => {
+                                      console.log(e.target.checked)
+                                      if (checkedEquipment.length === 0) {
+                                          console.log(e.target)
+                                          setCheckedEquipment(equipList)
+                                          setAllEquipmentChecked(true)
+                                      } else {
+                                          setCheckedEquipment([])
+                                          setAllEquipmentChecked(false)
+                                      }
+                                      setAllEquipmentChecked(!e.target.checked)
+                                      e.stopPropagation()
+                                  }}
                                   checked={checkedEquipment.length === equipList.length}
-                                  indeterminate={checkedEquipment.length > 0 && checkedEquipment.length < equipList.length} />
+                                  indeterminate={checkedEquipment.length > 0 && checkedEquipment.length < equipList.length}
+                        />
 
                     </AccordionSummary>
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={equipList} updateFunc={updateCheckedEquipment}/>
+                        <EquipmentCheckboxList data={checkedEquipment}
+                                               updateFunc={updateCheckedEquipment}
+                                               fullList={equipList}
+                        />
                     </AccordionDetails>
                 </Accordion>
 
+                {/***************************************/}
                 {/* AMENITIES SELECTION ACCORDION PANEL */}
+                {/***************************************/}
+
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
-                        id="panel2bh-header">
-
+                        id="panel2bh-header"
+                    >
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Amenities
                         </Typography>
@@ -179,22 +203,28 @@ export default function FilterAccordion() {
                                   size={'medium'}
                                   onClick={e => e.stopPropagation()}
                                   checked={checkedAmenities.length === amenitiesList.length}
-                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}/>
-
+                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}
+                        />
                     </AccordionSummary>
 
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={amenitiesList}
-                                               updateFunc={updateCheckedAmenities}/>
+                        <EquipmentCheckboxList data={checkedAmenities}
+                                               updateFunc={updateCheckedAmenities}
+                                               fullList={amenitiesList}
+                        />
                     </AccordionDetails>
                 </Accordion>
 
+                {/***********************************************/}
                 {/* SPORTS FACILITIES SELECTION ACCORDION PANEL */}
+                {/***********************************************/}
+
                 <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
-                        id="panel2bh-header">
+                        id="panel2bh-header"
+                    >
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Sports
                         </Typography>
@@ -202,13 +232,17 @@ export default function FilterAccordion() {
                                   size={'medium'}
                                   onClick={e => e.stopPropagation()}
                                   checked={checkedSports.length === sportsList.length}
-                                  indeterminate={checkedSports.length > 0 && checkedSports.length < sportsList.length}/>
+                                  indeterminate={checkedSports.length > 0 && checkedSports.length < sportsList.length}
+                        />
                     </AccordionSummary>
                     <AccordionDetails>
-                        <EquipmentCheckboxList data={sportsList} updateFunc={updateCheckedSports}/>
+                        <EquipmentCheckboxList data={checkedSports}
+                                               updateFunc={updateCheckedSports}
+                                               fullList={sportsList}
+                        />
                     </AccordionDetails>
                 </Accordion>
             </Box>
         </>
-    );
+    )
 }
