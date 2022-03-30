@@ -11,7 +11,6 @@ import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
 export default function FilterAccordion() {
 
-
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -82,32 +81,16 @@ export default function FilterAccordion() {
 
     // the useEffect calls here allow the checkbox in the accordion summary to track the state of the checked boxes within
     // react literally insists on doing all of this...I tried to shorten up, trust
-    useEffect( () => {
-            if (checkedEquipment.length  === equipList.length) {
-                setAllEquipmentChecked(true)
-            } else if (checkedEquipment.length === 0) {
-                setAllEquipmentChecked(false)
-            }
-        }, [equipList, checkedEquipment]
-    )
 
-    useEffect( () => {
-        if (checkedAmenities.length  === amenitiesList.length) {
-            setAllAmenitiesChecked(true)
-        } else if (checkedAmenities.length === 0) {
-            setAllAmenitiesChecked(false)
-            }
-        }, [amenitiesList, checkedAmenities]
-    )
-
-    useEffect( () => {
-            if (checkedSports.length  === sportsList.length) {
-                setAllSportsChecked(true)
-            } else if (checkedSports.length === 0) {
-                setAllSportsChecked(false)
-            }
-        }, [sportsList, checkedSports]
-    )
+    const checkboxOnClick = (e, setChecked, fullList, setAllChecked) => {
+        if (e.target.checked) {
+            setChecked(fullList)
+        } else {
+            setChecked([])
+        }
+        setAllChecked(!setAllChecked)
+        e.stopPropagation()
+        }
 
     return (
         <>
@@ -160,19 +143,7 @@ export default function FilterAccordion() {
                         </Typography>
                         <Checkbox sx={{ml: '5rem'}} edge={'start'}
                                   size={'medium'}
-                                  onClick={e => {
-                                      console.log(e.target.checked)
-                                      if (checkedEquipment.length === 0) {
-                                          console.log(e.target)
-                                          setCheckedEquipment(equipList)
-                                          setAllEquipmentChecked(true)
-                                      } else {
-                                          setCheckedEquipment([])
-                                          setAllEquipmentChecked(false)
-                                      }
-                                      setAllEquipmentChecked(!e.target.checked)
-                                      e.stopPropagation()
-                                  }}
+                                  onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setAllEquipmentChecked)}
                                   checked={checkedEquipment.length === equipList.length}
                                   indeterminate={checkedEquipment.length > 0 && checkedEquipment.length < equipList.length}
                         />
@@ -201,7 +172,7 @@ export default function FilterAccordion() {
                         </Typography>
                         <Checkbox sx={{ml: '5rem'}} edge={'start'}
                                   size={'medium'}
-                                  onClick={e => e.stopPropagation()}
+                                  onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setAllAmenitiesChecked)}
                                   checked={checkedAmenities.length === amenitiesList.length}
                                   indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}
                         />
@@ -230,7 +201,7 @@ export default function FilterAccordion() {
                         </Typography>
                         <Checkbox sx={{ml: '5rem'}} edge={'start'}
                                   size={'medium'}
-                                  onClick={e => e.stopPropagation()}
+                                  onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setAllSportsChecked)}
                                   checked={checkedSports.length === sportsList.length}
                                   indeterminate={checkedSports.length > 0 && checkedSports.length < sportsList.length}
                         />
