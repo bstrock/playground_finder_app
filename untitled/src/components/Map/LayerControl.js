@@ -1,6 +1,6 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers";
-import React, {Component, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import apiQuery from "../apiQuery";
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
@@ -35,7 +35,7 @@ function findMeanCenter(coords) {
     return [average(xx), average(yy)]
 }
 
-export default function LayerControlF(props) {
+export default function LayerControl(props) {
 
     let initQueryParams = {
         latitude: props.latitude,
@@ -60,13 +60,7 @@ export default function LayerControlF(props) {
     const json = require('../../data/ep_boundary.json'); // eden prairie border
     const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
 
-    // set params to lat, lon, radius from props
-    useEffect(() => {
-        apiQuery(params)
-            .then((data) => setData(data))
-    }, [params])
-
-    if (data === null) {
+    if (props.data === null) {
         /* here we display a loading bar while the API data is being fetched */
         return (
             <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
@@ -99,7 +93,7 @@ export default function LayerControlF(props) {
                     {
                         // map the data from the API to Polygons and Markers
                         // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
-                        data.features.map((d) => {
+                        props.data.features.map((d) => {
                             // these components will need keys...
                             const polygonKey = d.properties.site_id + '-polygon'
                             const pointKey = d.properties.site_id + '-point'

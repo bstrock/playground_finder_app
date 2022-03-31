@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import '../App.css'
 import '../index.css'
 import {MapContainer} from 'react-leaflet'
@@ -10,6 +10,7 @@ import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
 import LayerControlF from "./Map/LayerControlF";
+import apiQuery from "./apiQuery";
 
 function App() {
     // here's the entrypoint for our app
@@ -21,22 +22,33 @@ function App() {
         },
     });
 
+    let initQueryParams = {
+        latitude: 44.855,
+        longitude: -93.46,
+        radius: 10
+    }
     // starting position for the map and API query
-    const [lat, lon, radius] = [44.855, -93.46, 10]
+    //const [lat, lon, radius] = [44.855, -93.46, 10]
+    const [queryParams, setQueryParams] = useState(initQueryParams)
+    const [data, setData] = useState(null)
+
+    // set params to lat, lon, radius from props
+    useEffect(() => {
+        apiQuery(queryParams)
+            .then((data) => setData(data))
+    }, [queryParams])
 
     return (
         <ThemeProvider theme={theme}>
             <>
                 <Navbar />
                 <MapContainer style={{height: "94vh"}}
-                              center={[lat, lon]}
+                              center={[queryParams.latitude, queryParams.longitude]}
                               zoom={11.5}
                               zoomControl={true}>
                     <LocationMarker />
-                    <FilterDrawer />
-                    <LayerControl latitude={lat}
-                                  longitude={lon}
-                                  radius={radius}/>
+                    <FilterDrawer setQueryParams={setQueryParams}/>
+                    <LayerControl data={data}/>
                 </MapContainer>
             </>
         </ThemeProvider>
