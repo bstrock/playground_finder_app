@@ -9,6 +9,7 @@ import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
+import LayerControlF from "./Map/LayerControlF";
 
 function App() {
     // here's the entrypoint for our app
@@ -33,7 +34,7 @@ function App() {
                               zoomControl={true}>
                     <LocationMarker />
                     <FilterDrawer />
-                    <LayerControl latitude={lat}
+                    <LayerControlF latitude={lat}
                                   longitude={lon}
                                   radius={radius}/>
                 </MapContainer>
