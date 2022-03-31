@@ -34,7 +34,7 @@ function App() {
                               zoomControl={true}>
                     <LocationMarker />
                     <FilterDrawer />
-                    <LayerControlF latitude={lat}
+                    <LayerControl latitude={lat}
                                   longitude={lon}
                                   radius={radius}/>
                 </MapContainer>
