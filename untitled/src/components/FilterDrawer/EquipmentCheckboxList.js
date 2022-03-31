@@ -9,6 +9,7 @@ import Checkbox from '@mui/material/Checkbox';
 export default function EquipmentCheckboxList(props) {
     const checked = props.data
 
+    // this only works with the second anonymous function in there
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked]
@@ -18,6 +19,7 @@ export default function EquipmentCheckboxList(props) {
         } else {
             newChecked.splice(currentIndex, 1);
         }
+        // state is updated in parent
         props.updateFunc(newChecked)
     }
 
@@ -35,7 +37,8 @@ export default function EquipmentCheckboxList(props) {
                                               checked={checked.indexOf(item) !== -1}
                                               tabIndex={-1}
                                               disableRipple
-                                              inputProps={{'aria-labelledby': labelId}}/>
+                                              inputProps={{'aria-labelledby': labelId}}
+                                    />
                                 </ListItemIcon>
                                 <ListItemText id={labelId} primary={item} primaryTypographyProps={{variant: 'title'}}/>
                             </ListItemButton>

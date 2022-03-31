@@ -9,6 +9,7 @@ import {Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
+
 export default function FilterAccordion() {
 
     // top-level lists of all filter assets
@@ -79,18 +80,19 @@ export default function FilterAccordion() {
     const updateCheckedAmenities = (val) => setCheckedAmenities(val)
     const updateCheckedSports = (val) => setCheckedSports(val)
 
-    // the useEffect calls here allow the checkbox in the accordion summary to track the state of the checked boxes within
-    // react literally insists on doing all of this...I tried to shorten up, trust
-
     const checkboxOnClick = (e, setChecked, fullList, setAllChecked) => {
+        // this function toggles check state for the top-level accordion check boxes, which propagates to children in the same container
         if (e.target.checked) {
+            // when the checkbox is set to checked, all children should be checked
             setChecked(fullList)
         } else {
+            // when it's set to unchecked, no children should be checked
             setChecked([])
         }
+        // in either case, switch the state of allChecked
         setAllChecked(!setAllChecked)
-        e.stopPropagation()
-        }
+        e.stopPropagation()  // and stop the event from closing the sidebar drawer
+    }
 
     return (
         <>
@@ -164,8 +166,8 @@ export default function FilterAccordion() {
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel2bh-content"
-                        id="panel2bh-header"
+                        aria-controls="panel3bh-content"
+                        id="panel3bh-header"
                     >
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Amenities
@@ -193,8 +195,8 @@ export default function FilterAccordion() {
                 <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel2bh-content"
-                        id="panel2bh-header"
+                        aria-controls="panel4bh-content"
+                        id="panel4bh-header"
                     >
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Sports
