@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import SearchButton from "./FilterButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 export default function FilterDrawer(props) {
     const [state, setState] = React.useState({left: true});
@@ -42,8 +43,8 @@ export default function FilterDrawer(props) {
                             >
                                 Filter Playgrounds
                             </Typography>
-                            <FilterAccordion keys={keys} setQueryParams={props.setQueryParams}/>
-                            <Divider/>
+                            <FilterAccordion keys={keys} setQueryParams={props.setQueryParams} />
+                            <Divider />
                         </Box>
                     </Drawer>
                 </React.Fragment>

@@ -9,8 +9,9 @@ import {Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
+import Button from "@mui/material/Button";
 
-export default function FilterAccordion() {
+export default function FilterAccordion(props) {
 
     // top-level lists of all filter assets
     const equipList = [
@@ -92,6 +93,16 @@ export default function FilterAccordion() {
         // in either case, switch the state of allChecked
         setAllChecked(!setAllChecked)
         e.stopPropagation()  // and stop the event from closing the sidebar drawer
+    }
+
+    const applyFiltersOnClick = () => {
+
+        let queryParams = {
+            equipment: checkedEquipment.length > 0 ? checkedEquipment.toString() : null,
+            amenities: checkedAmenities.length > 0 ? checkedAmenities.length > 0 : null,
+            sports: checkedSports.length > 0 ? checkedSports.length > 0 : null
+        }
+        props.setQueryParams(queryParams)
     }
 
     return (
@@ -215,6 +226,21 @@ export default function FilterAccordion() {
                         />
                     </AccordionDetails>
                 </Accordion>
+            </Box>
+
+            <Box sx={{textAlign: 'center'}}>
+                <Button sx={{mt: 5, color: 'white'}}
+                        variant={'contained'}
+                        size={'large'}
+                        onClick={applyFiltersOnClick}
+                >
+                    <Typography sx={{fontWeight: 400}}
+                                align={'center'}
+                                variant={'subtitle1'}
+                    >
+                        Apply Filters
+                    </Typography>
+                </Button>
             </Box>
         </>
     )

@@ -34,6 +34,7 @@ function App() {
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
+        console.log(queryParams)
         apiQuery(queryParams)
             .then((data) => setData(data))
     }, [queryParams])
