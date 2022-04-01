@@ -4,18 +4,17 @@ import {Fab, Tooltip} from "@mui/material";
 
 export default function FilterButton(props) {
 
-    // Memoize the minimap so it's not affected by position changes
     const searchButton = useMemo(
         () => (
-            <Fab sx={ {bgcolor: 'green'} }
+            <Fab sx={{bgcolor: 'green'}}
                  size={'medium'}
-                 onClick={props.clickFunc}>
+                 onClick={props.clickFunc}
+            >
                 <Tooltip title={'Filter Playgrounds'}>
-                    <FilterAltIcon sx={ {color: 'white'} } />
+                    <FilterAltIcon sx={{color: 'white'}} />
                 </Tooltip>
             </Fab>
-        ),
-        [],
+        )
     )
 
     return (

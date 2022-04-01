@@ -30,16 +30,19 @@ export default function FilterDrawer(props) {
                     <SearchButton clickFunc={toggleDrawer(key, true)}/>
                     <Drawer anchor={'left'}
                             open={state[key]}
-                            onClose={toggleDrawer(key, false)}>
+                            onClose={toggleDrawer(key, false)}
+                    >
                         <Box sx={{anchor: 'left', width: '80%', justifyContent: 'center', alignContent: 'center', overflowY: 'hidden'}}
                              role="presentation"
-                             onKeyDown={toggleDrawer(key, false)}>
-
-
-                            <Typography sx={{mt: 5, mb: 3}} align={'center'} variant={'h4'}>
+                             onKeyDown={toggleDrawer(key, false)}
+                        >
+                            <Typography sx={{mt: 5, mb: 3}}
+                                        align={'center'}
+                                        variant={'h4'}
+                            >
                                 Filter Playgrounds
                             </Typography>
-                            <FilterAccordion keys={keys}/>
+                            <FilterAccordion keys={keys} setQueryParams={props.setQueryParams}/>
                             <Divider/>
                         </Box>
                     </Drawer>

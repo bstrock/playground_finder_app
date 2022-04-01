@@ -9,7 +9,6 @@ import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
-import LayerControlF from "./Map/LayerControlF";
 import apiQuery from "./apiQuery";
 
 function App() {
@@ -22,17 +21,18 @@ function App() {
         },
     });
 
+    // starting position for the map and API query
     let initQueryParams = {
         latitude: 44.855,
         longitude: -93.46,
         radius: 10
     }
-    // starting position for the map and API query
-    //const [lat, lon, radius] = [44.855, -93.46, 10]
+
+    // STATES
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
 
-    // set params to lat, lon, radius from props
+    // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
         apiQuery(queryParams)
             .then((data) => setData(data))
@@ -45,7 +45,8 @@ function App() {
                 <MapContainer style={{height: "94vh"}}
                               center={[queryParams.latitude, queryParams.longitude]}
                               zoom={11.5}
-                              zoomControl={true}>
+                              zoomControl={true}
+                >
                     <LocationMarker />
                     <FilterDrawer setQueryParams={setQueryParams}/>
                     <LayerControl data={data}/>
