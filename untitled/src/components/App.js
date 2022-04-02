@@ -22,20 +22,27 @@ function App() {
     });
 
     // starting position for the map and API query
-    let initQueryParams = {
+    let initLocation = {
         latitude: 44.855,
         longitude: -93.46,
-        radius: 10
+    }
+
+    let initQueryParams = {
+        radius: 10,
+        equipment: null,
+        amenities: null,
+        sports_facilities: null
     }
 
     // STATES
+    const [queryLocation, setQueryLocation] = useState(initLocation)
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
-        console.log(queryParams)
-        apiQuery(queryParams)
+        console.log(queryLocation)
+        apiQuery(queryLocation, queryParams)
             .then((data) => setData(data))
     }, [queryParams])
 
@@ -44,7 +51,7 @@ function App() {
             <>
                 <Navbar />
                 <MapContainer style={{height: "94vh"}}
-                              center={[queryParams.latitude, queryParams.longitude]}
+                              center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={11.5}
                               zoomControl={true}
                 >

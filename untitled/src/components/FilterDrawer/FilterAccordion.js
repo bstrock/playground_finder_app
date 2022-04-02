@@ -59,14 +59,14 @@ export default function FilterAccordion(props) {
     const [distValue, setDistValue] = useState(5)
 
     // tracks individual check boxes for filter criteria by category
-    const [checkedEquipment, setCheckedEquipment] = useState(equipList)
-    const [checkedAmenities, setCheckedAmenities] = useState(amenitiesList)
-    const [checkedSports, setCheckedSports] = useState(sportsList)
+    const [checkedEquipment, setCheckedEquipment] = useState([])
+    const [checkedAmenities, setCheckedAmenities] = useState([])
+    const [checkedSports, setCheckedSports] = useState([])
 
     // tracks whether all boxes in a category are checked (also if no boxes are checked)
-    const [allEquipmentChecked, setAllEquipmentChecked] = useState(true)
-    const [allAmenitiesChecked, setAllAmenitiesChecked] = useState(true)
-    const [allSportsChecked, setAllSportsChecked] = useState(true)
+    const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(false)
+    const [showAmenitiesCheckbox, setShowAmenitiesCheckbox] = useState(false)
+    const [showSportsCheckbox, setShowSportsCheckbox] = useState(false)
 
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
@@ -81,29 +81,28 @@ export default function FilterAccordion(props) {
     const updateCheckedAmenities = (val) => setCheckedAmenities(val)
     const updateCheckedSports = (val) => setCheckedSports(val)
 
-    const checkboxOnClick = (e, setChecked, fullList, setAllChecked) => {
+    const checkboxOnClick = (e, setChecked, fullList, setShowCheckbox) => {
         // this function toggles check state for the top-level accordion check boxes, which propagates to children in the same container
-        if (e.target.checked) {
-            // when the checkbox is set to checked, all children should be checked
-            setChecked(fullList)
-        } else {
-            // when it's set to unchecked, no children should be checked
-            setChecked([])
-        }
+        setChecked([])
         // in either case, switch the state of allChecked
-        setAllChecked(!setAllChecked)
+        setShowCheckbox(false)
         e.stopPropagation()  // and stop the event from closing the sidebar drawer
     }
 
     const applyFiltersOnClick = () => {
-
         let queryParams = {
-            equipment: checkedEquipment.length > 0 ? checkedEquipment.toString() : null,
-            amenities: checkedAmenities.length > 0 ? checkedAmenities.length > 0 : null,
-            sports: checkedSports.length > 0 ? checkedSports.length > 0 : null
+            radius: distValue,
+            equipment: (checkedEquipment.length > 0) ? checkedEquipment.toString() : null,
+            amenities: checkedAmenities.length > 0 ? checkedAmenities.toString() : null,
+            sports: checkedSports.length > 0 ? checkedSports.toString() : null
         }
         props.setQueryParams(queryParams)
     }
+
+    useEffect(() => {
+        if (checkedEquipment.length > 0) {setShowEquipmentCheckbox(true)}
+        }, [checkedEquipment]
+    )
 
     return (
         <>
@@ -154,13 +153,16 @@ export default function FilterAccordion(props) {
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Equipment
                         </Typography>
-                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                  size={'medium'}
-                                  onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setAllEquipmentChecked)}
-                                  checked={checkedEquipment.length === equipList.length}
-                                  indeterminate={checkedEquipment.length > 0 && checkedEquipment.length < equipList.length}
-                        />
-
+                        <>
+                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
+                                !showEquipmentCheckbox ? null :
+                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                          size={'medium'}
+                                          onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setShowEquipmentCheckbox)}
+                                          indeterminate={checkedEquipment.length > 0}
+                                />
+                            }
+                        </>
                     </AccordionSummary>
                     <AccordionDetails>
                         <EquipmentCheckboxList data={checkedEquipment}
@@ -183,12 +185,16 @@ export default function FilterAccordion(props) {
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Amenities
                         </Typography>
-                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                  size={'medium'}
-                                  onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setAllAmenitiesChecked)}
-                                  checked={checkedAmenities.length === amenitiesList.length}
-                                  indeterminate={checkedAmenities.length > 0 && checkedAmenities.length < amenitiesList.length}
-                        />
+                        <>
+                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
+                                !showAmenitiesCheckbox ? null :
+                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                          size={'medium'}
+                                          onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setShowAmenitiesCheckbox)}
+                                          indeterminate={checkedAmenities.length > 0}
+                                />
+                            }
+                        </>
                     </AccordionSummary>
 
                     <AccordionDetails>
@@ -212,12 +218,16 @@ export default function FilterAccordion(props) {
                         <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
                             Sports
                         </Typography>
-                        <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                  size={'medium'}
-                                  onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setAllSportsChecked)}
-                                  checked={checkedSports.length === sportsList.length}
-                                  indeterminate={checkedSports.length > 0 && checkedSports.length < sportsList.length}
-                        />
+                        <>
+                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
+                                !showSportsCheckbox ? null :
+                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                          size={'medium'}
+                                          onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setShowSportsCheckbox)}
+                                          indeterminate={checkedSports.length > 0}
+                                />
+                            }
+                    </>
                     </AccordionSummary>
                     <AccordionDetails>
                         <EquipmentCheckboxList data={checkedSports}
