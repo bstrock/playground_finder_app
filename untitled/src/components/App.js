@@ -28,7 +28,7 @@ function App() {
     }
 
     let initQueryParams = {
-        radius: 10,
+        radius: 4,
         equipment: null,
         amenities: null,
         sports_facilities: null
@@ -38,13 +38,14 @@ function App() {
     const [queryLocation, setQueryLocation] = useState(initLocation)
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
+    const [showSearchRadius, setShowSearchRadius] = useState(false)
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
         console.log(queryLocation)
         apiQuery(queryLocation, queryParams)
             .then((data) => setData(data))
-    }, [queryParams])
+    }, [queryLocation, queryParams])
 
     return (
         <ThemeProvider theme={theme}>
@@ -56,8 +57,14 @@ function App() {
                               zoomControl={true}
                 >
                     <LocationMarker />
-                    <FilterDrawer setQueryParams={setQueryParams}/>
-                    <LayerControl data={data}/>
+                    <LayerControl data={data}
+                                  showSearhRadius={showSearchRadius}
+                                  queryLocation={queryLocation}
+                                  radius={queryParams.radius}
+                    />
+                    <FilterDrawer setQueryParams={setQueryParams}
+                                  setShowSearchRadius={setShowSearchRadius}
+                    />
                 </MapContainer>
             </>
         </ThemeProvider>

@@ -43,7 +43,10 @@ export default function FilterDrawer(props) {
                             >
                                 Filter Playgrounds
                             </Typography>
-                            <FilterAccordion keys={keys} setQueryParams={props.setQueryParams} />
+                            <FilterAccordion keys={keys}
+                                             setQueryParams={props.setQueryParams}
+                                             setShowSearchRadius={props.setShowSearchRadius}
+                            />
                             <Divider />
                         </Box>
                     </Drawer>

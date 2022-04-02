@@ -56,7 +56,7 @@ export default function FilterAccordion(props) {
     const [expanded, setExpanded] = useState(false)
 
     // tracks value of the slider, so it can be displayed in accordion description
-    const [distValue, setDistValue] = useState(5)
+    const [distValue, setDistValue] = useState(4)
 
     // tracks individual check boxes for filter criteria by category
     const [checkedEquipment, setCheckedEquipment] = useState([])
@@ -97,11 +97,14 @@ export default function FilterAccordion(props) {
             sports: checkedSports.length > 0 ? checkedSports.toString() : null
         }
         props.setQueryParams(queryParams)
+        props.setShowSearchRadius(true)
     }
 
     useEffect(() => {
         if (checkedEquipment.length > 0) {setShowEquipmentCheckbox(true)}
-        }, [checkedEquipment]
+        if (checkedAmenities.length > 0) {setShowAmenitiesCheckbox(true)}
+        if (checkedSports.length > 0) {setShowSportsCheckbox(true)}
+        }, [checkedEquipment, checkedAmenities, checkedSports]
     )
 
     return (

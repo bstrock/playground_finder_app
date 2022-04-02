@@ -15,13 +15,13 @@ export default function DistanceSlider(props) {
 
             <Slider sx={{p: 2, ml: 2, width: '75%'}}
                 aria-label="Miles"
-                defaultValue={5}
+                defaultValue={4}
                 getAriaValueText={valuetext}
                 valueLabelDisplay="auto"
                 step={.5}
                 marks
                 min={.5}
-                max={5}
+                max={4}
                 onChange={ (event) => props.handleValueUpdate(event.target.value) }
             />
 

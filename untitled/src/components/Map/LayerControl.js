@@ -1,4 +1,4 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON, Circle} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers";
 import React, {useEffect, useState} from "react";
 import apiQuery from "../apiQuery";
@@ -20,7 +20,6 @@ function reverseCoordinates(coords) {
     return reversed_coords
 }
 
-
 function findMeanCenter(coords) {
     // here we generate our centroids from the playground polygons
     let xx = []
@@ -37,15 +36,6 @@ function findMeanCenter(coords) {
 
 export default function LayerControl(props) {
 
-    let initQueryParams = {
-        latitude: props.latitude,
-        longitude: props.longitude,
-        radius: props.radius,
-    }
-
-    const [data, setData] = useState(null)
-    const [params, setQueryParams] = useState(initQueryParams)
-
     const centroids = []
 
     const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
@@ -59,6 +49,9 @@ export default function LayerControl(props) {
     const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}  // playground polygon styles
     const json = require('../../data/ep_boundary.json'); // eden prairie border
     const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
+    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .3}
+
+    const miles_to_meters = (radius) => radius * 1609.34
 
     if (props.data === null) {
         /* here we display a loading bar while the API data is being fetched */
@@ -143,7 +136,18 @@ export default function LayerControl(props) {
                     }
                 </LayerGroup>
             </LayersControl.Overlay>
-            <LocationMarker/>
+            <>
+            <LayersControl.Overlay checked name={'Filter Radius'}>
+                {// show search radius if not using default search parameter values (ie init state)
+                    !props.showSearhRadius ? null :
+                    <Circle center={[props.queryLocation.latitude, props.queryLocation.longitude]}
+                            radius={miles_to_meters(props.radius)}
+                            pathOptions={searchRadiusPathOptions}
+                    />
+                }
+            </LayersControl.Overlay>
+            </>
+            <LocationMarker />
         </LayersControl>
     )
     // that was fun!
