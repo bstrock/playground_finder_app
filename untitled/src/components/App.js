@@ -63,6 +63,7 @@ function App() {
                                   radius={queryParams.radius}
                     />
                     <FilterDrawer queryParams={queryParams}
+                                  initQueryParams={initQueryParams}
                                   setQueryParams={setQueryParams}
                                   setShowSearchRadius={setShowSearchRadius}
                     />

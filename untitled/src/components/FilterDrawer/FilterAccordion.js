@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,11 +9,10 @@ import DistanceSlider from "./DistanceSlider";
 import {ButtonGroup, Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
-import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 
 export default function FilterAccordion(props) {
-    console.log(props)
+
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -89,27 +89,20 @@ export default function FilterAccordion(props) {
         e.stopPropagation()  // and stop the event from closing the sidebar drawer
     }
 
-    const applyFiltersOnClick = () => {
-        let queryParams = {
+    const getQueryParams = () => {
+        return {
             radius: distValue,
             equipment: (checkedEquipment.length > 0) ? checkedEquipment.toString() : [],
             amenities: checkedAmenities.length > 0 ? checkedAmenities.toString() : [],
             sports_facilities: checkedSports.length > 0 ? checkedSports.toString() : []
         }
-        props.setQueryParams(queryParams)
-        props.setShowSearchRadius(true)
-        props.setDrawerOpen(false)
     }
 
-    const clearFiltersOnClick = () => {
-        let queryParams = {
-            radius: 4,
-            equipment: [],
-            amenities: [],
-            sports_facilities: []
-        }
-        props.setQueryParams(queryParams)
-        props.setShowSearchRadius(false)
+    const filtersOnClick = (e) => {
+        const apply = e.target.outerText.toLowerCase() === 'apply filters'
+        const params = apply ? getQueryParams() : props.initQueryParams
+        props.setQueryParams(params)
+        props.setShowSearchRadius(apply)
         props.setDrawerOpen(false)
     }
 
@@ -263,9 +256,10 @@ export default function FilterAccordion(props) {
             <Box sx={{textAlign: 'center'}}>
                 <ButtonGroup>
                     <Button sx={{mt: 5, color: 'white'}}
+                            key={'apply'}
                             variant={'contained'}
                             size={'large'}
-                            onClick={applyFiltersOnClick}
+                            onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 400}}
                                     align={'center'}
@@ -276,9 +270,10 @@ export default function FilterAccordion(props) {
                     </Button>
 
                     <Button sx={{mt: 5, color: 'green', backgroundColor: 'white'}}
+                            key={'clear'}
                             variant={'contained'}
                             size={'large'}
-                            onClick={clearFiltersOnClick}
+                            onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 400}}
                                     align={'center'}
