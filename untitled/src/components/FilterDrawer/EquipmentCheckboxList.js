@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 export default function EquipmentCheckboxList(props) {
     const checked = props.data
-
+    console.log(props)
     // this only works with the second anonymous function in there
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);

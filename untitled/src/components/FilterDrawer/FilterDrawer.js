@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 
 export default function FilterDrawer(props) {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
-    const keys = props.keys
 
     const toggleDrawer = (open) => (e) => {
         if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
@@ -16,10 +15,6 @@ export default function FilterDrawer(props) {
         }
         setDrawerOpen(open);
     };
-
-    if (keys === null) {
-        return null
-    } else {
 
         return (
             <>
@@ -44,9 +39,10 @@ export default function FilterDrawer(props) {
                         >
                             Filter Playgrounds
                         </Typography>
-                        <FilterAccordion keys={keys}
+                        <FilterAccordion queryParams={props.queryParams}
                                          setQueryParams={props.setQueryParams}
                                          setShowSearchRadius={props.setShowSearchRadius}
+                                         setDrawerOpen={setDrawerOpen}
                         />
                         <Divider/>
                     </Box>
@@ -54,4 +50,3 @@ export default function FilterDrawer(props) {
             </>
         );
     }
-}

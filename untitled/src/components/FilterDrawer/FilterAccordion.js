@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 
 export default function FilterAccordion(props) {
-
+    console.log(props)
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -59,9 +59,9 @@ export default function FilterAccordion(props) {
     const [distValue, setDistValue] = useState(4)
 
     // tracks individual check boxes for filter criteria by category
-    const [checkedEquipment, setCheckedEquipment] = useState([])
-    const [checkedAmenities, setCheckedAmenities] = useState([])
-    const [checkedSports, setCheckedSports] = useState([])
+    const [checkedEquipment, setCheckedEquipment] = useState(props.queryParams.equipment)
+    const [checkedAmenities, setCheckedAmenities] = useState(props.queryParams.amenities)
+    const [checkedSports, setCheckedSports] = useState(props.queryParams.sports_facilities)
 
     // tracks whether all boxes in a category are checked (also if no boxes are checked)
     const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(false)
@@ -92,23 +92,25 @@ export default function FilterAccordion(props) {
     const applyFiltersOnClick = () => {
         let queryParams = {
             radius: distValue,
-            equipment: (checkedEquipment.length > 0) ? checkedEquipment.toString() : null,
-            amenities: checkedAmenities.length > 0 ? checkedAmenities.toString() : null,
-            sports: checkedSports.length > 0 ? checkedSports.toString() : null
+            equipment: (checkedEquipment.length > 0) ? checkedEquipment.toString() : [],
+            amenities: checkedAmenities.length > 0 ? checkedAmenities.toString() : [],
+            sports_facilities: checkedSports.length > 0 ? checkedSports.toString() : []
         }
         props.setQueryParams(queryParams)
         props.setShowSearchRadius(true)
+        props.setDrawerOpen(false)
     }
 
     const clearFiltersOnClick = () => {
         let queryParams = {
             radius: 4,
-            equipment: null,
-            amenities: null,
-            sports: null
+            equipment: [],
+            amenities: [],
+            sports_facilities: []
         }
         props.setQueryParams(queryParams)
         props.setShowSearchRadius(false)
+        props.setDrawerOpen(false)
     }
 
     useEffect(() => {

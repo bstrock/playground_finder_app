@@ -27,11 +27,12 @@ function App() {
         longitude: -93.46,
     }
 
+    // starting values for query parameters
     let initQueryParams = {
         radius: 4,
-        equipment: null,
-        amenities: null,
-        sports_facilities: null
+        equipment: [],
+        amenities: [],
+        sports_facilities: []
     }
 
     // STATES
@@ -61,7 +62,8 @@ function App() {
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
                     />
-                    <FilterDrawer setQueryParams={setQueryParams}
+                    <FilterDrawer queryParams={queryParams}
+                                  setQueryParams={setQueryParams}
                                   setShowSearchRadius={setShowSearchRadius}
                     />
                 </MapContainer>
