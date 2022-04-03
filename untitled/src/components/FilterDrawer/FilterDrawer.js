@@ -2,24 +2,20 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
-import SearchButton from "./FilterButton";
+import SearchButton from "./FloatingFilterButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 export default function FilterDrawer(props) {
-    const [state, setState] = React.useState({left: true});
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
     const keys = props.keys
 
-    const toggleDrawer = (key, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    const toggleDrawer = (open) => (e) => {
+        if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
             return;
         }
-
-        setState({...state, [key]: open});
+        setDrawerOpen(open);
     };
-
-    const key = 'drawer'
 
     if (keys === null) {
         return null
@@ -27,30 +23,34 @@ export default function FilterDrawer(props) {
 
         return (
             <>
-                <React.Fragment key={key}>
-                    <SearchButton clickFunc={toggleDrawer(key, true)}/>
-                    <Drawer anchor={'left'}
-                            open={state[key]}
-                            onClose={toggleDrawer(key, false)}
+                <SearchButton clickFunc={toggleDrawer(true)}/>
+                <Drawer anchor={'left'}
+                        open={drawerOpen}
+                        onClose={toggleDrawer(false)}
+                >
+                    <Box sx={{
+                        anchor: 'left',
+                        width: '80%',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                        overflowY: 'hidden'
+                    }}
+                         role="presentation"
+                         onKeyDown={toggleDrawer(false)}
                     >
-                        <Box sx={{anchor: 'left', width: '80%', justifyContent: 'center', alignContent: 'center', overflowY: 'hidden'}}
-                             role="presentation"
-                             onKeyDown={toggleDrawer(key, false)}
+                        <Typography sx={{mt: 5, mb: 3}}
+                                    align={'center'}
+                                    variant={'h4'}
                         >
-                            <Typography sx={{mt: 5, mb: 3}}
-                                        align={'center'}
-                                        variant={'h4'}
-                            >
-                                Filter Playgrounds
-                            </Typography>
-                            <FilterAccordion keys={keys}
-                                             setQueryParams={props.setQueryParams}
-                                             setShowSearchRadius={props.setShowSearchRadius}
-                            />
-                            <Divider />
-                        </Box>
-                    </Drawer>
-                </React.Fragment>
+                            Filter Playgrounds
+                        </Typography>
+                        <FilterAccordion keys={keys}
+                                         setQueryParams={props.setQueryParams}
+                                         setShowSearchRadius={props.setShowSearchRadius}
+                        />
+                        <Divider/>
+                    </Box>
+                </Drawer>
             </>
         );
     }

@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DistanceSlider from "./DistanceSlider";
-import {Checkbox, Divider} from "@mui/material";
+import {ButtonGroup, Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import {useEffect, useState} from "react";
@@ -100,10 +100,27 @@ export default function FilterAccordion(props) {
         props.setShowSearchRadius(true)
     }
 
+    const clearFiltersOnClick = () => {
+        let queryParams = {
+            radius: 4,
+            equipment: null,
+            amenities: null,
+            sports: null
+        }
+        props.setQueryParams(queryParams)
+        props.setShowSearchRadius(false)
+    }
+
     useEffect(() => {
-        if (checkedEquipment.length > 0) {setShowEquipmentCheckbox(true)}
-        if (checkedAmenities.length > 0) {setShowAmenitiesCheckbox(true)}
-        if (checkedSports.length > 0) {setShowSportsCheckbox(true)}
+            if (checkedEquipment.length > 0) {
+                setShowEquipmentCheckbox(true)
+            }
+            if (checkedAmenities.length > 0) {
+                setShowAmenitiesCheckbox(true)
+            }
+            if (checkedSports.length > 0) {
+                setShowSportsCheckbox(true)
+            }
         }, [checkedEquipment, checkedAmenities, checkedSports]
     )
 
@@ -159,11 +176,11 @@ export default function FilterAccordion(props) {
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
                                 !showEquipmentCheckbox ? null :
-                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                          size={'medium'}
-                                          onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setShowEquipmentCheckbox)}
-                                          indeterminate={checkedEquipment.length > 0}
-                                />
+                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                              size={'medium'}
+                                              onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setShowEquipmentCheckbox)}
+                                              indeterminate={checkedEquipment.length > 0}
+                                    />
                             }
                         </>
                     </AccordionSummary>
@@ -191,11 +208,11 @@ export default function FilterAccordion(props) {
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
                                 !showAmenitiesCheckbox ? null :
-                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                          size={'medium'}
-                                          onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setShowAmenitiesCheckbox)}
-                                          indeterminate={checkedAmenities.length > 0}
-                                />
+                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                              size={'medium'}
+                                              onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setShowAmenitiesCheckbox)}
+                                              indeterminate={checkedAmenities.length > 0}
+                                    />
                             }
                         </>
                     </AccordionSummary>
@@ -224,13 +241,13 @@ export default function FilterAccordion(props) {
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
                                 !showSportsCheckbox ? null :
-                                <Checkbox sx={{ml: '5rem'}} edge={'start'}
-                                          size={'medium'}
-                                          onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setShowSportsCheckbox)}
-                                          indeterminate={checkedSports.length > 0}
-                                />
+                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                              size={'medium'}
+                                              onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setShowSportsCheckbox)}
+                                              indeterminate={checkedSports.length > 0}
+                                    />
                             }
-                    </>
+                        </>
                     </AccordionSummary>
                     <AccordionDetails>
                         <EquipmentCheckboxList data={checkedSports}
@@ -242,18 +259,34 @@ export default function FilterAccordion(props) {
             </Box>
 
             <Box sx={{textAlign: 'center'}}>
-                <Button sx={{mt: 5, color: 'white'}}
-                        variant={'contained'}
-                        size={'large'}
-                        onClick={applyFiltersOnClick}
-                >
-                    <Typography sx={{fontWeight: 400}}
-                                align={'center'}
-                                variant={'subtitle1'}
+                <ButtonGroup>
+                    <Button sx={{mt: 5, color: 'white'}}
+                            variant={'contained'}
+                            size={'large'}
+                            onClick={applyFiltersOnClick}
                     >
-                        Apply Filters
-                    </Typography>
-                </Button>
+                        <Typography sx={{fontWeight: 400}}
+                                    align={'center'}
+                                    variant={'subtitle1'}
+                        >
+                            Apply Filters
+                        </Typography>
+                    </Button>
+
+                    <Button sx={{mt: 5, color: 'green', backgroundColor: 'white'}}
+                            variant={'contained'}
+                            size={'large'}
+                            onClick={clearFiltersOnClick}
+                    >
+                        <Typography sx={{fontWeight: 400}}
+                                    align={'center'}
+                                    variant={'subtitle1'}
+                        >
+                            Clear Filters
+                        </Typography>
+                    </Button>
+
+                </ButtonGroup>
             </Box>
         </>
     )

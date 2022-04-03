@@ -1,7 +1,7 @@
 import React from 'react';
 import {Polygon} from "react-leaflet";
 
-function PlaygroundPolygons(props) {
+export default function PlaygroundPolygons(props) {
     console.log(props)
     const polygons = props.data.features.map(
         (feature) => <Polygon pathOptions={{color: 'purple'}} positions={feature.geometry.coordinates}/>
@@ -9,4 +9,3 @@ function PlaygroundPolygons(props) {
     return polygons
 }
 
-export default PlaygroundPolygons;

@@ -9,11 +9,11 @@ import Paper from '@mui/material/Paper';
 
 function createData(label, value) {
 
-    const words = label.split("_");
+    const words = label.split("_")
     for (let i = 0; i < words.length; i++) {
-        words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+        words[i] = words[i][0].toUpperCase() + words[i].substring(1)
     }
-    label = words.join(" ");
+    label = words.join(" ")
     return {label, value}
 }
 
@@ -44,13 +44,10 @@ export default function AssetTable(props) {
         console.log(keys)
         if (!keys.includes(value)) {
             alpha_sort[value] = [rows[i]]
-            console.log('added key')
         } else if (keys.includes(value)) {
             alpha_sort[value].push(rows[i])
-            console.log('pushed key')
         }
     }
-    console.log(alpha_sort)
     let alpha_keys = Object.keys(alpha_sort)
 
     for (let i = 0; i < alpha_keys.length; i++) {
@@ -58,9 +55,7 @@ export default function AssetTable(props) {
         let vals = alpha_sort[key]
         alpha_sort[key] = vals.sort((a, b) => a.label.localeCompare(b.label))
     }
-    console.log(alpha_sort)
     alpha_keys.reverse()
-    console.log(alpha_keys)
     let alpha_sorted_rows = []
 
 
@@ -69,45 +64,40 @@ export default function AssetTable(props) {
         for (let j = 0; j < rows.length; j++) {
             alpha_sorted_rows.push(rows[j])
         }
-        }
+    }
 
-    console.log(alpha_sorted_rows)
+    return (<>
+            <TableContainer style={{maxHeight: 300}} component={Paper}>
 
-    return (
-        <>
-        <TableContainer style={ {maxHeight: 300} } component={Paper}>
+                <Table sx={{minWidth: 50}} stickyHeader aria-label="simple table">
 
-            <Table sx={ { minWidth: 50 } } stickyHeader aria-label="simple table">
-
-                <TableHead>
-                    <TableRow>
-                        <TableCell sx={ {fontWeight: 800, backgroundColor: '#157719', color: 'white'} }>
-                            {headers[props.whichOne][0]}
-                        </TableCell>
-                        <TableCell align="center"  sx={ {fontWeight: 800, backgroundColor: '#157719', color: 'white'} }>
-                            {headers[props.whichOne][1]}
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-
-                <TableBody>
-                    {alpha_sorted_rows.map((row) => (
-                        <TableRow
-                            key={row.label}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0} }}>
-                            <TableCell sx={{p: 2, width: '4%'}}>
-                                {row.label}
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                                {headers[props.whichOne][0]}
                             </TableCell>
-                            <TableCell sx={{p: 2, width: '1%'}} align="center">
-                                {row.value}
+                            <TableCell align="center"
+                                       sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                                {headers[props.whichOne][1]}
                             </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
+                    </TableHead>
 
-            </Table>
+                    <TableBody>
+                        {alpha_sorted_rows.map((row) => (<TableRow
+                                key={row.label}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                <TableCell sx={{p: 2, width: '4%'}}>
+                                    {row.label}
+                                </TableCell>
+                                <TableCell sx={{p: 2, width: '1%'}} align="center">
+                                    {row.value}
+                                </TableCell>
+                            </TableRow>))}
+                    </TableBody>
 
-        </TableContainer>
-        </>
-    );
+                </Table>
+
+            </TableContainer>
+        </>);
 }

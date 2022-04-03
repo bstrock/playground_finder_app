@@ -1,5 +1,5 @@
-import {TileLayer} from "react-leaflet";
-import React from "react";
+import {TileLayer} from "react-leaflet"
+import React from "react"
 
 function StreetLayer() {
     return (
@@ -23,4 +23,4 @@ function SatelliteLayer() {
     )
 }
 
-export {StreetLayer, SatelliteLayer};
+export {StreetLayer, SatelliteLayer}

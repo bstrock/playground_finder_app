@@ -62,12 +62,12 @@ export default function LocationMarker() {
         <Marker position={position} icon={userIcon}>
             <Popup>
                 <Box>
-                <Typography align={'center'} variant={'subtitle1'}>
-                    Here you are!
-                </Typography>
-                <Typography align={'center'} variant={'subtitle2'}>
-                    Click on a Pin to explore a nearby playground, or use the Filter button to search nearby!
-                </Typography>
+                    <Typography align={'center'} variant={'subtitle1'}>
+                        Here you are!
+                    </Typography>
+                    <Typography align={'center'} variant={'subtitle2'}>
+                        Click on a Pin to explore a nearby playground, or use the Filter button to search nearby!
+                    </Typography>
                 </Box>
             </Popup>
         </Marker>

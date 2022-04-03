@@ -137,17 +137,17 @@ export default function LayerControl(props) {
                 </LayerGroup>
             </LayersControl.Overlay>
             <>
-            <LayersControl.Overlay checked name={'Filter Radius'}>
-                {// show search radius if not using default search parameter values (ie init state)
-                    !props.showSearhRadius ? null :
-                    <Circle center={[props.queryLocation.latitude, props.queryLocation.longitude]}
-                            radius={miles_to_meters(props.radius)}
-                            pathOptions={searchRadiusPathOptions}
-                    />
-                }
-            </LayersControl.Overlay>
+                <LayersControl.Overlay checked name={'Filter Radius'}>
+                    {// show search radius if not using default search parameter values (ie init state)
+                        !props.showSearhRadius ? null :
+                            <Circle center={[props.queryLocation.latitude, props.queryLocation.longitude]}
+                                    radius={miles_to_meters(props.radius)}
+                                    pathOptions={searchRadiusPathOptions}
+                            />
+                    }
+                </LayersControl.Overlay>
             </>
-            <LocationMarker />
+            <LocationMarker/>
         </LayersControl>
     )
     // that was fun!

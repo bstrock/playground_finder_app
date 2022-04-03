@@ -17,7 +17,7 @@ export default class InfoBox extends Component {
     }
 
     TabPanel(props) {
-        const { children, value, index, ...other } = props;
+        const {children, value, index, ...other} = props;
 
         return (
             <div
@@ -28,7 +28,7 @@ export default class InfoBox extends Component {
                 {...other}
             >
                 {value === index && (
-                    <Box sx={ { p: 0 } }>
+                    <Box sx={{p: 0}}>
                         <Typography>{children}</Typography>
                     </Box>
                 )}
@@ -56,49 +56,50 @@ export default class InfoBox extends Component {
     }
 
     render() {
-    return (
-        <Box sx={ { height: '500px', bgcolor: 'paper.background'} }>
+        return (
+            <Box sx={{height: '500px', bgcolor: 'paper.background'}}>
 
-            <Box sx={ {flexGrow: 1, bgcolor: 'paper.background', display: "block"} }>
-                <Tabs sx={ { justifyContent: 'left', borderBottom: 1, borderColor: 'divider'} }
-                      variant="scrollable"
-                      scrollButtons
-                      allowScrollButtonsMobile
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                      aria-label="info-box-tabs">
-                    <Tab label="Info" {...this.a11yProps(0)} />
-                    <Tab label="Equipment" {...this.a11yProps(1)} />
-                    <Tab label="Amenities" {...this.a11yProps(2)} />
-                    <Tab label="Sports" {...this.a11yProps(3)} />
-                    <Tab label="Reviews" {...this.a11yProps(4)} />
-                    <Tab label="Reports" {...this.a11yProps(5)} />
-                </Tabs>
-        </Box>
+                <Box sx={{flexGrow: 1, bgcolor: 'paper.background', display: "block"}}>
+                    <Tabs sx={{justifyContent: 'left', borderBottom: 1, borderColor: 'divider'}}
+                          variant="scrollable"
+                          scrollButtons
+                          allowScrollButtonsMobile
+                          value={this.state.value}
+                          onChange={this.handleChange}
+                          aria-label="info-box-tabs">
+                        <Tab label="Info" {...this.a11yProps(0)} />
+                        <Tab label="Equipment" {...this.a11yProps(1)} />
+                        <Tab label="Amenities" {...this.a11yProps(2)} />
+                        <Tab label="Sports" {...this.a11yProps(3)} />
+                        <Tab label="Reviews" {...this.a11yProps(4)} />
+                        <Tab label="Reports" {...this.a11yProps(5)} />
+                    </Tabs>
+                </Box>
 
-            <this.TabPanel value={this.state.value} index={0}>
-                <ParkCard data={this.state.data} />
-            </this.TabPanel>
+                <this.TabPanel value={this.state.value} index={0}>
+                    <ParkCard data={this.state.data}/>
+                </this.TabPanel>
 
-            <this.TabPanel value={this.state.value} index={1}>
-                <TableCard data={this.state.data} whichOne={'equipment'} />
-            </this.TabPanel>
+                <this.TabPanel value={this.state.value} index={1}>
+                    <TableCard data={this.state.data} whichOne={'equipment'}/>
+                </this.TabPanel>
 
-            <this.TabPanel value={this.state.value} index={2}>
-                <TableCard data={this.state.data} whichOne={'amenities'} />
-            </this.TabPanel>
+                <this.TabPanel value={this.state.value} index={2}>
+                    <TableCard data={this.state.data} whichOne={'amenities'}/>
+                </this.TabPanel>
 
-            <this.TabPanel value={this.state.value} index={3}>
-                <TableCard data={this.state.data} whichOne={'sports_facilities'} />
-            </this.TabPanel>
+                <this.TabPanel value={this.state.value} index={3}>
+                    <TableCard data={this.state.data} whichOne={'sports_facilities'}/>
+                </this.TabPanel>
 
-            <this.TabPanel value={this.state.value} index={4}>
-                Reviews Will Go Here
-            </this.TabPanel>
+                <this.TabPanel value={this.state.value} index={4}>
+                    Reviews Will Go Here
+                </this.TabPanel>
 
-            <this.TabPanel value={this.state.value} index={5}>
-                Reports Will Go Here
-            </this.TabPanel>
-        </Box>
-    );
-}}
+                <this.TabPanel value={this.state.value} index={5}>
+                    Reports Will Go Here
+                </this.TabPanel>
+            </Box>
+        );
+    }
+}

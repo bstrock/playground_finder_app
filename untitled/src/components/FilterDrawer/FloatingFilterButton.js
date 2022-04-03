@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import {useMemo} from 'react'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {Fab, Tooltip} from "@mui/material";
 
-export default function FilterButton(props) {
+export default function FloatingFilterButton(props) {
 
     const searchButton = useMemo(
         () => (
@@ -11,7 +11,7 @@ export default function FilterButton(props) {
                  onClick={props.clickFunc}
             >
                 <Tooltip title={'Filter Playgrounds'}>
-                    <FilterAltIcon sx={{color: 'white'}} />
+                    <FilterAltIcon sx={{color: 'white'}}/>
                 </Tooltip>
             </Fab>
         )

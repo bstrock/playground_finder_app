@@ -4,11 +4,12 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import {Avatar, ListItemAvatar} from "@mui/material";
 
 export default function ReviewCard(props) {
     // TODO: MAP REVIEWS TO LISTITEM IF PARK HAS REVIEWS
     return (
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
 
             <ListItem alignItems="flex-start">
                 <ListItemText
@@ -16,7 +17,7 @@ export default function ReviewCard(props) {
                     secondary={
                         <>
                             <Typography
-                                sx={{ display: 'inline' }}
+                                sx={{display: 'inline'}}
                                 component="span"
                                 variant="body2"
                                 color="text.primary"
@@ -28,17 +29,17 @@ export default function ReviewCard(props) {
                     }
                 />
             </ListItem>
-            <Divider variant="inset" component="li" />
+            <Divider variant="inset" component="li"/>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                    <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg"/>
                 </ListItemAvatar>
                 <ListItemText
                     primary="Summer BBQ"
                     secondary={
                         <React.Fragment>
                             <Typography
-                                sx={{ display: 'inline' }}
+                                sx={{display: 'inline'}}
                                 component="span"
                                 variant="body2"
                                 color="text.primary"
@@ -50,7 +51,7 @@ export default function ReviewCard(props) {
                     }
                 />
             </ListItem>
-            <Divider variant="inset" component="li" />
+            <Divider variant="inset" component="li"/>
             <ListItem alignItems="flex-start">
 
                 <ListItemText
@@ -58,7 +59,7 @@ export default function ReviewCard(props) {
                     secondary={
                         <React.Fragment>
                             <Typography
-                                sx={{ display: 'inline' }}
+                                sx={{display: 'inline'}}
                                 component="span"
                                 variant="body2"
                                 color="text.primary"
