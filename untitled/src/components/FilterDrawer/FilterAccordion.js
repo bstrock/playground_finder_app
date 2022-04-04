@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 
 export default function FilterAccordion(props) {
 
+
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -64,9 +65,9 @@ export default function FilterAccordion(props) {
     const [checkedSports, setCheckedSports] = useState(props.queryParams.sports_facilities)
 
     // tracks whether all boxes in a category are checked (also if no boxes are checked)
-    const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(false)
-    const [showAmenitiesCheckbox, setShowAmenitiesCheckbox] = useState(false)
-    const [showSportsCheckbox, setShowSportsCheckbox] = useState(false)
+    const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(0)
+    const [showAmenitiesCheckbox, setShowAmenitiesCheckbox] = useState(0)
+    const [showSportsCheckbox, setShowSportsCheckbox] = useState(0)
 
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
@@ -107,22 +108,46 @@ export default function FilterAccordion(props) {
     }
 
     useEffect(() => {
-            if (checkedEquipment.length > 0) {
-                setShowEquipmentCheckbox(true)
-            }
-            if (checkedAmenities.length > 0) {
-                setShowAmenitiesCheckbox(true)
-            }
-            if (checkedSports.length > 0) {
-                setShowSportsCheckbox(true)
-            }
-        }, [checkedEquipment, checkedAmenities, checkedSports]
+        const toggle = checkedEquipment.length > 0 ? 1 : 0
+        setShowEquipmentCheckbox(toggle)
+        }, [checkedEquipment]
     )
+
+    useEffect(() => {
+        const toggle = checkedAmenities.length > 0 ? 1 : 0
+        setShowAmenitiesCheckbox(toggle)
+            }, [checkedAmenities]
+    )
+
+    useEffect(() => {
+        const toggle = checkedSports.length > 0 ? 1 : 0
+        setShowSportsCheckbox(toggle)
+        }, [checkedSports]
+    )
+
+var stylingObject = {
+        accordionSummary: {
+            height: '1em',
+            justifyContent: 'center',
+            alignContent: 'center',
+            width: 'fixed'
+        },
+        accordionButtonText: {
+            paddingTop: 1,
+            paddingBottom: 1,
+            width: '33%',
+            flexGrow: 1
+        },
+        checkbox: {
+                paddingLeft: '5rem'
+            }
+    }
+
 
     return (
         <>
             {/* This box contains the Accordion */}
-            <Box sx={{width: 'auto'}}>
+            <Box sx={{width: '17em', margin: 'auto'}}>
                 <Divider sx={{mb: 3}} variant={'middle'}/>
 
                 {/***********************************/}
@@ -130,7 +155,8 @@ export default function FilterAccordion(props) {
                 {/***********************************/}
 
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}
+                    <AccordionSummary style={stylingObject.accordionSummary}
+                                      expandIcon={<ExpandMoreIcon/>}
                                       aria-controls="panel1bh-content"
                                       id="panel1bh-header"
                     >
@@ -139,14 +165,12 @@ export default function FilterAccordion(props) {
                             ie:     2 miles -> 2.5 miles
                             thus:   2   miles -> 2.5 miles */}
                         <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
-                            Distance:
+                            Distance (miles):
                         </Typography>
-                        <Typography sx={{ml: 1, width: '15%', alignContent: 'center'}} variant={'h6'}>
+                        <Typography sx={{ml: 3, width: '15%', flexGrow: 1, alignItems: 'right'}} variant={'h6'}>
                             {` ${distValue} `}
                         </Typography>
-                        <Typography sx={{flexShrink: 1}} variant={'h6'}>
-                            Miles
-                        </Typography>
+
                     </AccordionSummary>
 
                     {/* SLIDER GOES HERE- TAKES IN UPDATE CALLBACK FUNCTION */}
@@ -161,17 +185,18 @@ export default function FilterAccordion(props) {
 
                 <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                     <AccordionSummary
+                        style={stylingObject.accordionSummary}
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
                         id="panel2bh-header"
                     >
-                        <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
+                        <Typography style={stylingObject.accordionButtonText}
+                                    variant={'h6'}>
                             Equipment
                         </Typography>
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
-                                !showEquipmentCheckbox ? null :
-                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                    <Checkbox sx={{ml: '5rem', flexShrink: 1, opacity: showEquipmentCheckbox}} edge={'start'}
                                               size={'medium'}
                                               onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setShowEquipmentCheckbox)}
                                               indeterminate={checkedEquipment.length > 0}
@@ -192,18 +217,18 @@ export default function FilterAccordion(props) {
                 {/***************************************/}
 
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel3bh-content"
-                        id="panel3bh-header"
+                    <AccordionSummary style={stylingObject.accordionSummary}
+                                      expandIcon={<ExpandMoreIcon/>}
+                                      aria-controls="panel3bh-content"
+                                      id="panel3bh-header"
                     >
-                        <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
+                        <Typography style={stylingObject.accordionButtonText}
+                                    variant={'h6'}>
                             Amenities
                         </Typography>
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
-                                !showAmenitiesCheckbox ? null :
-                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                    <Checkbox sx={{ml: '5rem', flexShrink: 1, opacity: showAmenitiesCheckbox}} edge={'start'}
                                               size={'medium'}
                                               onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setShowAmenitiesCheckbox)}
                                               indeterminate={checkedAmenities.length > 0}
@@ -225,18 +250,19 @@ export default function FilterAccordion(props) {
                 {/***********************************************/}
 
                 <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                    <AccordionSummary
+                    <AccordionSummary style={stylingObject.accordionSummary}
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel4bh-content"
                         id="panel4bh-header"
                     >
-                        <Typography sx={{width: '33%', flexShrink: 1}} variant={'h6'}>
+                        <Typography style={stylingObject.accordionButtonText}
+                                    variant={'h6'}>
                             Sports
                         </Typography>
                         <>
                             {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
                                 !showSportsCheckbox ? null :
-                                    <Checkbox sx={{ml: '5rem'}} edge={'start'}
+                                    <Checkbox sx={{ml: '5rem', opacity: showSportsCheckbox, flexShrink: 1}} edge={'start'}
                                               size={'medium'}
                                               onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setShowSportsCheckbox)}
                                               indeterminate={checkedSports.length > 0}
@@ -254,14 +280,14 @@ export default function FilterAccordion(props) {
             </Box>
 
             <Box sx={{textAlign: 'center'}}>
-                <ButtonGroup>
+                <ButtonGroup sx={{width: '17em'}}>
                     <Button sx={{mt: 5, color: 'white'}}
                             key={'apply'}
                             variant={'contained'}
                             size={'large'}
                             onClick={e => filtersOnClick(e)}
                     >
-                        <Typography sx={{fontWeight: 400}}
+                        <Typography sx={{fontWeight: 500}}
                                     align={'center'}
                                     variant={'subtitle1'}
                         >
