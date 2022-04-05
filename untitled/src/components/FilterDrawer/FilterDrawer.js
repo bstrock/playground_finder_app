@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
-import SearchButton from "./FloatingFilterButton";
+import FloatingButton from "./FloatingButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
 
@@ -18,7 +18,12 @@ export default function FilterDrawer(props) {
 
         return (
             <>
-                <SearchButton clickFunc={toggleDrawer(true)}/>
+                <FloatingButton clickFunc={toggleDrawer(true)}
+                                      which={'filter'}
+                />
+                <FloatingButton clickFunc={() => null}
+                                which={'location'}
+                />
                 <Drawer anchor={'left'}
                         open={drawerOpen}
                         onClose={toggleDrawer(false)}

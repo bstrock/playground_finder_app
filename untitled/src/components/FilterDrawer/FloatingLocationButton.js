@@ -4,17 +4,15 @@ import {Fab, Tooltip} from "@mui/material";
 
 export default function FloatingLocationButton(props) {
 
-    const searchButton = useMemo(
-        () => (
+    const searchButton = (
             <Fab sx={{bgcolor: 'green'}}
-                 size={'medium'}
+                 size={'large'}
                  onClick={props.clickFunc}
             >
                 <Tooltip title={'Filter Playgrounds'}>
                     <MyLocationIcon sx={{color: 'white'}}/>
                 </Tooltip>
             </Fab>
-        )
     )
 
     return (
