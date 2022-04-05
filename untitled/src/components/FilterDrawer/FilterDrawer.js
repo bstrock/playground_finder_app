@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import FloatingButton from "./FloatingButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
+import {useMap} from "react-leaflet";
 
 export default function FilterDrawer(props) {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -16,12 +17,14 @@ export default function FilterDrawer(props) {
         setDrawerOpen(open);
     };
 
+    const map = useMap()
+
         return (
             <>
                 <FloatingButton clickFunc={toggleDrawer(true)}
                                       which={'filter'}
                 />
-                <FloatingButton clickFunc={() => null}
+                <FloatingButton clickFunc={() => props.userClickedLocate ? map.locate() : props.setUserClickedLocate(true)}
                                 which={'location'}
                 />
                 <Drawer anchor={'left'}
@@ -33,7 +36,6 @@ export default function FilterDrawer(props) {
                         width: '80%',
                         justifyContent: 'center',
                         alignContent: 'center',
-                        overflowY: 'hidden'
                     }}
                          role="presentation"
                          onKeyDown={toggleDrawer(false)}

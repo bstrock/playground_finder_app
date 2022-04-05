@@ -10,6 +10,8 @@ import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
 import apiQuery from "./apiQuery";
+import L from "leaflet";
+import {setPosition} from "leaflet/src/dom/DomUtil";
 
 function App() {
     // here's the entrypoint for our app
@@ -40,6 +42,7 @@ function App() {
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
     const [showSearchRadius, setShowSearchRadius] = useState(false)
+    const [userClickedLocate, setUserClickedLocate] = useState(false)
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
@@ -47,6 +50,8 @@ function App() {
         apiQuery(queryLocation, queryParams)
             .then((data) => setData(data))
     }, [queryLocation, queryParams])
+
+    // load data at app startup and when queryParams changed via filter button
 
     return (
         <ThemeProvider theme={theme}>
@@ -57,7 +62,9 @@ function App() {
                               zoom={11.5}
                               zoomControl={true}
                 >
-                    <LocationMarker />
+                <LocationMarker setQueryLocation={setQueryLocation}
+                                userClickedLocate={userClickedLocate}
+                />
                     <LayerControl data={data}
                                   showSearhRadius={showSearchRadius}
                                   queryLocation={queryLocation}
@@ -67,6 +74,8 @@ function App() {
                                   initQueryParams={initQueryParams}
                                   setQueryParams={setQueryParams}
                                   setShowSearchRadius={setShowSearchRadius}
+                                  userClickedLocate={userClickedLocate}
+                                  setUserClickedLocate={setUserClickedLocate}
                     />
                 </MapContainer>
             </>

@@ -18,7 +18,6 @@ export default function FilterAccordion(props) {
     const equipList = [
         'Bouncers',
         'Bridges',
-        'Cooperative',
         'Climbers',
         'Diggers',
         'Ladders',
@@ -125,14 +124,14 @@ export default function FilterAccordion(props) {
         }, [checkedSports]
     )
 
-var styles = {
-        accordionSummary: {
-            height: '1em',
-            justifyContent: 'center',
-            alignContent: 'center',
-            width: 'fixed'
+    const styles = {
+            accordionSummary: {
+                height: '1em',
+                justifyContent: 'center',
+                alignContent: 'center',
+                width: 'fixed'
+            }
         }
-    }
 
     return (
         <>
@@ -245,7 +244,6 @@ var styles = {
                             Clear Filters
                         </Typography>
                     </Button>
-
                 </ButtonGroup>
             </Box>
         </>

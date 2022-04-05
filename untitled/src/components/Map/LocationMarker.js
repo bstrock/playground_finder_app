@@ -4,9 +4,9 @@ import L from 'leaflet'
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-function isMarkerInsidePolygon(marker, poly) {
+function isMarkerInsidePolygon(latlng, poly) {
     const polyPoints = poly.getLatLngs()
-    const x = marker.getLatLng().lat, y = marker.getLatLng().lng
+    const x = latlng.lat, y = latlng.lng
 
     let inside = false
     for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
@@ -17,13 +17,11 @@ function isMarkerInsidePolygon(marker, poly) {
             && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)
         if (intersect) inside = !inside
     }
-
     return inside
 }
 
-export default function LocationMarker() {
+export default function LocationMarker(props) {
     const [position, setPosition] = useState(null);
-    const [bbox, setBbox] = useState([]);
 
     const map = useMap();
 
@@ -36,29 +34,31 @@ export default function LocationMarker() {
         popupAnchor: [0, 0]
     })
 
+    const {setQueryLocation, userClickedLocate} = props
 
     useEffect(() => {
-        const mapStartPosition = map.getCenter()
-        const mapStartBBox = map.getBounds()
-        const bbPoly = L.polygon(mapStartBBox)
+        if (userClickedLocate) {
+            const mapStartPosition = map.getCenter()
+            const mapStartBBox = map.getBounds()
+            const bbPoly = L.polygon(mapStartBBox)
 
-        map.locate().on("locationfound", function (e) {
-            let marker = L.marker(e.latlng)
-            let latlng = e.latlng
-            let box = e.bounds.toBBoxString().split(",")
-            if (!isMarkerInsidePolygon(marker, bbPoly)) {
-                marker = L.marker(mapStartPosition)
-                latlng = mapStartPosition
-                box = mapStartBBox
-            }
-            setPosition(latlng);
-            map.flyTo(latlng, 13);
-            marker.addTo(map);
-            setBbox(box);
-        });
-    }, [map]);
+            map.locate().on("locationfound", function (e) {
+                let latlng = e.latlng
+                // FIX THIS!  1- doesn't work, 2- replace icon for generic marker
+                // if (!isMarkerInsidePolygon(latlng, bbPoly)) {
+                //     let marker = L.marker(mapStartPosition)
+                //     latlng = mapStartPosition
+                //     marker.addTo(map);
+                // }
+                setQueryLocation({latitude: latlng.lat, longitude: latlng.lng})
+                setPosition(latlng);
+                map.flyTo(latlng, 13);
+            })
+        }
+    }, [userClickedLocate, setQueryLocation, map])
 
-    return position === null ? null : (
+    return position === null ? null :
+        (
         <Marker position={position} icon={userIcon}>
             <Popup>
                 <Box>

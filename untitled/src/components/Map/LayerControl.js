@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import {LinearProgress} from "@mui/material";
 import Box from "@mui/material/Box";
 import LocationMarker from "./LocationMarker";
+import {setPosition} from "leaflet/src/dom/DomUtil";
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -52,6 +53,7 @@ export default function LayerControl(props) {
     const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .3}
 
     const miles_to_meters = (radius) => radius * 1609.34
+
 
     if (props.data === null) {
         /* here we display a loading bar while the API data is being fetched */
@@ -147,7 +149,6 @@ export default function LayerControl(props) {
                     }
                 </LayersControl.Overlay>
             </>
-            <LocationMarker/>
         </LayersControl>
     )
     // that was fun!
