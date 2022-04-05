@@ -10,6 +10,7 @@ import {ButtonGroup, Checkbox, Divider} from "@mui/material";
 import Box from "@mui/material/Box";
 import EquipmentCheckboxList from "./EquipmentCheckboxList";
 import Button from "@mui/material/Button";
+import AccordionTemplate from "./AccordionTemplate";
 
 export default function FilterAccordion(props) {
 
@@ -81,14 +82,6 @@ export default function FilterAccordion(props) {
     const updateCheckedAmenities = (val) => setCheckedAmenities(val)
     const updateCheckedSports = (val) => setCheckedSports(val)
 
-    const checkboxOnClick = (e, setChecked, fullList, setShowCheckbox) => {
-        // this function toggles check state for the top-level accordion check boxes, which propagates to children in the same container
-        setChecked([])
-        // in either case, switch the state of allChecked
-        setShowCheckbox(false)
-        e.stopPropagation()  // and stop the event from closing the sidebar drawer
-    }
-
     const getQueryParams = () => {
         // this function captures the current filter value state when Apply Filters is clicked
         return {
@@ -138,22 +131,13 @@ var styles = {
             justifyContent: 'center',
             alignContent: 'center',
             width: 'fixed'
-        },
-        accordionButtonText: {
-            paddingTop: 1,
-            paddingBottom: 1,
-            width: '33%',
-            flexGrow: 1
-        },
-        checkbox: {
-                paddingLeft: '5rem'
-            }
+        }
     }
 
     return (
         <>
             {/* This box contains the Accordion */}
-            <Box sx={{width: '17em', margin: 'auto'}}>
+            <Box sx={{width: '20em', margin: 'auto'}}>
                 <Divider sx={{mb: 3}} variant={'middle'}/>
 
                 {/***********************************/}
@@ -170,7 +154,7 @@ var styles = {
                         <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
                             Distance (miles):
                         </Typography>
-                        <Typography sx={{ml: 3, width: '15%', flexGrow: 1, alignItems: 'right'}} variant={'h6'}>
+                        <Typography sx={{ml: 8, flexShrink: 1, alignContent: 'right'}} variant={'h6'}>
                             {` ${distValue} `}
                         </Typography>
 
@@ -186,100 +170,49 @@ var styles = {
                 {/* EQUIPMENT SELECTION ACCORDION PANEL */}
                 {/***************************************/}
 
-                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-                    <AccordionSummary
-                        style={styles.accordionSummary}
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel2bh-content"
-                        id="panel2bh-header"
-                    >
-                        <Typography style={styles.accordionButtonText}
-                                    variant={'h6'}>
-                            Equipment
-                        </Typography>
-                        <>
-                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
-                                    <Checkbox sx={{ml: '5rem', flexShrink: 1, opacity: showEquipmentCheckbox}} edge={'start'}
-                                              size={'medium'}
-                                              onClick={e => checkboxOnClick(e, setCheckedEquipment, equipList, setShowEquipmentCheckbox)}
-                                              indeterminate={checkedEquipment.length > 0}
-                                    />
-                            }
-                        </>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <EquipmentCheckboxList data={checkedEquipment}
-                                               updateFunc={updateCheckedEquipment}
-                                               fullList={equipList}
-                        />
-                    </AccordionDetails>
-                </Accordion>
+                <AccordionTemplate expanded={expanded}
+                                   panel={'panel2'}
+                                   title={'Equipment'}
+                                   showCheckbox={showEquipmentCheckbox}
+                                   setChecked={setCheckedEquipment}
+                                   fullList={equipList}
+                                   setShowCheckbox={setShowEquipmentCheckbox}
+                                   updateChecked={updateCheckedEquipment}
+                                   checked={checkedEquipment}
+                                   handleChange={handleChange}
+                />
 
                 {/***************************************/}
                 {/* AMENITIES SELECTION ACCORDION PANEL */}
                 {/***************************************/}
 
-                <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                    <AccordionSummary style={styles.accordionSummary}
-                                      expandIcon={<ExpandMoreIcon/>}
-                                      aria-controls="panel3bh-content"
-                                      id="panel3bh-header"
-                    >
-                        <Typography style={styles.accordionButtonText}
-                                    variant={'h6'}>
-                            Amenities
-                        </Typography>
-                        <>
-                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
-                                    <Checkbox sx={{ml: '5rem', flexShrink: 1, opacity: showAmenitiesCheckbox}} edge={'start'}
-                                              size={'medium'}
-                                              onClick={e => checkboxOnClick(e, setCheckedAmenities, amenitiesList, setShowAmenitiesCheckbox)}
-                                              indeterminate={checkedAmenities.length > 0}
-                                    />
-                            }
-                        </>
-                    </AccordionSummary>
-
-                    <AccordionDetails>
-                        <EquipmentCheckboxList data={checkedAmenities}
-                                               updateFunc={updateCheckedAmenities}
-                                               fullList={amenitiesList}
-                        />
-                    </AccordionDetails>
-                </Accordion>
+                <AccordionTemplate expanded={expanded}
+                                   panel={'panel3'}
+                                   title={'Amenities'}
+                                   showCheckbox={showAmenitiesCheckbox}
+                                   setChecked={setCheckedAmenities}
+                                   fullList={amenitiesList}
+                                   setShowCheckbox={setShowAmenitiesCheckbox}
+                                   updateChecked={updateCheckedAmenities}
+                                   checked={checkedAmenities}
+                                   handleChange={handleChange}
+                />
 
                 {/***********************************************/}
                 {/* SPORTS FACILITIES SELECTION ACCORDION PANEL */}
                 {/***********************************************/}
 
-                <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                    <AccordionSummary style={styles.accordionSummary}
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel4bh-content"
-                        id="panel4bh-header"
-                    >
-                        <Typography style={styles.accordionButtonText}
-                                    variant={'h6'}>
-                            Sports
-                        </Typography>
-                        <>
-                            {// render checkbox if values are checked in the accordion panel, allow click checkbox to clear state
-                                !showSportsCheckbox ? null :
-                                    <Checkbox sx={{ml: '5rem', opacity: showSportsCheckbox, flexShrink: 1}} edge={'start'}
-                                              size={'medium'}
-                                              onClick={e => checkboxOnClick(e, setCheckedSports, sportsList, setShowSportsCheckbox)}
-                                              indeterminate={checkedSports.length > 0}
-                                    />
-                            }
-                        </>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <EquipmentCheckboxList data={checkedSports}
-                                               updateFunc={updateCheckedSports}
-                                               fullList={sportsList}
-                        />
-                    </AccordionDetails>
-                </Accordion>
+                <AccordionTemplate expanded={expanded}
+                                   panel={'panel4'}
+                                   title={'Sports Facilities'}
+                                   showCheckbox={showSportsCheckbox}
+                                   setChecked={setCheckedSports}
+                                   fullList={sportsList}
+                                   setShowCheckbox={setShowSportsCheckbox}
+                                   updateChecked={updateCheckedSports}
+                                   checked={checkedSports}
+                                   handleChange={handleChange}
+                />
             </Box>
 
             {/* APPLY/CLEAR FILTERS BUTTONS */}

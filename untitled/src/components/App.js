@@ -43,6 +43,7 @@ function App() {
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
+        setData(null)
         apiQuery(queryLocation, queryParams)
             .then((data) => setData(data))
     }, [queryLocation, queryParams])
@@ -56,7 +57,7 @@ function App() {
                               zoom={11.5}
                               zoomControl={true}
                 >
-                    <LocationMarker/>
+                    <LocationMarker />
                     <LayerControl data={data}
                                   showSearhRadius={showSearchRadius}
                                   queryLocation={queryLocation}
