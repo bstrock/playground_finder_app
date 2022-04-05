@@ -13,7 +13,6 @@ import Button from "@mui/material/Button";
 
 export default function FilterAccordion(props) {
 
-
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
@@ -91,6 +90,7 @@ export default function FilterAccordion(props) {
     }
 
     const getQueryParams = () => {
+        // this function captures the current filter value state when Apply Filters is clicked
         return {
             radius: distValue,
             equipment: (checkedEquipment.length > 0) ? checkedEquipment.toString() : [],
@@ -100,13 +100,20 @@ export default function FilterAccordion(props) {
     }
 
     const filtersOnClick = (e) => {
+        // filter apply/clear actions...
+        // 1. which button is it?  apply is a boolean where 'apply filters' is true
         const apply = e.target.outerText.toLowerCase() === 'apply filters'
+
+        // 2. if we're applying, we poll the current checkbox state, otherwise for clear we use the initial state
         const params = apply ? getQueryParams() : props.initQueryParams
+
+        // 3. we use the setter hooks as appropriate, and close the drawer either way
         props.setQueryParams(params)
         props.setShowSearchRadius(apply)
         props.setDrawerOpen(false)
     }
 
+    // these effects hid or show the checkbox in the accordion summary based on whether or not checkboxes in that accordion are checked
     useEffect(() => {
         const toggle = checkedEquipment.length > 0 ? 1 : 0
         setShowEquipmentCheckbox(toggle)
@@ -125,7 +132,7 @@ export default function FilterAccordion(props) {
         }, [checkedSports]
     )
 
-var stylingObject = {
+var styles = {
         accordionSummary: {
             height: '1em',
             justifyContent: 'center',
@@ -143,7 +150,6 @@ var stylingObject = {
             }
     }
 
-
     return (
         <>
             {/* This box contains the Accordion */}
@@ -155,15 +161,12 @@ var stylingObject = {
                 {/***********************************/}
 
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                    <AccordionSummary style={stylingObject.accordionSummary}
+                    <AccordionSummary style={styles.accordionSummary}
                                       expandIcon={<ExpandMoreIcon/>}
                                       aria-controls="panel1bh-content"
                                       id="panel1bh-header"
                     >
-                        {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE
-                            3 components are used to ensure decimal change doesn't move miles label and cause flicker
-                            ie:     2 miles -> 2.5 miles
-                            thus:   2   miles -> 2.5 miles */}
+                        {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE */}
                         <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
                             Distance (miles):
                         </Typography>
@@ -185,12 +188,12 @@ var stylingObject = {
 
                 <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                     <AccordionSummary
-                        style={stylingObject.accordionSummary}
+                        style={styles.accordionSummary}
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2bh-content"
                         id="panel2bh-header"
                     >
-                        <Typography style={stylingObject.accordionButtonText}
+                        <Typography style={styles.accordionButtonText}
                                     variant={'h6'}>
                             Equipment
                         </Typography>
@@ -217,12 +220,12 @@ var stylingObject = {
                 {/***************************************/}
 
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                    <AccordionSummary style={stylingObject.accordionSummary}
+                    <AccordionSummary style={styles.accordionSummary}
                                       expandIcon={<ExpandMoreIcon/>}
                                       aria-controls="panel3bh-content"
                                       id="panel3bh-header"
                     >
-                        <Typography style={stylingObject.accordionButtonText}
+                        <Typography style={styles.accordionButtonText}
                                     variant={'h6'}>
                             Amenities
                         </Typography>
@@ -250,12 +253,12 @@ var stylingObject = {
                 {/***********************************************/}
 
                 <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                    <AccordionSummary style={stylingObject.accordionSummary}
+                    <AccordionSummary style={styles.accordionSummary}
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel4bh-content"
                         id="panel4bh-header"
                     >
-                        <Typography style={stylingObject.accordionButtonText}
+                        <Typography style={styles.accordionButtonText}
                                     variant={'h6'}>
                             Sports
                         </Typography>
@@ -279,12 +282,13 @@ var stylingObject = {
                 </Accordion>
             </Box>
 
+            {/* APPLY/CLEAR FILTERS BUTTONS */}
             <Box sx={{textAlign: 'center'}}>
                 <ButtonGroup sx={{width: '17em'}}>
                     <Button sx={{mt: 5, color: 'white'}}
                             key={'apply'}
                             variant={'contained'}
-                            size={'large'}
+                            size={'medium'}
                             onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 500}}
@@ -298,7 +302,7 @@ var stylingObject = {
                     <Button sx={{mt: 5, color: 'green', backgroundColor: 'white'}}
                             key={'clear'}
                             variant={'contained'}
-                            size={'large'}
+                            size={'medium'}
                             onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 400}}
