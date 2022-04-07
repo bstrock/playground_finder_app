@@ -1,14 +1,14 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-import Typography from "@mui/material/Typography";
-import {Divider} from "@mui/material";
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
 
 function valuetext(value) {
-    return `${value} mi.`;
+    return `${value} mi.`
 }
 
 export default function DistanceSlider(props) {
+
+    const {handleValueUpdate} = props
 
     return (
         <Box sx={{width: 'auto', mt: 2}}>
@@ -22,7 +22,7 @@ export default function DistanceSlider(props) {
                     marks
                     min={.5}
                     max={4}
-                    onChange={(event) => props.handleValueUpdate(event.target.value)}
+                    onChange={(event) => handleValueUpdate(event.target.value)}
             />
 
         </Box>

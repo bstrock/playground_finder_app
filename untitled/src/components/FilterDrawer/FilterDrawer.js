@@ -8,14 +8,24 @@ import Typography from "@mui/material/Typography";
 import {useMap} from "react-leaflet";
 
 export default function FilterDrawer(props) {
-    const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [drawerOpen, setDrawerOpen] = React.useState(false)
 
     const toggleDrawer = (open) => (e) => {
         if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
             return;
         }
         setDrawerOpen(open);
-    };
+    }
+
+    // destructure props
+    const {
+        queryParams,
+        initQueryParams,
+        setQueryParams,
+        setShowSearchRadius,
+        userClickedLocate,
+        setUserClickedLocate
+    } = props
 
     const map = useMap()
 
@@ -24,7 +34,7 @@ export default function FilterDrawer(props) {
                 <FloatingButton clickFunc={toggleDrawer(true)}
                                       which={'filter'}
                 />
-                <FloatingButton clickFunc={() => props.userClickedLocate ? map.locate() : props.setUserClickedLocate(true)}
+                <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
                                 which={'location'}
                 />
                 <Drawer anchor={'left'}
@@ -47,10 +57,10 @@ export default function FilterDrawer(props) {
                             Filter Playgrounds
                         </Typography>
 
-                        <FilterAccordion queryParams={props.queryParams}
-                                         initQueryParams={props.initQueryParams}
-                                         setQueryParams={props.setQueryParams}
-                                         setShowSearchRadius={props.setShowSearchRadius}
+                        <FilterAccordion queryParams={queryParams}
+                                         initQueryParams={initQueryParams}
+                                         setQueryParams={setQueryParams}
+                                         setShowSearchRadius={setShowSearchRadius}
                                          setDrawerOpen={setDrawerOpen}
                         />
                         <Divider/>

@@ -10,8 +10,6 @@ import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
 import apiQuery from "./apiQuery";
-import L from "leaflet";
-import {setPosition} from "leaflet/src/dom/DomUtil";
 
 function App() {
     // here's the entrypoint for our app
@@ -66,7 +64,7 @@ function App() {
                                 userClickedLocate={userClickedLocate}
                 />
                     <LayerControl data={data}
-                                  showSearhRadius={showSearchRadius}
+                                  showSearchRadius={showSearchRadius}
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
                     />

@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 function createData(label, value) {
-
     const words = label.split("_")
     for (let i = 0; i < words.length; i++) {
         words[i] = words[i][0].toUpperCase() + words[i].substring(1)
@@ -18,7 +17,7 @@ function createData(label, value) {
 }
 
 export default function AssetTable(props) {
-    console.log(props)
+    const {data, whichOne} = props
 
     const headers = {
         equipment: ['Equipment', 'Quantity'],
@@ -28,9 +27,9 @@ export default function AssetTable(props) {
 
     const rows = []
 
-    for (let key in props.data) {
-        if (props.data[key] > 0) {
-            let row = createData(key, props.data[key])
+    for (let key in data) {
+        if (data[key] > 0) {
+            let row = createData(key, data[key])
             rows.push(row)
         }
     }
@@ -41,13 +40,14 @@ export default function AssetTable(props) {
     for (let i = 0; i < rows.length; i++) {
         let value = String(rows[i].value)
         let keys = Object.keys(alpha_sort)
-        console.log(keys)
+
         if (!keys.includes(value)) {
             alpha_sort[value] = [rows[i]]
         } else if (keys.includes(value)) {
             alpha_sort[value].push(rows[i])
         }
     }
+
     let alpha_keys = Object.keys(alpha_sort)
 
     for (let i = 0; i < alpha_keys.length; i++) {
@@ -66,38 +66,40 @@ export default function AssetTable(props) {
         }
     }
 
-    return (<>
-            <TableContainer style={{maxHeight: 300}} component={Paper}>
+    return (
+        <>
+        <TableContainer style={{maxHeight: 300}} component={Paper}>
 
-                <Table sx={{minWidth: 50}} stickyHeader aria-label="simple table">
+            <Table sx={{minWidth: 50}} stickyHeader aria-label="simple table">
 
-                    <TableHead>
-                        <TableRow>
-                            <TableCell sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
-                                {headers[props.whichOne][0]}
-                            </TableCell>
-                            <TableCell align="center"
-                                       sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
-                                {headers[props.whichOne][1]}
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
+                <TableHead>
+                    <TableRow>
+                        <TableCell sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                            {headers[whichOne][0]}
+                        </TableCell>
+                        <TableCell align="center"
+                                   sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                            {headers[whichOne][1]}
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
 
-                    <TableBody>
-                        {alpha_sorted_rows.map((row) => (<TableRow
-                                key={row.label}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                <TableCell sx={{p: 2, width: '4%'}}>
-                                    {row.label}
-                                </TableCell>
-                                <TableCell sx={{p: 2, width: '1%'}} align="center">
-                                    {row.value}
-                                </TableCell>
-                            </TableRow>))}
-                    </TableBody>
+                <TableBody>
+                    {alpha_sorted_rows.map((row) => (<TableRow
+                        key={row.label}
+                        sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                        <TableCell sx={{p: 2, width: '4%'}}>
+                            {row.label}
+                        </TableCell>
+                        <TableCell sx={{p: 2, width: '1%'}} align="center">
+                            {row.value}
+                        </TableCell>
+                    </TableRow>))}
+                </TableBody>
 
-                </Table>
+            </Table>
 
-            </TableContainer>
-        </>);
+        </TableContainer>
+    </>
+    )
 }

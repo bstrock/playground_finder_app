@@ -1,18 +1,20 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DistanceSlider from "./DistanceSlider";
-import {ButtonGroup, Checkbox, Divider} from "@mui/material";
-import Box from "@mui/material/Box";
-import EquipmentCheckboxList from "./EquipmentCheckboxList";
-import Button from "@mui/material/Button";
-import AccordionTemplate from "./AccordionTemplate";
+import * as React from 'react'
+import {useEffect, useState} from 'react'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import DistanceSlider from "./DistanceSlider"
+import {ButtonGroup, Divider} from "@mui/material"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import AccordionTemplate from "./AccordionTemplate"
 
 export default function FilterAccordion(props) {
+
+    // props destructuring
+    const {queryParams, initQueryParams, setQueryParams, setShowSearchRadius, setDrawerOpen} = props
 
     // top-level lists of all filter assets
     const equipList = [
@@ -59,9 +61,9 @@ export default function FilterAccordion(props) {
     const [distValue, setDistValue] = useState(4)
 
     // tracks individual check boxes for filter criteria by category
-    const [checkedEquipment, setCheckedEquipment] = useState(props.queryParams.equipment)
-    const [checkedAmenities, setCheckedAmenities] = useState(props.queryParams.amenities)
-    const [checkedSports, setCheckedSports] = useState(props.queryParams.sports_facilities)
+    const [checkedEquipment, setCheckedEquipment] = useState(queryParams.equipment)
+    const [checkedAmenities, setCheckedAmenities] = useState(queryParams.amenities)
+    const [checkedSports, setCheckedSports] = useState(queryParams.sports_facilities)
 
     // tracks whether all boxes in a category are checked (also if no boxes are checked)
     const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(0)
@@ -97,12 +99,12 @@ export default function FilterAccordion(props) {
         const apply = e.target.outerText.toLowerCase() === 'apply filters'
 
         // 2. if we're applying, we poll the current checkbox state, otherwise for clear we use the initial state
-        const params = apply ? getQueryParams() : props.initQueryParams
+        const params = apply ? getQueryParams() : initQueryParams
 
         // 3. we use the setter hooks as appropriate, and close the drawer either way
-        props.setQueryParams(params)
-        props.setShowSearchRadius(apply)
-        props.setDrawerOpen(false)
+        setQueryParams(params)
+        setShowSearchRadius(apply)
+        setDrawerOpen(false)
     }
 
     // these effects hid or show the checkbox in the accordion summary based on whether or not checkboxes in that accordion are checked

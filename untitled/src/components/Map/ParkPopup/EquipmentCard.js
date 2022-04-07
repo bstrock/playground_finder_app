@@ -1,12 +1,14 @@
 import * as React from 'react';
-import {Avatar, Card, CardContent, CardHeader, Divider, Fade, Zoom} from "@mui/material";
+import {Avatar, Card, CardContent, CardHeader, Divider, Fade} from "@mui/material";
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import AssetTable from "./AssetTable";
 import Box from "@mui/material/Box";
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 
-export default function TableCard(props) {
+export default function EquipmentCard(props) {
+
+    const {data, whichOne} = props
 
     const avatar = (whichOne) => {
 
@@ -24,14 +26,14 @@ export default function TableCard(props) {
     }
 
     console.log('equipment card')
-    console.log(props.data)
+    console.log(data)
 
     return (
         <Card sx={{display: 'block', minHeight: 350, maxHeight: 400}} variant={'outlined'}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
-                        title={props.data.site_name}
+                        title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem'}}
-                        avatar={avatar(props.whichOne)}/>
+                        avatar={avatar(whichOne)}/>
             <Fade in={true} timeout={700}>
 
                 <CardContent sx={{
@@ -43,7 +45,7 @@ export default function TableCard(props) {
                     <Box>
                         <>
                             <Divider/>
-                            <AssetTable data={props.data[props.whichOne]} whichOne={props.whichOne}/>
+                            <AssetTable data={data[whichOne]} whichOne={whichOne}/>
                             <Divider/>
                         </>
                     </Box>

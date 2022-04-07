@@ -3,22 +3,28 @@ import {Fab, Tooltip} from "@mui/material";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 export default function FloatingButton(props) {
+
+    // destructure props
+    const {which, clickFunc} = props
+
+    // styles object
     const styles = {
         button: {
             color: 'white'
         }
     }
 
+    // defines which button properties to use
     const buttonGuide = {
-        icon: props.which === 'filter' ? (<FilterAltIcon style={styles.button}/>) : (<MyLocationIcon style={styles.button}/>),
-        tooltip: props.which === 'filter' ? 'Filter Playgrounds' : 'Find My Location',
-        anchor: props.which === 'filter' ?  'left' : 'right'
+        icon: which === 'filter' ? (<FilterAltIcon style={styles.button}/>) : (<MyLocationIcon style={styles.button}/>),
+        tooltip: which === 'filter' ? 'Filter Playgrounds' : 'Find My Location',
+        anchor: which === 'filter' ?  'left' : 'right'
     }
 
     const floatingButton = (
-            <Fab sx={{bgcolor: 'green'}}
+            <Fab sx={{bgcolor: 'orange'}}
                  size={'large'}
-                 onClick={props.clickFunc}
+                 onClick={clickFunc}
             >
                 <Tooltip title={buttonGuide.tooltip}>
                     {buttonGuide.icon}

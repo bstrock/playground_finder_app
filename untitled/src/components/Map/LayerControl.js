@@ -1,14 +1,11 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, Tooltip, GeoJSON, Circle} from 'react-leaflet'
-import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers";
-import React, {useEffect, useState} from "react";
-import apiQuery from "../apiQuery";
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle} from 'react-leaflet'
+import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers"
+import React from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
-import 'leaflet/dist/leaflet.css';
-import {LinearProgress} from "@mui/material";
-import Box from "@mui/material/Box";
-import LocationMarker from "./LocationMarker";
-import {setPosition} from "leaflet/src/dom/DomUtil";
+import 'leaflet/dist/leaflet.css'
+import {LinearProgress} from "@mui/material"
+import Box from "@mui/material/Box"
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -37,6 +34,9 @@ function findMeanCenter(coords) {
 
 export default function LayerControl(props) {
 
+    // props destructuring
+    const {data, showSearchRadius, queryLocation, radius} = props
+
     const centroids = []
 
     const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
@@ -55,7 +55,7 @@ export default function LayerControl(props) {
     const miles_to_meters = (radius) => radius * 1609.34
 
 
-    if (props.data === null) {
+    if (data === null) {
         /* here we display a loading bar while the API data is being fetched */
         return (
             <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
@@ -88,7 +88,7 @@ export default function LayerControl(props) {
                     {
                         // map the data from the API to Polygons and Markers
                         // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
-                        props.data.features.map((d) => {
+                        data.features.map((d) => {
                             // these components will need keys...
                             const polygonKey = d.properties.site_id + '-polygon'
                             const pointKey = d.properties.site_id + '-point'
@@ -141,9 +141,9 @@ export default function LayerControl(props) {
             <>
                 <LayersControl.Overlay checked name={'Filter Radius'}>
                     {// show search radius if not using default search parameter values (ie init state)
-                        !props.showSearhRadius ? null :
-                            <Circle center={[props.queryLocation.latitude, props.queryLocation.longitude]}
-                                    radius={miles_to_meters(props.radius)}
+                        !showSearchRadius ? null :
+                            <Circle center={[queryLocation.latitude, queryLocation.longitude]}
+                                    radius={miles_to_meters(radius)}
                                     pathOptions={searchRadiusPathOptions}
                             />
                     }

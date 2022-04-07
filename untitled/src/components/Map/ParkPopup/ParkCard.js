@@ -1,15 +1,17 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import CardMedia from '@mui/material/CardMedia';
-import {Avatar, ButtonGroup, Card, CardActions, CardContent, CardHeader, Divider, Fade, Tooltip} from "@mui/material";
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import * as React from 'react'
+import Typography from '@mui/material/Typography'
+import CardMedia from '@mui/material/CardMedia'
+import {Avatar, ButtonGroup, Card, CardActions, CardContent, CardHeader, Divider, Fade, Tooltip} from "@mui/material"
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import IconButton from '@mui/material/IconButton'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import NaturePeopleIcon from "@mui/icons-material/NaturePeople";
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk'
+import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
 
 export default function ParkCard(props) {
+
+    const {data} = props
 
     const avatar = () => {
         return (
@@ -27,16 +29,16 @@ export default function ParkCard(props) {
         return () => openInNewTab(url)
     }
 
-    const [lat, lon] = props.data.centroid
+    const [lat, lon] = data.centroid
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
 
     console.log('info box')
-    console.log(props.data)
+    console.log(data)
 
     return (
         <Card sx={{display: 'block', minHeight: 350, maxHeight: 395}} variant={'outlined'}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
-                        title={props.data.site_name}
+                        title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
                         avatar={avatar()}/>
             <Fade in={true} timeout={700}>
@@ -51,14 +53,14 @@ export default function ParkCard(props) {
                     <CardMedia sx={{display: 'block', mb: 2}}
                                component="img"
                                height="80%"
-                               image={require("../../../images/playgrounds/" + props.data.site_id + ".jpg")}
-                               alt={props.data.site_name + ' photo'}/>
+                               image={require("../../../images/playgrounds/" + data.site_id + ".jpg")}
+                               alt={data.site_name + ' photo'}/>
 
                     <Typography align={'center'} variant={'subtitle1'}>
-                        {props.data.addr_street1}
+                        {data.addr_street1}
                     </Typography>
                     <Typography align={'center'} variant={'subtitle2'}>
-                        {`${props.data.addr_city}, ${props.data.addr_state} ${props.data.addr_zip}`}
+                        {`${data.addr_city}, ${data.addr_state} ${data.addr_zip}`}
                     </Typography>
 
                     <CardActions sx={{align: 'center', justifyContent: 'center'}}>

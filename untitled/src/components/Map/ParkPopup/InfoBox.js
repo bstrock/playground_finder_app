@@ -1,13 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import ParkCard from "./ParkCard";
-import TableCard from "./EquipmentCard";
-import {Component} from "react";
-
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import ParkCard from "./ParkCard"
+import EquipmentCard from "./EquipmentCard"
+import {Component} from "react"
 
 export default class InfoBox extends Component {
     state = {value: 0, data: null}
@@ -81,15 +80,15 @@ export default class InfoBox extends Component {
                 </this.TabPanel>
 
                 <this.TabPanel value={this.state.value} index={1}>
-                    <TableCard data={this.state.data} whichOne={'equipment'}/>
+                    <EquipmentCard data={this.state.data} whichOne={'equipment'}/>
                 </this.TabPanel>
 
                 <this.TabPanel value={this.state.value} index={2}>
-                    <TableCard data={this.state.data} whichOne={'amenities'}/>
+                    <EquipmentCard data={this.state.data} whichOne={'amenities'}/>
                 </this.TabPanel>
 
                 <this.TabPanel value={this.state.value} index={3}>
-                    <TableCard data={this.state.data} whichOne={'sports_facilities'}/>
+                    <EquipmentCard data={this.state.data} whichOne={'sports_facilities'}/>
                 </this.TabPanel>
 
                 <this.TabPanel value={this.state.value} index={4}>
