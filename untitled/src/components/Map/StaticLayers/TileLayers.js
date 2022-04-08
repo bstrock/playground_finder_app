@@ -1,6 +1,19 @@
 import {TileLayer} from "react-leaflet"
 import React from "react"
 
+function OutdoorLayer() {
+    return (
+        <TileLayer
+            attribution={'Map data &copy; <a href="https://www.mapbox.com/">Mapbox</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'}
+            url={'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'}
+            maxZoom={18}
+            id={'mapbox/outdoors-v9'}
+            tileSize={512}
+            zoomOffset={-1}
+            accessToken={'pk.eyJ1IjoiYnN0cm9jayIsImEiOiJja3cxZnN6MTRhMzBlMnVxcGtvZWtja3RhIn0.2Xs4HMBYwnUQh5wurxmeDA'}/>
+    )
+}
+
 function StreetLayer() {
     return (
         <TileLayer
@@ -14,6 +27,7 @@ function StreetLayer() {
     )
 }
 
+
 function SatelliteLayer() {
     return (
         <TileLayer
@@ -23,4 +37,4 @@ function SatelliteLayer() {
     )
 }
 
-export {StreetLayer, SatelliteLayer}
+export {OutdoorLayer, StreetLayer, SatelliteLayer}

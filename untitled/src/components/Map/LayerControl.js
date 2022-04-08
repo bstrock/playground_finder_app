@@ -1,5 +1,5 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle} from 'react-leaflet'
-import {StreetLayer, SatelliteLayer} from "./StaticLayers/TileLayers"
+import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
 import React from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
@@ -68,11 +68,16 @@ export default function LayerControl(props) {
         /* LAYERS CONTROL MAIN STRUCTURE */
         <LayersControl position="topright">
             {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
-            <LayersControl.BaseLayer checked name="Street Map">
+
+            <LayersControl.BaseLayer checked name="Outdoors">
+                <OutdoorLayer/>
+            </LayersControl.BaseLayer>
+
+            <LayersControl.BaseLayer name="Streets">
                 <StreetLayer/>
             </LayersControl.BaseLayer>
 
-            <LayersControl.BaseLayer name="Land Map">
+            <LayersControl.BaseLayer name="Satellite">
                 <SatelliteLayer/>
             </LayersControl.BaseLayer>
 

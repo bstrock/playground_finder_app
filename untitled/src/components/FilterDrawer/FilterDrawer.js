@@ -34,7 +34,6 @@ export default function FilterDrawer(props) {
                 <Drawer anchor={'left'}
                         open={drawerOpen}
                         onClose={toggleDrawer(false)}
-                        PaperProps={{backgroundColor: 'rgba(0, 0, 0, 0'}}
                 >
                     <Box sx={{
                         anchor: 'left',
