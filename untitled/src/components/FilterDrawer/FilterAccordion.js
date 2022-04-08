@@ -138,7 +138,7 @@ export default function FilterAccordion(props) {
     return (
         <>
             {/* This box contains the Accordion */}
-            <Box sx={{width: '20em', margin: 'auto'}}>
+            <Box sx={{width: '19em', ml: 2, mr: 2}}>
                 <Divider sx={{mb: 3}} variant={'middle'}/>
 
                 {/***********************************/}
@@ -218,7 +218,7 @@ export default function FilterAccordion(props) {
 
             {/* APPLY/CLEAR FILTERS BUTTONS */}
             <Box sx={{textAlign: 'center'}}>
-                <ButtonGroup sx={{width: '17em'}}>
+                <ButtonGroup sx={{width: '17em', mb: 4}}>
                     <Button sx={{mt: 5, color: 'white'}}
                             key={'apply'}
                             variant={'contained'}

@@ -31,21 +31,16 @@ export default function FilterDrawer(props) {
 
         return (
             <>
-                <FloatingButton clickFunc={toggleDrawer(true)}
-                                      which={'filter'}
-                />
-                <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
-                                which={'location'}
-                />
                 <Drawer anchor={'left'}
                         open={drawerOpen}
                         onClose={toggleDrawer(false)}
                 >
                     <Box sx={{
                         anchor: 'left',
-                        width: '80%',
+                        mt: 5,
                         justifyContent: 'center',
                         alignContent: 'center',
+                        backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'
                     }}
                          role="presentation"
                          onKeyDown={toggleDrawer(false)}
@@ -66,6 +61,12 @@ export default function FilterDrawer(props) {
                         <Divider/>
                     </Box>
                 </Drawer>
+                <FloatingButton clickFunc={toggleDrawer(true)}
+                                which={'filter'}
+                />
+                <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
+                                which={'location'}
+                />
             </>
         );
     }
