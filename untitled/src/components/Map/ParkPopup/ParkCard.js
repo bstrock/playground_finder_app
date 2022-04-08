@@ -8,6 +8,8 @@ import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk'
 import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
+import Box from "@mui/material/Box";
+import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
 
 export default function ParkCard(props) {
 
@@ -55,14 +57,30 @@ export default function ParkCard(props) {
                                height="135em"
                                image={require("../../../images/playgrounds/" + data.site_id + ".jpg")}
                                alt={data.site_name + ' photo'}/>
+                    <Box>
+                        <Box sx={{display: 'flex', width: '30rem', justifyContent: 'flex-start'}}>
+                            <Typography align={'left'} variant={'subtitle1'}>
 
-                    <Typography align={'center'} variant={'subtitle1'}>
-                        {data.addr_street1}
-                    </Typography>
-                    <Typography align={'center'} variant={'subtitle2'}>
-                        {`${data.addr_city}, ${data.addr_state} ${data.addr_zip}`}
-                    </Typography>
+                            </Typography>
+                        </Box>
+                        <Box sx={{display: 'flex', justifyContent: 'flex-start', ml: 6}}>
+                            <Typography display={'block'} align={'left'} variant={'subtitle2'}>
+                                {`${data.addr_street1}`}
+                                <br/>
+                                {`${data.addr_city}, ${data.addr_state} ${data.addr_zip}`}
+                            </Typography>
+                            <IconButton sx={{ml: 1, display: 'flex', color: 'black', justifySelf: 'flex-end'}}
+                                        size={'small'}
+                                        onClick={onClickUrl(url + 'walking')}
+                            >
+                                <ZoomInMapIcon color={'primary'}/>
+                            </IconButton>
+                        </Box>
+                        </Box>
+                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
 
+
+                    </Box>
                     <CardActions sx={{align: 'center', justifyContent: 'center'}}>
                         <ButtonGroup variant={'contained'} size={'large'}>
                             <Tooltip title="Walk There!">
