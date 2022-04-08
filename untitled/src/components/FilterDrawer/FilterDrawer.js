@@ -66,6 +66,7 @@ export default function FilterDrawer(props) {
                 </Drawer>
                 <FloatingButton clickFunc={toggleDrawer(true)}
                                 which={'filter'}
+
                 />
                 <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
                                 which={'location'}

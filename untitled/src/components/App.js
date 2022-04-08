@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import '../App.css'
+import 'leaflet/dist/leaflet.css'
 import '../index.css'
 import {MapContainer} from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
 import LayerControl from "./Map/LayerControl";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 import green from "@mui/material/colors/green";
