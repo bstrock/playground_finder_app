@@ -36,7 +36,7 @@ export default function ParkCard(props) {
     console.log(data)
 
     return (
-        <Card sx={{display: 'block', minHeight: 350, maxHeight: 395}} variant={'outlined'}>
+        <Card sx={{display: 'block', height: '22em', border: 1, borderRadius: 2}} variant={'outlined'}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
                         title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
@@ -52,7 +52,7 @@ export default function ParkCard(props) {
 
                     <CardMedia sx={{display: 'block', mb: 2}}
                                component="img"
-                               height="80%"
+                               height="135em"
                                image={require("../../../images/playgrounds/" + data.site_id + ".jpg")}
                                alt={data.site_name + ' photo'}/>
 

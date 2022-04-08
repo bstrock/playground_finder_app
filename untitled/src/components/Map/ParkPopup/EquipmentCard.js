@@ -29,7 +29,7 @@ export default function EquipmentCard(props) {
     console.log(data)
 
     return (
-        <Card sx={{display: 'block', minHeight: 350, maxHeight: 400}} variant={'outlined'}>
+        <Card sx={{display: 'block', height: '22em', border: 1, borderRadius: 2}} variant={'outlined'}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
                         title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem'}}
@@ -38,7 +38,9 @@ export default function EquipmentCard(props) {
 
                 <CardContent sx={{
                     minHeight: 350,
+                    maxHeight: 389,
                     p: 1,
+                    pb: 0,
                     backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'
                 }}>
 

@@ -56,7 +56,7 @@ export default class InfoBox extends Component {
 
     render() {
         return (
-            <Box sx={{height: '500px', bgcolor: 'paper.background'}}>
+            <Box sx={{bgcolor: 'paper.background'}}>
 
                 <Box sx={{flexGrow: 1, bgcolor: 'paper.background', display: "block"}}>
                     <Tabs sx={{justifyContent: 'left', borderBottom: 1, borderColor: 'divider'}}
