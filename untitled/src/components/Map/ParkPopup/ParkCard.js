@@ -10,10 +10,13 @@ import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
 import Box from "@mui/material/Box";
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
+import {useMap} from "react-leaflet";
 
 export default function ParkCard(props) {
 
     const {data} = props
+
+    const map = useMap()
 
     const avatar = () => {
         return (
@@ -70,8 +73,11 @@ export default function ParkCard(props) {
                                 {`${data.addr_city}, ${data.addr_state} ${data.addr_zip}`}
                             </Typography>
                             <IconButton sx={{ml: 1, display: 'flex', color: 'black', justifySelf: 'flex-end'}}
-                                        size={'small'}
-                                        onClick={onClickUrl(url + 'walking')}
+                                        size={'medium'}
+                                        onClick={() => {
+                                            map.closePopup()
+                                            map.flyTo([lat, lon], 18)
+                                        }}
                             >
                                 <ZoomInMapIcon color={'primary'}/>
                             </IconButton>
