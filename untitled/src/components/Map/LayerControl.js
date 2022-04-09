@@ -6,6 +6,7 @@ import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
 import {LinearProgress} from "@mui/material"
 import Box from "@mui/material/Box"
+import ResetViewButton from "../FilterDrawer/ResetViewButton";
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -35,7 +36,7 @@ function findMeanCenter(coords) {
 export default function LayerControl(props) {
 
     // props destructuring
-    const {data, showSearchRadius, queryLocation, radius} = props
+    const {data, showSearchRadius, initLocation, queryLocation, radius} = props
 
     const centroids = []
 
@@ -66,8 +67,11 @@ export default function LayerControl(props) {
 
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
+        <>
+            <ResetViewButton initLocation={initLocation}/>
         <LayersControl position="topright">
             {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
+
 
             <LayersControl.BaseLayer checked name="Outdoors">
                 <OutdoorLayer/>
@@ -155,6 +159,7 @@ export default function LayerControl(props) {
                 </LayersControl.Overlay>
             </>
         </LayersControl>
+        </>
     )
     // that was fun!
 }

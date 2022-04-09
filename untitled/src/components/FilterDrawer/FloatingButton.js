@@ -10,7 +10,7 @@ export default function FloatingButton(props) {
     // styles object
     const styles = {
         button: {
-            color: 'white'
+            color: 'white',
         }
     }
 
@@ -22,7 +22,7 @@ export default function FloatingButton(props) {
     }
 
     const floatingButton = (
-            <Fab sx={{bgcolor: 'orange'}}
+            <Fab sx={{bgcolor: 'orange', mb: 4}}
                  size={'large'}
                  onClick={clickFunc}
             >

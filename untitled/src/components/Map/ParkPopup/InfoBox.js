@@ -70,8 +70,6 @@ export default class InfoBox extends Component {
                         <Tab label="Equipment" {...this.a11yProps(1)} />
                         <Tab label="Amenities" {...this.a11yProps(2)} />
                         <Tab label="Sports" {...this.a11yProps(3)} />
-                        <Tab label="Reviews" {...this.a11yProps(4)} />
-                        <Tab label="Reports" {...this.a11yProps(5)} />
                     </Tabs>
                 </Box>
 
@@ -90,15 +88,7 @@ export default class InfoBox extends Component {
                 <this.TabPanel value={this.state.value} index={3}>
                     <EquipmentCard data={this.state.data} whichOne={'sports_facilities'}/>
                 </this.TabPanel>
-
-                <this.TabPanel value={this.state.value} index={4}>
-                    Reviews Will Go Here
-                </this.TabPanel>
-
-                <this.TabPanel value={this.state.value} index={5}>
-                    Reports Will Go Here
-                </this.TabPanel>
             </Box>
-        );
+        )
     }
 }

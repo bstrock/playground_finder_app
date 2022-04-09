@@ -19,10 +19,9 @@ export default function ParkCard(props) {
     const map = useMap()
 
     const avatar = () => {
-        return (
-            <Avatar sx={{bgcolor: 'green'}}>
-                <NaturePeopleIcon/>
-            </Avatar>)
+        return (<Avatar sx={{bgcolor: 'green'}}>
+            <NaturePeopleIcon/>
+        </Avatar>)
     }
 
     const openInNewTab = (url) => {
@@ -40,8 +39,7 @@ export default function ParkCard(props) {
     console.log('info box')
     console.log(data)
 
-    return (
-        <Card sx={{display: 'block', height: '22em', border: 1, borderRadius: 2}} variant={'outlined'}>
+    return (<Card sx={{display: 'block', height: '22em', border: 1, borderRadius: 2}} variant={'outlined'}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
                         title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
@@ -82,10 +80,6 @@ export default function ParkCard(props) {
                                 <ZoomInMapIcon color={'primary'}/>
                             </IconButton>
                         </Box>
-                        </Box>
-                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-
-
                     </Box>
                     <CardActions sx={{align: 'center', justifyContent: 'center'}}>
                         <ButtonGroup variant={'contained'} size={'large'}>
@@ -127,6 +121,5 @@ export default function ParkCard(props) {
                 </CardContent>
             </Fade>
 
-        </Card>
-    );
+        </Card>);
 }

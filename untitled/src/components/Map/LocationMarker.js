@@ -21,9 +21,8 @@ function isMarkerInsidePolygon(latlng, poly) {
 }
 
 export default function LocationMarker(props) {
-    const [position, setPosition] = useState(null);
 
-    const map = useMap();
+    const map = useMap()
 
     const markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23c000ff&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689'
 
@@ -34,11 +33,10 @@ export default function LocationMarker(props) {
         popupAnchor: [0, 0]
     })
 
-    const {setQueryLocation, userClickedLocate} = props
+    const {setQueryLocation, userClickedLocate, queryLocation} = props
 
     useEffect(() => {
         if (userClickedLocate) {
-            const mapStartPosition = map.getCenter()
             const mapStartBBox = map.getBounds()
             const bbPoly = L.polygon(mapStartBBox)
 
@@ -51,15 +49,13 @@ export default function LocationMarker(props) {
                 //     marker.addTo(map);
                 // }
                 setQueryLocation({latitude: latlng.lat, longitude: latlng.lng})
-                setPosition(latlng);
                 map.flyTo(latlng, 13);
             })
         }
     }, [userClickedLocate, setQueryLocation, map])
 
-    return position === null ? null :
-        (
-        <Marker position={position} icon={userIcon}>
+    return (
+        <Marker position={[queryLocation.latitude, queryLocation.longitude]} icon={userIcon}>
             <Popup>
                 <Box>
                     <Typography align={'center'} variant={'subtitle1'}>

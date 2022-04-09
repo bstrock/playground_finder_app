@@ -54,17 +54,19 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <>
-                <Navbar/>
-                <MapContainer style={{height: "94vh"}}
+                <Navbar initLocation={initLocation}/>
+                <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={11.5}
                               zoomControl={true}
                 >
                 <LocationMarker setQueryLocation={setQueryLocation}
                                 userClickedLocate={userClickedLocate}
+                                queryLocation={queryLocation}
                 />
                     <LayerControl data={data}
                                   showSearchRadius={showSearchRadius}
+                                  initLocation={initLocation}
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
                     />
