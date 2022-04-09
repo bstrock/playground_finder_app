@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {Marker, Popup, useMap} from "react-leaflet";
 import L from 'leaflet'
 import Typography from "@mui/material/Typography";
@@ -35,6 +35,21 @@ export default function LocationMarker(props) {
 
     const {setQueryLocation, userClickedLocate, queryLocation} = props
 
+    const markerRef = useRef(null)
+
+    const eventHandlers = useMemo(
+        () => ({
+            dragend() {
+                const marker = markerRef.current
+                if (marker != null) {
+                    const latLng = marker.getLatLng()
+                    setQueryLocation({latitude: latLng.lat, longitude: latLng.lng})
+                }
+            },
+        }),
+        [setQueryLocation],
+    )
+
     useEffect(() => {
         if (userClickedLocate) {
             const mapStartBBox = map.getBounds()
@@ -55,7 +70,12 @@ export default function LocationMarker(props) {
     }, [userClickedLocate, setQueryLocation, map])
 
     return (
-        <Marker position={[queryLocation.latitude, queryLocation.longitude]} icon={userIcon}>
+        <Marker position={{lat: queryLocation.latitude, lng: queryLocation.longitude}}
+                icon={userIcon}
+                draggable={true}
+                eventHandlers={eventHandlers}
+                ref={markerRef}
+        >
             <Popup>
                 <Box>
                     <Typography align={'center'} variant={'subtitle1'}>
