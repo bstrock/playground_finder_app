@@ -1,10 +1,10 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
-import {LinearProgress} from "@mui/material"
+import {CircularProgress, LinearProgress} from "@mui/material"
 import Box from "@mui/material/Box"
 import ResetViewButton from "../FilterDrawer/ResetViewButton";
 
@@ -36,9 +36,27 @@ function findMeanCenter(coords) {
 export default function LayerControl(props) {
 
     // props destructuring
-    const {data, showSearchRadius, initLocation, queryLocation, radius} = props
+    const miles_to_meters = (radius) => radius * 1609.34
+
+    const {data, gggg, initLocation, queryLocation, radius} = props
 
     const centroids = []
+    const [showSearchRadius, setShowSearchRadius] = useState(true)
+    const bigMap = useMap()
+    const map = useMapEvent('zoomend', () => {
+        console.log('zoom ended')
+        const bbox = bigMap.getBounds()
+        const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
+        const northeast = bbox.getNorthEast()
+        const aa = northeast.distanceTo(bbox.getNorthWest())
+        const bb = northeast.distanceTo(bbox.getSouthEast())
+        const boxArea = aa * bb
+        console.log(searchArea)
+        console.log(boxArea)
+        setShowSearchRadius(boxArea > searchArea)
+        console.log(showSearchRadius)
+        return null
+    })
 
     const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
     const parkIcon = new L.Icon({
@@ -51,114 +69,122 @@ export default function LayerControl(props) {
     const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}  // playground polygon styles
     const json = require('../../data/ep_boundary.json'); // eden prairie border
     const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
-    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .3}
+    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, width: 1}
 
-    const miles_to_meters = (radius) => radius * 1609.34
+    const renderLayers = () => {
+        if (data === null) {
+            /* here we display a loading bar while the API data is being fetched */
+            return (
+                <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+                    <CircularProgress variant={'indeterminate'}/>
+                </Box>
+            )
+        } else {
+            return (
+                <>
+                    <LayersControl.Overlay checked name={'Playground Outlines'}>
+                        <LayerGroup>
+                            {
+                                // map the data from the API to Polygons and Markers
+                                // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
+                                data.features.map((d) => {
+                                    // these components will need keys...
+                                    const polygonKey = d.properties.site_id + '-polygon'
+                                    const pointKey = d.properties.site_id + '-point'
 
+                                    // reverse the coordinates to display them in the correct hemisphere
+                                    const polygonGeom = reverseCoordinates(d.geometry.coordinates)
 
-    if (data === null) {
-        /* here we display a loading bar while the API data is being fetched */
-        return (
-            <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
-                <LinearProgress variant={'indeterminate'}/>
-            </Box>
-        );
+                                    // find location for marker
+                                    const centroid = findMeanCenter(polygonGeom)
+                                    d.properties.centroid = centroid  // this is necessary!
+
+                                    // build the object we'll use to generate the point markers
+                                    centroids.push({
+                                        'pointKey': pointKey,
+                                        'geom': centroid,
+                                        'data': d.properties
+                                    })
+
+                                    // then push the polygons
+                                    return (
+                                        <Polygon key={polygonKey}
+                                                 pathOptions={pathOptions}
+                                                 positions={polygonGeom}/>
+                                    )
+                                })
+                            }
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay checked name={'Playground Markers'}>
+                        <LayerGroup>
+                            {
+                                // we generated these centroids while making the polygons, remember?
+                                centroids.map((centroid) => {
+                                        return (
+                                            // generate marker
+                                            <Marker key={centroid.pointKey}
+                                                    icon={parkIcon}
+                                                    position={centroid.geom}>
+
+                                                {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
+                                                <Popup>
+                                                    <InfoBox data={centroid.data}/>
+                                                </Popup>
+
+                                            </Marker>
+                                        )
+                                    }
+                                )
+                            }
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay checked name={'Search Radius'}>
+                        {!showSearchRadius ? null :
+                        <Circle center={[queryLocation.latitude, queryLocation.longitude]}
+                                radius={miles_to_meters(radius)}
+                                pathOptions={searchRadiusPathOptions}
+                        />
+                        }
+                    </LayersControl.Overlay>
+                </>
+            )
+        }
     }
 
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
         <>
             <ResetViewButton initLocation={initLocation}/>
-        <LayersControl position="topright">
-            {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
+            <LayersControl position="topright">
+                {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
 
 
-            <LayersControl.BaseLayer checked name="Outdoors">
-                <OutdoorLayer/>
-            </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer checked name="Outdoors">
+                    <OutdoorLayer/>
+                </LayersControl.BaseLayer>
 
-            <LayersControl.BaseLayer name="Streets">
-                <StreetLayer/>
-            </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer name="Streets">
+                    <StreetLayer/>
+                </LayersControl.BaseLayer>
 
-            <LayersControl.BaseLayer name="Satellite">
-                <SatelliteLayer/>
-            </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer name="Satellite">
+                    <SatelliteLayer/>
+                </LayersControl.BaseLayer>
 
-            {/* BASE LAYERS - EDEN PRAIRIE BOUNDARY POLYGON */}
-            <LayersControl.Overlay checked name={'EP Boundary'}>
-                <GeoJSON data={json}
-                         pathOptions={boundaryPathOptions}/>
-            </LayersControl.Overlay>
-
-            {/* DYNAMIC LAYERS - PLAYGROUND POLYGONS */}
-            <LayersControl.Overlay checked name={'Playground Outlines'}>
-                <LayerGroup>
-                    {
-                        // map the data from the API to Polygons and Markers
-                        // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
-                        data.features.map((d) => {
-                            // these components will need keys...
-                            const polygonKey = d.properties.site_id + '-polygon'
-                            const pointKey = d.properties.site_id + '-point'
-
-                            // reverse the coordinates to display them in the correct hemisphere
-                            const polygonGeom = reverseCoordinates(d.geometry.coordinates)
-
-                            // find location for marker
-                            const centroid = findMeanCenter(polygonGeom)
-                            d.properties.centroid = centroid  // this is necessary!
-
-                            // build the object we'll use to generate the point markers
-                            centroids.push({'pointKey': pointKey, 'geom': centroid, 'data': d.properties})
-
-                            // then push the polygons
-                            return (
-                                <Polygon key={polygonKey}
-                                         pathOptions={pathOptions}
-                                         positions={polygonGeom}/>
-                            )
-                        })
-                    }
-
-                </LayerGroup>
-            </LayersControl.Overlay>
-
-            {/* DYNAMIC LAYERS - PLAYGROUND MAKERS */}
-            <LayersControl.Overlay checked name={'Playground Markers'}>
-                <LayerGroup>
-                    {
-                        // we generated these centroids while making the polygons, remember?
-                        centroids.map((centroid) => {
-                            return (
-                                // generate marker
-                                <Marker key={centroid.pointKey}
-                                        icon={parkIcon}
-                                        position={centroid.geom}>
-
-                                    {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
-                                    <Popup>
-                                        <InfoBox data={centroid.data}/>
-                                    </Popup>
-
-                                </Marker>
-                            )
-                        })
-                    }
-                </LayerGroup>
-            </LayersControl.Overlay>
-            <>
-                <LayersControl.Overlay checked name={'Filter Radius'}>
-                    {// show search radius if not using default search parameter values (ie init state)
-                        !showSearchRadius ? null :
-                            <Circle center={[queryLocation.latitude, queryLocation.longitude]}
-                                    radius={miles_to_meters(radius)}
-                                    pathOptions={searchRadiusPathOptions}
-                            />
-                    }
+                {/* BASE LAYERS - EDEN PRAIRIE BOUNDARY POLYGON */}
+                <LayersControl.Overlay checked name={'EP Boundary'}>
+                    <GeoJSON data={json}
+                             pathOptions={boundaryPathOptions}/>
                 </LayersControl.Overlay>
-            </>
-        </LayersControl>
+
+                {/* DYNAMIC LAYERS - PLAYGROUND POLYGONS */}
+                <>
+                    {
+                        renderLayers()
+                    }
+                </>
+            </LayersControl>
         </>
     )
     // that was fun!
