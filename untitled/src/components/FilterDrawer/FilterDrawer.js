@@ -6,7 +6,6 @@ import FloatingButton from "./FloatingButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
 import {useMap} from "react-leaflet";
-import ResetViewButton from "./ResetViewButton";
 
 export default function FilterDrawer(props) {
     const [drawerOpen, setDrawerOpen] = React.useState(false)
@@ -23,7 +22,6 @@ export default function FilterDrawer(props) {
         queryParams,
         initQueryParams,
         setQueryParams,
-        setShowSearchRadius,
         userClickedLocate,
         setUserClickedLocate
     } = props
@@ -58,7 +56,6 @@ export default function FilterDrawer(props) {
                     <FilterAccordion queryParams={queryParams}
                                      initQueryParams={initQueryParams}
                                      setQueryParams={setQueryParams}
-                                     setShowSearchRadius={setShowSearchRadius}
                                      setDrawerOpen={setDrawerOpen}
                     />
                     <Divider/>

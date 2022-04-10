@@ -38,23 +38,20 @@ export default function LayerControl(props) {
     // props destructuring
     const miles_to_meters = (radius) => radius * 1609.34
 
-    const {data, gggg, initLocation, queryLocation, radius} = props
+    const {data, initLocation, queryLocation, radius} = props
 
     const centroids = []
     const [showSearchRadius, setShowSearchRadius] = useState(true)
     const bigMap = useMap()
-    const map = useMapEvent('zoomend', () => {
-        console.log('zoom ended')
+
+    useMapEvent('zoomend', () => {
         const bbox = bigMap.getBounds()
         const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
         const northeast = bbox.getNorthEast()
         const aa = northeast.distanceTo(bbox.getNorthWest())
         const bb = northeast.distanceTo(bbox.getSouthEast())
         const boxArea = aa * bb
-        console.log(searchArea)
-        console.log(boxArea)
         setShowSearchRadius(boxArea > searchArea)
-        console.log(showSearchRadius)
         return null
     })
 

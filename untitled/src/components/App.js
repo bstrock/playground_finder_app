@@ -39,7 +39,6 @@ function App() {
     const [queryLocation, setQueryLocation] = useState(initLocation)
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
-    const [showSearchRadius, setShowSearchRadius] = useState(false)
     const [userClickedLocate, setUserClickedLocate] = useState(false)
 
     // load data at app startup and when queryParams changed via filter button
@@ -64,7 +63,6 @@ function App() {
                                 queryLocation={queryLocation}
                 />
                     <LayerControl data={data}
-                                  showSearchRadius={showSearchRadius}
                                   initLocation={initLocation}
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
@@ -72,7 +70,6 @@ function App() {
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
                                   setQueryParams={setQueryParams}
-                                  setShowSearchRadius={setShowSearchRadius}
                                   userClickedLocate={userClickedLocate}
                                   setUserClickedLocate={setUserClickedLocate}
                     />
