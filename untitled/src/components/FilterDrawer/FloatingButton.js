@@ -1,7 +1,6 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {Fab, Tooltip} from "@mui/material";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import Box from "@mui/material/Box";
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 
 export default function FloatingButton(props) {
@@ -40,7 +39,7 @@ export default function FloatingButton(props) {
 
     return (
 
-        <Fab sx={{bgcolor: 'orange', mb: 4}}
+        <Fab sx={{bgcolor: 'orange', mb: 4, ml: 3, mr: 3}}
              size={'large'}
              onClick={clickFunc}
         >

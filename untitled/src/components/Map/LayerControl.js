@@ -1,13 +1,13 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
-import {ButtonGroup, CircularProgress, LinearProgress, Zoom} from "@mui/material"
+import {ButtonGroup, CircularProgress, LinearProgress} from "@mui/material"
 import Box from "@mui/material/Box"
-import ResetViewButton from "../FilterDrawer/ResetViewButton";
 import FloatingButton from "../FilterDrawer/FloatingButton";
+import Paper from "@mui/material/Paper";
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -44,9 +44,9 @@ export default function LayerControl(props) {
         radius,
         userClickedLocate,
         setUserClickedLocate,
-        drawerOpen,
         toggleDrawer
     } = props
+
     const [showSearchRadius, setShowSearchRadius] = useState(true)
 
     const map = useMap()
@@ -162,17 +162,6 @@ export default function LayerControl(props) {
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
         <>
-            <ButtonGroup>
-                <FloatingButton clickFunc={locateUserOnClickFunc}
-                                which={'reset'}
-                />
-                <FloatingButton clickFunc={toggleDrawer(true)}
-                                which={'filter'}
-                />
-                <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
-                                which={'location'}
-                />
-            </ButtonGroup>
             <LayersControl position="topright">
                 {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
 
@@ -201,6 +190,22 @@ export default function LayerControl(props) {
                     }
                 </>
             </LayersControl>
+            <Box sx={{display: 'flex', flexGrow: 1, height: '100%', justifyContent: 'center'}}>
+                <Box sx={{display: 'flex', mt: 'auto', mb: 1}}>
+                    <ButtonGroup>
+                        <FloatingButton clickFunc={toggleDrawer(true)}
+                                        which={'filter'}
+                        />
+                        <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
+                                        which={'location'}
+                        />
+                        <FloatingButton clickFunc={locateUserOnClickFunc}
+                                        which={'reset'}
+                        />
+
+                    </ButtonGroup>
+                </Box>
+            </Box>
         </>
     )
     // that was fun!

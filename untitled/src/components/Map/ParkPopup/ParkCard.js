@@ -1,13 +1,25 @@
 import * as React from 'react'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
-import {Avatar, ButtonGroup, Card, CardActions, CardContent, CardHeader, Divider, Fade, Tooltip} from "@mui/material"
+import {
+    Avatar,
+    ButtonGroup,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    Divider,
+    Fade,
+    Link,
+    Tooltip
+} from "@mui/material"
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import IconButton from '@mui/material/IconButton'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk'
 import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import Box from "@mui/material/Box";
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
 import {useMap} from "react-leaflet";
@@ -34,7 +46,8 @@ export default function ParkCard(props) {
     }
 
     const [lat, lon] = data.centroid
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
+    const fixURL = `https://seeclickfix.com/web_portal/HMhVHR4G4NEv79TUV8nhnP27/report/location?lat=${lat}&lng=${lon}`
 
     console.log('info box')
     console.log(data)
@@ -86,7 +99,7 @@ export default function ParkCard(props) {
                             <Tooltip title="Walk There!">
                                 <IconButton sx={{color: 'black'}}
                                             size={'large'}
-                                            onClick={onClickUrl(url + 'walking')}>
+                                            onClick={onClickUrl(directionsUrl + 'walking')}>
                                     <DirectionsWalkIcon color={'primary'}/>
                                 </IconButton>
                             </Tooltip>
@@ -94,7 +107,7 @@ export default function ParkCard(props) {
                             <Tooltip title="Bike There!">
                                 <IconButton sx={{color: 'black'}}
                                             size={'large'}
-                                            onClick={onClickUrl(url + 'bicycling')}>
+                                            onClick={onClickUrl(directionsUrl + 'bicycling')}>
                                     <DirectionsBikeIcon color={'primary'}/>
                                 </IconButton>
                             </Tooltip>
@@ -102,7 +115,7 @@ export default function ParkCard(props) {
                             <Tooltip title="Bus There!">
                                 <IconButton sx={{color: 'black'}}
                                             size={'large'}
-                                            onClick={onClickUrl(url + 'transit')}>
+                                            onClick={onClickUrl(directionsUrl + 'transit')}>
                                     <DirectionsBusIcon color={'primary'}/>
                                 </IconButton>
                             </Tooltip>
@@ -110,16 +123,24 @@ export default function ParkCard(props) {
                             <Tooltip title="Drive There!">
                                 <IconButton sx={{color: 'black'}}
                                             size={'large'}
-                                            onClick={onClickUrl(url + 'driving')}>
+                                            onClick={onClickUrl(directionsUrl + 'driving')}>
                                     <DirectionsCarIcon color={'primary'}/>
                                 </IconButton>
                             </Tooltip>
+                            <IconButton sx={{color: 'green'}}
+                                        size={'small'}
+                                        onClick={onClickUrl(fixURL)}>
+                                <ReportProblemIcon />
+                            </IconButton>
                         </ButtonGroup>
+                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
 
+                        </Box>
                     </CardActions>
                     <Divider/>
+
                 </CardContent>
             </Fade>
 
-        </Card>);
+        </Card>)
 }

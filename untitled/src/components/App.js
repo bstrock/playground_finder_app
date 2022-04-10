@@ -78,7 +78,6 @@ function App() {
                                   radius={queryParams.radius}
                                   userClickedLocate={userClickedLocate}
                                   setUserClickedLocate={setUserClickedLocate}
-                                  drawerOpen={drawerOpen}
                                   toggleDrawer={toggleDrawer}
                     />
                     <FilterDrawer queryParams={queryParams}
