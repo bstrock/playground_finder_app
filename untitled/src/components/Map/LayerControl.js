@@ -7,7 +7,6 @@ import 'leaflet/dist/leaflet.css'
 import {ButtonGroup, CircularProgress, LinearProgress} from "@mui/material"
 import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
-import Paper from "@mui/material/Paper";
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -69,6 +68,7 @@ export default function LayerControl(props) {
 
     useMapEvent('zoomend', () => {
         const bbox = map.getBounds()
+        console.log(bbox)
         console.log(map.getZoom())
         const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
         const northeast = bbox.getNorthEast()
@@ -147,13 +147,13 @@ export default function LayerControl(props) {
                             }
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name={'Search Radius'}>
-                        {!showSearchRadius ? null :
+
+                    <LayersControl.Overlay checked={showSearchRadius} name={'Search Radius'}>
                         <Circle center={[queryLocation.latitude, queryLocation.longitude]}
                                 radius={miles_to_meters(radius)}
                                 pathOptions={searchRadiusPathOptions}
                         />
-                        }
+
                     </LayersControl.Overlay>
                 </>
             )

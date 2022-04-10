@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import L from 'leaflet'
 import '../App.css'
 import 'leaflet/dist/leaflet.css'
 import '../index.css'
@@ -20,6 +21,10 @@ function App() {
             type: "light"
         },
     });
+
+    const maxSouthWest = L.latLng(45.33, -92.8)
+    const maxNorthEast = L.latLng(44.38, -94.12)
+    const maxBounds = L.latLngBounds(maxSouthWest, maxNorthEast)
 
     // starting position for the map and API query
     let initLocation = {
@@ -54,14 +59,18 @@ function App() {
         const viewportWidth = window.innerWidth;
         const SMALL = 320
         const MEDIUM = 767
+        const LARGE = 1439
+
         console.log(viewportWidth)
         let mapZoom
         if (viewportWidth <= SMALL) {
             mapZoom = 11
         } else if (viewportWidth <= MEDIUM) {
             mapZoom = 12
-        }  else {
+        }  else if (viewportWidth <= LARGE){
             mapZoom = 13
+        } else {
+            mapZoom = 14
         }
         return mapZoom
     }
@@ -72,8 +81,6 @@ function App() {
             .then((data) => setData(data))
     }, [queryLocation, queryParams])
 
-    // load data at app startup and when queryParams changed via filter button
-
     return (
         <ThemeProvider theme={theme}>
             <>
@@ -81,6 +88,8 @@ function App() {
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={setInitialMapZoom()}
+                              maxBounds={maxBounds}
+                              minZoom={10}
                               zoomControl={true}
                 >
                 <LocationMarker setQueryLocation={setQueryLocation}
