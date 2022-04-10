@@ -1,6 +1,8 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {Fab, Tooltip} from "@mui/material";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import Box from "@mui/material/Box";
+import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 
 export default function FloatingButton(props) {
 
@@ -14,27 +16,37 @@ export default function FloatingButton(props) {
         }
     }
 
-    // defines which button properties to use
-    const buttonGuide = {
-        icon: which === 'filter' ? (<FilterAltIcon style={styles.button}/>) : (<MyLocationIcon style={styles.button}/>),
-        tooltip: which === 'filter' ? 'Filter Playgrounds' : 'Find My Location',
-        anchor: which === 'filter' ?  'left' : 'right'
-    }
+    const getButtonGuide = (which) => {
+        let guide = {}
 
-    const floatingButton = (
-            <Fab sx={{bgcolor: 'orange', mb: 4}}
-                 size={'large'}
-                 onClick={clickFunc}
-            >
-                <Tooltip title={buttonGuide.tooltip}>
-                    {buttonGuide.icon}
-                </Tooltip>
-            </Fab>
-        )
+        // eslint-disable-next-line default-case
+        switch (which) {
+            case 'filter':
+                guide.icon = (<FilterAltIcon style={styles.button}/>)
+                guide.tooltip = "Filter Playgrounds"
+                break
+            case 'location':
+                guide.icon = (<MyLocationIcon style={styles.button}/>)
+                guide.tooltip = "Find My Location"
+                break
+            case 'reset':
+                guide.icon = (<FilterCenterFocusIcon style={styles.button}/>)
+                guide.tooltip = 'Reset Map View'
+            }
+            return guide
+        }
+
+    const buttonGuide = getButtonGuide(which)
 
     return (
-        <div className={`leaflet-bottom leaflet-${buttonGuide.anchor}`}>
-            <div className="leaflet-control leaflet-bar">{floatingButton}</div>
-        </div>
+
+        <Fab sx={{bgcolor: 'orange', mb: 4}}
+             size={'large'}
+             onClick={clickFunc}
+        >
+            <Tooltip title={buttonGuide.tooltip}>
+                {buttonGuide.icon}
+            </Tooltip>
+        </Fab>
     )
 }

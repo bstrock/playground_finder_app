@@ -4,9 +4,10 @@ import React, {useEffect, useState} from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
-import {CircularProgress, LinearProgress, Zoom} from "@mui/material"
+import {ButtonGroup, CircularProgress, LinearProgress, Zoom} from "@mui/material"
 import Box from "@mui/material/Box"
 import ResetViewButton from "../FilterDrawer/ResetViewButton";
+import FloatingButton from "../FilterDrawer/FloatingButton";
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -36,25 +37,25 @@ function findMeanCenter(coords) {
 export default function LayerControl(props) {
 
     // props destructuring
-    const miles_to_meters = (radius) => radius * 1609.34
-
-    const {data, initLocation, queryLocation, radius} = props
-
-    const centroids = []
+    const {
+        data,
+        initLocation,
+        queryLocation,
+        radius,
+        userClickedLocate,
+        setUserClickedLocate,
+        drawerOpen,
+        toggleDrawer
+    } = props
     const [showSearchRadius, setShowSearchRadius] = useState(true)
-    const bigMap = useMap()
 
-    useMapEvent('zoomend', () => {
-        const bbox = bigMap.getBounds()
-        const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
-        const northeast = bbox.getNorthEast()
-        const aa = northeast.distanceTo(bbox.getNorthWest())
-        const bb = northeast.distanceTo(bbox.getSouthEast())
-        const boxArea = aa * bb
-        setShowSearchRadius(boxArea > searchArea)
-        return null
-    })
+    const map = useMap()
+    const centroids = []
 
+    const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}  // playground polygon styles
+    const json = require('../../data/ep_boundary.json'); // eden prairie border
+    const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
+    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, width: 1}
     const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
     const parkIcon = new L.Icon({
         iconUrl: markerIconURL,
@@ -63,10 +64,19 @@ export default function LayerControl(props) {
         popupAnchor: [0, 0]
     })
 
-    const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}  // playground polygon styles
-    const json = require('../../data/ep_boundary.json'); // eden prairie border
-    const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
-    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, width: 1}
+    const miles_to_meters = (radius) => radius * 1609.34
+    const locateUserOnClickFunc = () => map.flyTo([initLocation.latitude, initLocation.longitude], 11.5)
+
+    useMapEvent('zoomend', () => {
+        const bbox = map.getBounds()
+        const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
+        const northeast = bbox.getNorthEast()
+        const aa = northeast.distanceTo(bbox.getNorthWest())
+        const bb = northeast.distanceTo(bbox.getSouthEast())
+        const boxArea = aa * bb
+        setShowSearchRadius(boxArea > searchArea)
+        return null
+    })
 
     const renderLayers = () => {
         if (data === null) {
@@ -152,10 +162,19 @@ export default function LayerControl(props) {
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
         <>
-            <ResetViewButton initLocation={initLocation}/>
+            <ButtonGroup>
+                <FloatingButton clickFunc={locateUserOnClickFunc}
+                                which={'reset'}
+                />
+                <FloatingButton clickFunc={toggleDrawer(true)}
+                                which={'filter'}
+                />
+                <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
+                                which={'location'}
+                />
+            </ButtonGroup>
             <LayersControl position="topright">
                 {/* BASE LAYERS - STREET AND SATELLITE VIEWS */}
-
 
                 <LayersControl.BaseLayer checked name="Outdoors">
                     <OutdoorLayer/>

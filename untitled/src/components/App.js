@@ -41,6 +41,16 @@ function App() {
     const [data, setData] = useState(null)
     const [userClickedLocate, setUserClickedLocate] = useState(false)
 
+    const [drawerOpen, setDrawerOpen] = React.useState(false)
+
+    const toggleDrawer = (open) => (e) => {
+        if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    }
+
+
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
         apiQuery(queryLocation, queryParams)
@@ -66,12 +76,16 @@ function App() {
                                   initLocation={initLocation}
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
+                                  userClickedLocate={userClickedLocate}
+                                  setUserClickedLocate={setUserClickedLocate}
+                                  drawerOpen={drawerOpen}
+                                  toggleDrawer={toggleDrawer}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
                                   setQueryParams={setQueryParams}
-                                  userClickedLocate={userClickedLocate}
-                                  setUserClickedLocate={setUserClickedLocate}
+                                  drawerOpen={drawerOpen}
+                                  toggleDrawer={toggleDrawer}
                     />
                 </MapContainer>
             </>

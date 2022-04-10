@@ -14,7 +14,7 @@ import AccordionTemplate from "./AccordionTemplate"
 export default function FilterAccordion(props) {
 
     // props destructuring
-    const {queryParams, initQueryParams, setQueryParams, setDrawerOpen} = props
+    const {queryParams, initQueryParams, setQueryParams, toggleDrawer} = props
 
     // top-level lists of all filter assets
     const equipList = [
@@ -103,7 +103,7 @@ export default function FilterAccordion(props) {
 
         // 3. we use the setter hooks as appropriate, and close the drawer either way
         setQueryParams(params)
-        setDrawerOpen(false)
+        toggleDrawer(false)
     }
 
     // these effects hid or show the checkbox in the accordion summary based on whether or not checkboxes in that accordion are checked

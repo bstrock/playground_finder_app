@@ -2,31 +2,20 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
-import FloatingButton from "./FloatingButton";
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
-import {useMap} from "react-leaflet";
 
 export default function FilterDrawer(props) {
-    const [drawerOpen, setDrawerOpen] = React.useState(false)
 
-    const toggleDrawer = (open) => (e) => {
-        if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
-            return;
-        }
-        setDrawerOpen(open);
-    }
 
     // destructure props
     const {
         queryParams,
         initQueryParams,
         setQueryParams,
-        userClickedLocate,
-        setUserClickedLocate
+        drawerOpen,
+        toggleDrawer
     } = props
-
-    const map = useMap()
 
     return (
         <>
@@ -56,17 +45,11 @@ export default function FilterDrawer(props) {
                     <FilterAccordion queryParams={queryParams}
                                      initQueryParams={initQueryParams}
                                      setQueryParams={setQueryParams}
-                                     setDrawerOpen={setDrawerOpen}
+                                     toggleDrawer={toggleDrawer}
                     />
                     <Divider/>
                 </Box>
             </Drawer>
-            <FloatingButton clickFunc={toggleDrawer(true)}
-                            which={'filter'}
-            />
-            <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
-                            which={'location'}
-            />
         </>
     )
 }

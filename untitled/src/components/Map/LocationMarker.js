@@ -52,9 +52,6 @@ export default function LocationMarker(props) {
 
     useEffect(() => {
         if (userClickedLocate) {
-            const mapStartBBox = map.getBounds()
-            const bbPoly = L.polygon(mapStartBBox)
-
             map.locate().on("locationfound", function (e) {
                 let latlng = e.latlng
                 // FIX THIS!  1- doesn't work, 2- replace icon for generic marker
