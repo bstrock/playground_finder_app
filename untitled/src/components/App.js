@@ -50,6 +50,21 @@ function App() {
         setDrawerOpen(open);
     }
 
+    function setInitialMapZoom() {
+        const viewportWidth = window.innerWidth;
+        const SMALL = 320
+        const MEDIUM = 767
+        console.log(viewportWidth)
+        let mapZoom
+        if (viewportWidth <= SMALL) {
+            mapZoom = 11
+        } else if (viewportWidth <= MEDIUM) {
+            mapZoom = 12
+        }  else {
+            mapZoom = 13
+        }
+        return mapZoom
+    }
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
@@ -65,7 +80,7 @@ function App() {
                 <Navbar initLocation={initLocation}/>
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
-                              zoom={11.5}
+                              zoom={setInitialMapZoom()}
                               zoomControl={true}
                 >
                 <LocationMarker setQueryLocation={setQueryLocation}

@@ -69,6 +69,7 @@ export default function LayerControl(props) {
 
     useMapEvent('zoomend', () => {
         const bbox = map.getBounds()
+        console.log(map.getZoom())
         const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
         const northeast = bbox.getNorthEast()
         const aa = northeast.distanceTo(bbox.getNorthWest())
