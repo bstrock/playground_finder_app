@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react"
 import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
-import {CircularProgress, LinearProgress} from "@mui/material"
+import {CircularProgress, LinearProgress, Zoom} from "@mui/material"
 import Box from "@mui/material/Box"
 import ResetViewButton from "../FilterDrawer/ResetViewButton";
 
