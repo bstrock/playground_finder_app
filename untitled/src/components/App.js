@@ -70,12 +70,12 @@ function App() {
     const [drawerOpen, setDrawerOpen] = React.useState(false)
 
     const toggleDrawer = (open) => (e) => {
+        // responds to drawer close events.  button-based drawer behavior (ie, filter buttons) must be closed by setDrawerOpen directly
         if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
             return;
         }
         setDrawerOpen(open);
     }
-
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
