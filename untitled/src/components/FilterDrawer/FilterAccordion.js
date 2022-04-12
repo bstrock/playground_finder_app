@@ -14,7 +14,12 @@ import AccordionTemplate from "./AccordionTemplate"
 export default function FilterAccordion(props) {
 
     // props destructuring
-    const {queryParams, initQueryParams, setQueryParams, toggleDrawer} = props
+    const {
+        queryParams,
+        initQueryParams,
+        setQueryParams,
+        setDrawerOpen
+    } = props
 
     // top-level lists of all filter assets
     const equipList = [
@@ -96,6 +101,7 @@ export default function FilterAccordion(props) {
     const filtersOnClick = (e) => {
         // filter apply/clear actions...
         // 1. which button is it?  apply is a boolean where 'apply filters' is true
+        setDrawerOpen(false)
         const apply = e.target.outerText.toLowerCase() === 'apply filters'
 
         // 2. if we're applying, we poll the current checkbox state, otherwise for clear we use the initial state
@@ -103,7 +109,6 @@ export default function FilterAccordion(props) {
 
         // 3. we use the setter hooks as appropriate, and close the drawer either way
         setQueryParams(params)
-        toggleDrawer(false)
     }
 
     // these effects hid or show the checkbox in the accordion summary based on whether or not checkboxes in that accordion are checked
@@ -222,7 +227,9 @@ export default function FilterAccordion(props) {
                             key={'apply'}
                             variant={'contained'}
                             size={'medium'}
-                            onClick={e => filtersOnClick(e)}
+                            onClick={e => {
+                                filtersOnClick(e)
+                            }}
                     >
                         <Typography sx={{fontWeight: 500}}
                                     align={'center'}

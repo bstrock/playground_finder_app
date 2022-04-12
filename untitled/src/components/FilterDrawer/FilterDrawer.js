@@ -4,9 +4,9 @@ import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
+import {useState, useEffect} from "react";
 
 export default function FilterDrawer(props) {
-
 
     // destructure props
     const {
@@ -14,8 +14,10 @@ export default function FilterDrawer(props) {
         initQueryParams,
         setQueryParams,
         drawerOpen,
+        setDrawerOpen,
         toggleDrawer
     } = props
+
 
     return (
         <>
@@ -45,7 +47,7 @@ export default function FilterDrawer(props) {
                     <FilterAccordion queryParams={queryParams}
                                      initQueryParams={initQueryParams}
                                      setQueryParams={setQueryParams}
-                                     toggleDrawer={toggleDrawer}
+                                     setDrawerOpen={setDrawerOpen}
                     />
                     <Divider/>
                 </Box>

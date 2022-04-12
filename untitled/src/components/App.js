@@ -43,8 +43,8 @@ function App() {
     const setInitialMapZoom = () => {
         const viewportWidth = window.innerWidth;
         const SMALL = 320
-        const MEDIUM = 767
-        const LARGE = 1439
+        const MEDIUM = 1023
+        const LARGE = 2559
 
         console.log(viewportWidth)
         let mapZoom
@@ -67,7 +67,6 @@ function App() {
     const [data, setData] = useState(null)
     const [userClickedLocate, setUserClickedLocate] = useState(false)
     const [zoom, setZoom] = useState(setInitialMapZoom())
-
     const [drawerOpen, setDrawerOpen] = React.useState(false)
 
     const toggleDrawer = (open) => (e) => {
@@ -106,12 +105,14 @@ function App() {
                                   userClickedLocate={userClickedLocate}
                                   setUserClickedLocate={setUserClickedLocate}
                                   toggleDrawer={toggleDrawer}
-                                  zoom={zoom}
+                                  setZoom={setZoom}
+                                  zoomFunc={setInitialMapZoom}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
                                   setQueryParams={setQueryParams}
                                   drawerOpen={drawerOpen}
+                                  setDrawerOpen={setDrawerOpen}
                                   toggleDrawer={toggleDrawer}
                     />
                 </MapContainer>
