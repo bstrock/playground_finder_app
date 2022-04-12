@@ -2,8 +2,10 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import {LinearProgress} from "@mui/material";
 
-export default function Navbar() {
+export default function Navbar(props) {
+    const {loading} = props
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static"
@@ -14,6 +16,11 @@ export default function Navbar() {
                         EP Playground Finder
                     </Typography>
             </AppBar>
+            <>
+                {
+                    loading ? <LinearProgress variant={'indeterminate'}/> : null
+                }
+            </>
         </Box>
     )
 }

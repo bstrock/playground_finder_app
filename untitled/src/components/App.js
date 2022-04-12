@@ -46,7 +46,6 @@ function App() {
         const MEDIUM = 1023
         const LARGE = 2559
 
-        console.log(viewportWidth)
         let mapZoom
         if (viewportWidth <= SMALL) {
             mapZoom = 11
@@ -60,14 +59,14 @@ function App() {
         return mapZoom
     }
 
-
     // STATES
     const [queryLocation, setQueryLocation] = useState(initLocation)
     const [queryParams, setQueryParams] = useState(initQueryParams)
     const [data, setData] = useState(null)
     const [userClickedLocate, setUserClickedLocate] = useState(false)
     const [zoom, setZoom] = useState(setInitialMapZoom())
-    const [drawerOpen, setDrawerOpen] = React.useState(false)
+    const [drawerOpen, setDrawerOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const toggleDrawer = (open) => (e) => {
         // responds to drawer close events.  button-based drawer behavior (ie, filter buttons) must be closed by setDrawerOpen directly
@@ -79,14 +78,18 @@ function App() {
 
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
+        setLoading(true)
         apiQuery(queryLocation, queryParams)
-            .then((data) => setData(data))
-    }, [queryLocation, queryParams])
+            .then((data) => {
+                setData(data)
+                setLoading(false)
+            })
+    }, [setLoading, queryLocation, queryParams])
 
     return (
         <ThemeProvider theme={theme}>
             <>
-                <Navbar initLocation={initLocation}/>
+                <Navbar loading={loading}/>
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={zoom}
@@ -99,6 +102,7 @@ function App() {
                                 queryLocation={queryLocation}
                 />
                     <LayerControl data={data}
+                                  loading={loading}
                                   initLocation={initLocation}
                                   queryLocation={queryLocation}
                                   radius={queryParams.radius}
@@ -107,6 +111,7 @@ function App() {
                                   toggleDrawer={toggleDrawer}
                                   setZoom={setZoom}
                                   zoomFunc={setInitialMapZoom}
+                                  setLoading={setLoading}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}

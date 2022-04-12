@@ -45,7 +45,8 @@ export default function LayerControl(props) {
         setUserClickedLocate,
         toggleDrawer,
         setZoom,
-        zoomFunc
+        zoomFunc,
+        setLoading
     } = props
 
     const [showSearchRadius, setShowSearchRadius] = useState(true)
@@ -74,97 +75,13 @@ export default function LayerControl(props) {
 
     useMapEvent('zoomend', () => {
         const bbox = map.getBounds()
-        console.log(bbox)
-        console.log(map.getZoom())
         const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
         const northeast = bbox.getNorthEast()
         const aa = northeast.distanceTo(bbox.getNorthWest())
         const bb = northeast.distanceTo(bbox.getSouthEast())
         const boxArea = aa * bb
         setShowSearchRadius(boxArea > searchArea)
-        return null
     })
-
-    const renderLayers = () => {
-        if (data === null) {
-            /* here we display a loading bar while the API data is being fetched */
-            return (
-                <Box sx={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
-                    <CircularProgress variant={'indeterminate'}/>
-                </Box>
-            )
-        } else {
-            return (
-                <>
-                    <LayersControl.Overlay checked name={'Playground Outlines'}>
-                        <LayerGroup>
-                            {
-                                // map the data from the API to Polygons and Markers
-                                // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
-                                data.features.map((d) => {
-                                    // these components will need keys...
-                                    const polygonKey = d.properties.site_id + '-polygon'
-                                    const pointKey = d.properties.site_id + '-point'
-
-                                    // reverse the coordinates to display them in the correct hemisphere
-                                    const polygonGeom = reverseCoordinates(d.geometry.coordinates)
-
-                                    // find location for marker
-                                    const centroid = findMeanCenter(polygonGeom)
-                                    d.properties.centroid = centroid  // this is necessary!
-
-                                    // build the object we'll use to generate the point markers
-                                    centroids.push({
-                                        'pointKey': pointKey,
-                                        'geom': centroid,
-                                        'data': d.properties
-                                    })
-
-                                    // then push the polygons
-                                    return (
-                                        <Polygon key={polygonKey}
-                                                 pathOptions={pathOptions}
-                                                 positions={polygonGeom}/>
-                                    )
-                                })
-                            }
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name={'Playground Markers'}>
-                        <LayerGroup>
-                            {
-                                // we generated these centroids while making the polygons, remember?
-                                centroids.map((centroid) => {
-                                        return (
-                                            // generate marker
-                                            <Marker key={centroid.pointKey}
-                                                    icon={parkIcon}
-                                                    position={centroid.geom}>
-
-                                                {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
-                                                <Popup>
-                                                    <InfoBox data={centroid.data}/>
-                                                </Popup>
-
-                                            </Marker>
-                                        )
-                                    }
-                                )
-                            }
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-
-                    <LayersControl.Overlay checked={showSearchRadius} name={'Search Radius'}>
-                        <Circle center={[queryLocation.latitude, queryLocation.longitude]}
-                                radius={miles_to_meters(radius)}
-                                pathOptions={searchRadiusPathOptions}
-                        />
-
-                    </LayersControl.Overlay>
-                </>
-            )
-        }
-    }
 
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
@@ -193,7 +110,73 @@ export default function LayerControl(props) {
                 {/* DYNAMIC LAYERS - PLAYGROUND POLYGONS */}
                 <>
                     {
-                        renderLayers()
+                    data === null ? null :
+                        <>
+                            <LayersControl.Overlay checked name={'Playground Outlines'}>
+                                <LayerGroup>
+                                    {
+                                        // map the data from the API to Polygons and Markers
+                                        // steps: ingest data, build metadata, reverse coords, generate polys, generate centroids
+                                        data.features.map((d) => {
+                                            // these components will need keys...
+                                            const polygonKey = d.properties.site_id + '-polygon'
+                                            const pointKey = d.properties.site_id + '-point'
+
+                                            // reverse the coordinates to display them in the correct hemisphere
+                                            const polygonGeom = reverseCoordinates(d.geometry.coordinates)
+
+                                            // find location for marker
+                                            const centroid = findMeanCenter(polygonGeom)
+                                            d.properties.centroid = centroid  // this is necessary!
+
+                                            // build the object we'll use to generate the point markers
+                                            centroids.push({
+                                                'pointKey': pointKey,
+                                                'geom': centroid,
+                                                'data': d.properties
+                                            })
+
+                                            // then push the polygons
+                                            return (
+                                                <Polygon key={polygonKey}
+                                                         pathOptions={pathOptions}
+                                                         positions={polygonGeom}/>
+                                            )
+                                        })
+                                    }
+                                </LayerGroup>
+                            </LayersControl.Overlay>
+                            <LayersControl.Overlay checked name={'Playground Markers'}>
+                                <LayerGroup>
+                                    {
+                                        // we generated these centroids while making the polygons, remember?
+                                        centroids.map((centroid) => {
+                                                return (
+                                                    // generate marker
+                                                    <Marker key={centroid.pointKey}
+                                                            icon={parkIcon}
+                                                            position={centroid.geom}>
+
+                                                        {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
+                                                        <Popup>
+                                                            <InfoBox data={centroid.data}/>
+                                                        </Popup>
+
+                                                    </Marker>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </LayerGroup>
+                            </LayersControl.Overlay>
+                            <LayersControl.Overlay checked={showSearchRadius} name={'Search Radius'}>
+                                <Circle center={[queryLocation.latitude, queryLocation.longitude]}
+                                        radius={miles_to_meters(radius)}
+                                        pathOptions={searchRadiusPathOptions}
+                                />
+
+                            </LayersControl.Overlay>
+                        </>
                     }
                 </>
             </LayersControl>
@@ -203,7 +186,10 @@ export default function LayerControl(props) {
                         <FloatingButton clickFunc={toggleDrawer(true)}
                                         which={'filter'}
                         />
-                        <FloatingButton clickFunc={() => userClickedLocate ? map.locate() : setUserClickedLocate(true)}
+                        <FloatingButton clickFunc={() => {
+                            setLoading(true)
+                            userClickedLocate ? map.locate() : setUserClickedLocate(true)
+                        }}
                                         which={'location'}
                         />
                         <FloatingButton clickFunc={locateUserOnClickFunc}
