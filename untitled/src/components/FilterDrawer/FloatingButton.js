@@ -39,7 +39,7 @@ export default function FloatingButton(props) {
 
     return (
 
-        <Fab sx={{bgcolor: 'orange', mb: 4, ml: 3, mr: 3}}
+        <Fab sx={{bgcolor: 'orange', mb: 5, ml: 3, mr: 3}}
              size={'large'}
              onClick={clickFunc}
         >

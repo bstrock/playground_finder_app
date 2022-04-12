@@ -43,7 +43,8 @@ export default function LayerControl(props) {
         radius,
         userClickedLocate,
         setUserClickedLocate,
-        toggleDrawer
+        toggleDrawer,
+        zoom
     } = props
 
     const [showSearchRadius, setShowSearchRadius] = useState(true)
@@ -64,7 +65,7 @@ export default function LayerControl(props) {
     })
 
     const miles_to_meters = (radius) => radius * 1609.34
-    const locateUserOnClickFunc = () => map.flyTo([initLocation.latitude, initLocation.longitude], 11.5)
+    const locateUserOnClickFunc = () => map.flyTo([initLocation.latitude, initLocation.longitude], zoom)
 
     useMapEvent('zoomend', () => {
         const bbox = map.getBounds()

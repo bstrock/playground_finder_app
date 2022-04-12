@@ -40,22 +40,7 @@ function App() {
         sports_facilities: []
     }
 
-    // STATES
-    const [queryLocation, setQueryLocation] = useState(initLocation)
-    const [queryParams, setQueryParams] = useState(initQueryParams)
-    const [data, setData] = useState(null)
-    const [userClickedLocate, setUserClickedLocate] = useState(false)
-
-    const [drawerOpen, setDrawerOpen] = React.useState(false)
-
-    const toggleDrawer = (open) => (e) => {
-        if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
-            return;
-        }
-        setDrawerOpen(open);
-    }
-
-    function setInitialMapZoom() {
+    const setInitialMapZoom = () => {
         const viewportWidth = window.innerWidth;
         const SMALL = 320
         const MEDIUM = 767
@@ -75,6 +60,24 @@ function App() {
         return mapZoom
     }
 
+
+    // STATES
+    const [queryLocation, setQueryLocation] = useState(initLocation)
+    const [queryParams, setQueryParams] = useState(initQueryParams)
+    const [data, setData] = useState(null)
+    const [userClickedLocate, setUserClickedLocate] = useState(false)
+    const [zoom, setZoom] = useState(setInitialMapZoom())
+
+    const [drawerOpen, setDrawerOpen] = React.useState(false)
+
+    const toggleDrawer = (open) => (e) => {
+        if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    }
+
+
     // load data at app startup and when queryParams changed via filter button
     useEffect(() => {
         apiQuery(queryLocation, queryParams)
@@ -87,7 +90,7 @@ function App() {
                 <Navbar initLocation={initLocation}/>
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
-                              zoom={setInitialMapZoom()}
+                              zoom={zoom}
                               maxBounds={maxBounds}
                               minZoom={10}
                               zoomControl={true}
@@ -103,6 +106,7 @@ function App() {
                                   userClickedLocate={userClickedLocate}
                                   setUserClickedLocate={setUserClickedLocate}
                                   toggleDrawer={toggleDrawer}
+                                  zoom={zoom}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
