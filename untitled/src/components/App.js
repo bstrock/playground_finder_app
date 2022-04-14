@@ -6,7 +6,6 @@ import '../index.css'
 import {MapContainer} from 'react-leaflet'
 import LayerControl from "./Map/LayerControl";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
-import green from "@mui/material/colors/green";
 import Navbar from "./NavBar/Navbar";
 import LocationMarker from "./Map/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
@@ -19,9 +18,13 @@ function App() {
         palette: {
             primary: {
                 main: '#66bb6a',
+                dark: '#387002',
+                light: '#99d066'
             },
             secondary: {
                 main: '#ffa726',
+                dark: '#c17900',
+                light: '#f9a825'
             },
             common: {
                 black: '#1D1D1D'

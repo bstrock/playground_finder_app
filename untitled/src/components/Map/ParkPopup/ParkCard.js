@@ -20,7 +20,6 @@ import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
 import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import Box from "@mui/material/Box"
-import ZoomInMapIcon from '@mui/icons-material/ZoomInMap'
 import {useMap} from "react-leaflet"
 import {useTheme} from "@mui/styles"
 import L from 'leaflet'
@@ -31,11 +30,21 @@ export default function ParkCard(props) {
     const {data, queryLocation} = props
 
     const map = useMap()
+    const theme = useTheme()
 
     const avatar = () => {
-        return (<Avatar sx={{bgcolor: 'primary'}}>
+        return (<Avatar sx={{bgcolor: theme.palette.primary.main}}>
             <NaturePeopleIcon/>
         </Avatar>)
+    }
+
+    const styles = {
+        button: {
+            mr: 1,
+            ml: 1,
+            mb: 0,
+            mt: 0
+        }
     }
 
     const openInNewTab = (url) => {
@@ -55,7 +64,6 @@ export default function ParkCard(props) {
     const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
     const fixURL = `https://seeclickfix.com/web_portal/HMhVHR4G4NEv79TUV8nhnP27/report/location?lat=${lat}&lng=${lon}`
 
-    const theme = useTheme()
     console.log('info box')
     console.log(data)
 
@@ -90,7 +98,7 @@ export default function ParkCard(props) {
                                             map.flyTo([lat, lon], 18)
                                         }}
                             >
-                                <LocationOnIcon sx={{display: 'flex', alignSelf: 'left', mb: 1, ml: 1}} color={'primary'}/>
+                                <LocationOnIcon sx={{display: 'flex', alignSelf: 'left', m: 1}} color={'primary'}/>
                             </IconButton>
                             <Typography display={'flex'} align={'left'} variant={'subtitle2'}>
                                 {`${data.addr_street1}`}
@@ -101,50 +109,55 @@ export default function ParkCard(props) {
                         </Box>
                     </>
                     <CardActions sx={{align: 'center', justifyContent: 'center'}}>
-                        <ButtonGroup variant={'contained'} size={'large'}>
+                        <ButtonGroup variant={'contained'} size={'medium'} sx={{bgcolor: 'primary.light'}}>
                             <Tooltip title="Walk There!">
-                                <IconButton sx={{color: theme.palette.common.black}}
-                                            size={'large'}
+                                <IconButton styles={styles.button}
+                                            sx={{color: theme.palette.primary.dark}}
+                                            size={'medium'}
                                             onClick={onClickUrl(directionsUrl + 'walking')}>
-                                    <DirectionsWalkIcon color={'primary'}/>
+                                    <DirectionsWalkIcon/>
                                 </IconButton>
                             </Tooltip>
 
                             <Tooltip title="Bike There!">
-                                <IconButton sx={{color: theme.palette.common.black}}
-                                            size={'large'}
+                                <IconButton styles={styles.button}
+                                            sx={{color: theme.palette.primary.dark}}
+                                            size={'medium'}
                                             onClick={onClickUrl(directionsUrl + 'bicycling')}>
-                                    <DirectionsBikeIcon color={'primary'}/>
+                                    <DirectionsBikeIcon/>
                                 </IconButton>
                             </Tooltip>
 
                             <Tooltip title="Bus There!">
-                                <IconButton sx={{color: theme.palette.common.black}}
-                                            size={'large'}
+                                <IconButton styles={styles.button}
+                                            sx={{color: theme.palette.primary.dark}}
+                                            size={'medium'}
                                             onClick={onClickUrl(directionsUrl + 'transit')}>
-                                    <DirectionsBusIcon color={'primary'}/>
+                                    <DirectionsBusIcon/>
                                 </IconButton>
                             </Tooltip>
 
                             <Tooltip title="Drive There!">
-                                <IconButton sx={{color: theme.palette.common.black}}
-                                            size={'large'}
+                                <IconButton styles={styles.button}
+                                            sx={{color: theme.palette.primary.dark}}
+                                            size={'medium'}
                                             onClick={onClickUrl(directionsUrl + 'driving')}>
-                                    <DirectionsCarIcon color={'primary'}/>
+                                    <DirectionsCarIcon/>
                                 </IconButton>
                             </Tooltip>
-                            <IconButton sx={{color: 'green'}}
-                                        size={'small'}
-                                        onClick={onClickUrl(fixURL)}>
-                                <ReportProblemIcon />
-                            </IconButton>
+                            <Tooltip title={'Report Issue'}>
+                                <IconButton sx={{color: theme.palette.primary.dark}}
+                                            size={'small'}
+                                            onClick={onClickUrl(fixURL)}>
+                                    <ReportProblemIcon />
+                                </IconButton>
+                            </Tooltip>
                         </ButtonGroup>
                         <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
 
                         </Box>
                     </CardActions>
                     <Divider/>
-
                 </CardContent>
             </Fade>
 
