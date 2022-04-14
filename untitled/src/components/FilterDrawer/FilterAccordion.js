@@ -10,6 +10,7 @@ import {ButtonGroup, Divider} from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import AccordionTemplate from "./AccordionTemplate"
+import {useTheme} from "@mui/styles";
 
 export default function FilterAccordion(props) {
 
@@ -138,7 +139,7 @@ export default function FilterAccordion(props) {
                 width: 'fixed'
             }
         }
-
+    const theme = useTheme()
     return (
         <>
             {/* This box contains the Accordion */}
@@ -239,13 +240,14 @@ export default function FilterAccordion(props) {
                         </Typography>
                     </Button>
 
-                    <Button sx={{mt: 5, color: 'green', backgroundColor: 'white'}}
+                    <Button sx={{mt: 5, color: 'info', backgroundColor: 'white'}}
                             key={'clear'}
                             variant={'contained'}
                             size={'medium'}
                             onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 400}}
+                                    color={theme.palette.primary.dark}
                                     align={'center'}
                                     variant={'subtitle1'}
                         >

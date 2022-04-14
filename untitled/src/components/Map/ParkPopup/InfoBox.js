@@ -9,7 +9,7 @@ import EquipmentCard from "./EquipmentCard"
 import {Component} from "react"
 
 export default class InfoBox extends Component {
-    state = {value: 0, data: null}
+    state = {value: 0, data: null, queryLocation: null}
 
     handleChange = (event, newValue) => {
         this.setState({value: newValue, data: this.state.data})
@@ -51,7 +51,7 @@ export default class InfoBox extends Component {
         };
 
         this.state.data = props.data
-
+        this.state.queryLocation = props.queryLocation
     }
 
     render() {
@@ -74,7 +74,7 @@ export default class InfoBox extends Component {
                 </Box>
 
                 <this.TabPanel value={this.state.value} index={0}>
-                    <ParkCard data={this.state.data}/>
+                    <ParkCard data={this.state.data} queryLocation={this.state.queryLocation}/>
                 </this.TabPanel>
 
                 <this.TabPanel value={this.state.value} index={1}>

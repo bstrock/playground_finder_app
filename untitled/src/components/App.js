@@ -17,10 +17,17 @@ function App() {
 
     const theme = createTheme({
         palette: {
-            primary: green,
-            type: "light"
+            primary: {
+                main: '#66bb6a',
+            },
+            secondary: {
+                main: '#ffa726',
+            },
+            common: {
+                black: '#1D1D1D'
+            }
         },
-    });
+    })
 
     const maxSouthWest = L.latLng(45.33, -92.8)
     const maxNorthEast = L.latLng(44.38, -94.12)

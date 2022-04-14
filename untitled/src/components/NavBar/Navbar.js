@@ -3,22 +3,31 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {LinearProgress} from "@mui/material";
+import { useTheme } from '@mui/styles';
 
 export default function Navbar(props) {
     const {loading} = props
+    const theme = useTheme()
+    console.log(theme.palette.secondary.main)
+    console.log(theme)
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static"
-                    sx={{height: '3rem', bgcolor: 'linear-gradient(90deg, rgba(210,255,112,1) 10%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'}}>
+                    sx={{height: '3rem'}}
+                    color={'primary'}
+            >
                     <Typography variant="h6"
-                                sx={{flexGrow: 2, color: 'white', pt: 1, ml: 2}}
+                                sx={{flexGrow: 2, color: 'black', pt: 1, ml: 2}}
                     >
                         EP Playground Finder
                     </Typography>
             </AppBar>
             <>
                 {
-                    loading ? <LinearProgress variant={'indeterminate'}/> : null
+                    !loading ? <Box sx={{height: 5, bgcolor: theme.palette.primary.main}}/> :
+                        <LinearProgress sx={{height: 5}}
+                                        color={'primary'}
+                                        variant={'indeterminate'}/>
                 }
             </>
         </Box>

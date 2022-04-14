@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css'
 import {ButtonGroup, CircularProgress, LinearProgress} from "@mui/material"
 import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
+import {useTheme} from "@mui/styles"
 
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
@@ -53,11 +54,12 @@ export default function LayerControl(props) {
 
     const map = useMap()
     const centroids = []
+    const theme = useTheme()
 
-    const pathOptions = {color: 'orange', fillColor: 'orange', fillOpacity: 1}  // playground polygon styles
+    const pathOptions = {color: theme.palette.secondary.dark, fillColor: theme.palette.secondary.main, fillOpacity: 1, weight: 2}  // playground polygon styles
     const json = require('../../data/ep_boundary.json'); // eden prairie border
-    const boundaryPathOptions = {color: 'black', fillColor: 'white', fillOpacity: 0}  // ensure border polygon isn't filled
-    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, width: 1}
+    const boundaryPathOptions = {color: theme.palette.common.black, fillColor: 'white', fillOpacity: 0, weight: 2}  // ensure border polygon isn't filled
+    const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, weight: 3}
     const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
     const parkIcon = new L.Icon({
         iconUrl: markerIconURL,
@@ -159,7 +161,7 @@ export default function LayerControl(props) {
 
                                                         {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
                                                         <Popup>
-                                                            <InfoBox data={centroid.data}/>
+                                                            <InfoBox data={centroid.data} queryLocation={queryLocation}/>
                                                         </Popup>
 
                                                     </Marker>

@@ -7,29 +7,22 @@ export default function FloatingButton(props) {
 
     // destructure props
     const {which, clickFunc} = props
-
     // styles object
-    const styles = {
-        button: {
-            color: 'white',
-        }
-    }
 
     const getButtonGuide = (which) => {
         let guide = {}
-
         // eslint-disable-next-line default-case
         switch (which) {
             case 'filter':
-                guide.icon = (<FilterAltIcon style={styles.button}/>)
+                guide.icon = (<FilterAltIcon color={'white'}/>)
                 guide.tooltip = "Filter Playgrounds"
                 break
             case 'location':
-                guide.icon = (<MyLocationIcon style={styles.button}/>)
+                guide.icon = (<MyLocationIcon color={'white'}/>)
                 guide.tooltip = "Find My Location"
                 break
             case 'reset':
-                guide.icon = (<FilterCenterFocusIcon style={styles.button}/>)
+                guide.icon = (<FilterCenterFocusIcon color={'white'}/>)
                 guide.tooltip = 'Reset Map View'
             }
             return guide
@@ -39,7 +32,8 @@ export default function FloatingButton(props) {
 
     return (
 
-        <Fab sx={{bgcolor: 'orange', mb: 5, ml: 3, mr: 3}}
+        <Fab sx={{mb: 5, ml: 3, mr: 3}}
+             color={'secondary'}
              size={'large'}
              onClick={clickFunc}
         >
