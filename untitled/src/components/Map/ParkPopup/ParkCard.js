@@ -22,12 +22,11 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import Box from "@mui/material/Box"
 import {useMap} from "react-leaflet"
 import {useTheme} from "@mui/styles"
-import L from 'leaflet'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 
 export default function ParkCard(props) {
 
-    const {data, queryLocation} = props
+    const {data, distance} = props
 
     const map = useMap()
     const theme = useTheme()
@@ -37,7 +36,6 @@ export default function ParkCard(props) {
             <NaturePeopleIcon/>
         </Avatar>)
     }
-
     const styles = {
         button: {
             mr: 1,
@@ -57,9 +55,6 @@ export default function ParkCard(props) {
     }
 
     const [lat, lon] = data.centroid
-    const here = L.latLng(lat, lon)
-    const there = L.latLng(queryLocation.latitude, queryLocation.longitude)
-    const distance = (here.distanceTo(there) * 0.000621371).toFixed(2)
 
     const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=`
     const fixURL = `https://seeclickfix.com/web_portal/HMhVHR4G4NEv79TUV8nhnP27/report/location?lat=${lat}&lng=${lon}`

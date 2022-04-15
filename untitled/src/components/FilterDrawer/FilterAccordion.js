@@ -102,6 +102,7 @@ export default function FilterAccordion(props) {
     const filtersOnClick = (e) => {
         // filter apply/clear actions...
         // 1. which button is it?  apply is a boolean where 'apply filters' is true
+        e.preventDefault()
         setDrawerOpen(false)
         const apply = e.target.outerText.toLowerCase() === 'apply filters'
 
@@ -242,7 +243,6 @@ export default function FilterAccordion(props) {
 
                     <Button sx={{mt: 5, color: 'info', backgroundColor: 'white'}}
                             key={'clear'}
-                            variant={'contained'}
                             size={'medium'}
                             onClick={e => filtersOnClick(e)}
                     >

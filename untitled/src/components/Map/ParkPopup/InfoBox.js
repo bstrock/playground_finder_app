@@ -6,25 +6,34 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ParkCard from "./ParkCard"
 import EquipmentCard from "./EquipmentCard"
-import {Component} from "react"
+import {useCallback, useEffect, useState} from "react"
+import L from "leaflet";
 
-export default class InfoBox extends Component {
-    state = {value: 0, data: null, queryLocation: null}
+export default function InfoBox(props) {
+    const {data, queryLocation} = props
+    const [lat, lon] = data.centroid
 
-    handleChange = (event, newValue) => {
-        this.setState({value: newValue, data: this.state.data})
-    }
 
-    TabPanel(props) {
-        const {children, value, index, ...other} = props;
+    const getDistance = useCallback(
+        (toPoint) => {
+        const here = L.latLng(lat, lon)
+        const there = L.latLng(toPoint.latitude, toPoint.longitude)
+
+        // apparently this is how you're supposed to round a number to two digits without a trailing zero
+        // javascript is so weird...what's wrong with round(val, digits) you guys... or this.round(2) ???
+        return +(here.distanceTo(there) * 0.000621371).toFixed(2)
+        }, [lat, lon]
+    )
+
+    const [value, setValue] = useState(0)
+    const [distance, setDistance] = useState(getDistance(queryLocation))
+
+    function TabPanel(props) {
+        const {children, value, index} = props;
 
         return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`vertical-tabpanel-${index}`}
-                aria-labelledby={`vertical-tab-${index}`}
-                {...other}
+            <div role="tabpanel"
+                 hidden={value !== index}
             >
                 {value === index && (
                     <Box sx={{p: 0}}>
@@ -32,63 +41,56 @@ export default class InfoBox extends Component {
                     </Box>
                 )}
             </div>
-        );
-    }
-
-    a11yProps(index) {
-        return {
-            id: `vertical-tab-${index}`,
-            'aria-controls': `vertical-tabpanel-${index}`,
-        };
-    }
-
-    constructor(props) {
-        super(props)
-        this.TabPanel.propTypes = {
-            children: PropTypes.node,
-            index: PropTypes.number.isRequired,
-            value: PropTypes.number.isRequired,
-        };
-
-        this.state.data = props.data
-        this.state.queryLocation = props.queryLocation
-    }
-
-    render() {
-        return (
-            <Box sx={{bgcolor: 'paper.background'}}>
-
-                <Box sx={{flexGrow: 1, bgcolor: 'paper.background', display: "block"}}>
-                    <Tabs sx={{justifyContent: 'left', borderBottom: 1, borderColor: 'divider'}}
-                          variant="scrollable"
-                          scrollButtons
-                          allowScrollButtonsMobile
-                          value={this.state.value}
-                          onChange={this.handleChange}
-                          aria-label="info-box-tabs">
-                        <Tab label="Info" {...this.a11yProps(0)} />
-                        <Tab label="Equipment" {...this.a11yProps(1)} />
-                        <Tab label="Amenities" {...this.a11yProps(2)} />
-                        <Tab label="Sports" {...this.a11yProps(3)} />
-                    </Tabs>
-                </Box>
-
-                <this.TabPanel value={this.state.value} index={0}>
-                    <ParkCard data={this.state.data} queryLocation={this.state.queryLocation}/>
-                </this.TabPanel>
-
-                <this.TabPanel value={this.state.value} index={1}>
-                    <EquipmentCard data={this.state.data} whichOne={'equipment'}/>
-                </this.TabPanel>
-
-                <this.TabPanel value={this.state.value} index={2}>
-                    <EquipmentCard data={this.state.data} whichOne={'amenities'}/>
-                </this.TabPanel>
-
-                <this.TabPanel value={this.state.value} index={3}>
-                    <EquipmentCard data={this.state.data} whichOne={'sports_facilities'}/>
-                </this.TabPanel>
-            </Box>
         )
     }
+
+    TabPanel.propTypes = {
+        children: PropTypes.node,
+        index: PropTypes.number.isRequired,
+        value: PropTypes.number.isRequired,
+    }
+
+    const handleChange = (e) => {
+        setValue(Number(e.target.name))
+    }
+
+    useEffect(() => {
+            setDistance(getDistance(queryLocation))
+        }, [getDistance, queryLocation]
+    )
+
+    return (
+        <Box sx={{bgcolor: 'paper.background'}}>
+
+            <Box sx={{flexGrow: 1, bgcolor: 'paper.background', display: "block"}}>
+                <Tabs sx={{justifyContent: 'left', borderBottom: 1, borderColor: 'divider'}}
+                      variant="scrollable"
+                      scrollButtons
+                      allowScrollButtonsMobile
+                      value={value}
+                      onChange={e => handleChange(e)}>
+                    <Tab label="Info" name={0}/>
+                    <Tab label="Equipment" name={1}/>
+                    <Tab label="Amenities" name={2}/>
+                    <Tab label="Sports" name={3}/>
+                </Tabs>
+            </Box>
+
+            <TabPanel value={value} index={0}>
+                <ParkCard data={data} distance={distance}/>
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
+                <EquipmentCard data={data} whichOne={'equipment'} distance={distance}/>
+            </TabPanel>
+
+            <TabPanel value={value} index={2}>
+                <EquipmentCard data={data} whichOne={'amenities'} distance={distance}/>
+            </TabPanel>
+
+            <TabPanel value={value} index={3}>
+                <EquipmentCard data={data} whichOne={'sports_facilities'} distance={distance}/>
+            </TabPanel>
+        </Box>
+    )
 }

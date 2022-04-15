@@ -8,7 +8,7 @@ import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 
 export default function EquipmentCard(props) {
 
-    const {data, whichOne} = props
+    const {data, whichOne, distance} = props
 
     const avatar = (whichOne) => {
 
@@ -30,9 +30,11 @@ export default function EquipmentCard(props) {
 
     return (
         <Card sx={{display: 'block', height: '22em', border: 1, borderRadius: 2}} variant={'outlined'}>
-            <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'center', p: 1}}
+            <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'left', p: 1}}
                         title={data.site_name}
                         titleTypographyProps={{fontSize: '1.2rem'}}
+                        subheader={`${distance} miles away`}
+                        subheaderTypographyProps={{fontStyle: 'italic'}}
                         avatar={avatar(whichOne)}/>
             <Fade in={true} timeout={700}>
 
