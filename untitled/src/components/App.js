@@ -70,14 +70,15 @@ function App() {
     }
 
     // STATES
-    const [queryLocation, setQueryLocation] = useState(initLocation)
-    const [queryParams, setQueryParams] = useState(initQueryParams)
-    const [data, setData] = useState(null)
-    const [userClickedLocate, setUserClickedLocate] = useState(false)
-    const [zoom, setZoom] = useState(setInitialMapZoom())
-    const [drawerOpen, setDrawerOpen] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [queryLocation, setQueryLocation] = useState(initLocation)  // point being queried
+    const [queryParams, setQueryParams] = useState(initQueryParams)  // selected parameters from filter menu
+    const [data, setData] = useState(null)  // data retrieved from API
+    const [userClickedLocate, setUserClickedLocate] = useState(false)  // if the user has clicked the locate button
+    const [zoom, setZoom] = useState(setInitialMapZoom())  // leaflet zoom level (responsive)
+    const [drawerOpen, setDrawerOpen] = useState(false)  // control drawer state
+    const [loading, setLoading] = useState(false)  // whether not loading is currently occuring (triggers progress indicator)
 
+    // DRAWER OPEN/CLOSE CALLBACK
     const toggleDrawer = (open) => (e) => {
         // responds to drawer close events.  button-based drawer behavior (ie, filter buttons) must be closed by setDrawerOpen directly
         if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
@@ -86,7 +87,7 @@ function App() {
         setDrawerOpen(open);
     }
 
-    // load data at app startup and when queryParams changed via filter button
+    // DATA LOADING FROM API
     useEffect(() => {
         setLoading(true)
         apiQuery(queryLocation, queryParams)

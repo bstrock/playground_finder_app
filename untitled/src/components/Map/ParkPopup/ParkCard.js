@@ -84,7 +84,6 @@ export default function ParkCard(props) {
                                image={require("../../../images/playgrounds/" + data.site_id + ".jpg")}
                                alt={data.site_name + ' photo'}/>
 
-                    <>
                         <Box sx={{display: 'flex', justifyContent: 'left', ml: 2, flexGrow: 1}}>
                             <IconButton sx={{ml: 1, mr: 1, p:0, color: theme.palette.common.black}}
                                         size={'medium'}
@@ -102,55 +101,51 @@ export default function ParkCard(props) {
                                 <br/>
                             </Typography>
                         </Box>
-                    </>
-                    <CardActions sx={{align: 'center', justifyContent: 'center'}}>
-                        <ButtonGroup variant={'contained'} size={'medium'} sx={{bgcolor: 'primary.light'}}>
-                            <Tooltip title="Walk There!">
-                                <IconButton styles={styles.button}
-                                            sx={{color: theme.palette.primary.dark}}
-                                            size={'medium'}
-                                            onClick={onClickUrl(directionsUrl + 'walking')}>
-                                    <DirectionsWalkIcon/>
-                                </IconButton>
-                            </Tooltip>
+                        <CardActions sx={{align: 'center', justifyContent: 'center'}}>
+                            <ButtonGroup variant={'contained'} size={'medium'} sx={{bgcolor: 'primary.light'}}>
+                                <Tooltip title="Walk There!">
+                                    <IconButton styles={styles.button}
+                                                sx={{color: theme.palette.primary.dark}}
+                                                size={'medium'}
+                                                onClick={onClickUrl(directionsUrl + 'walking')}>
+                                        <DirectionsWalkIcon/>
+                                    </IconButton>
+                                </Tooltip>
 
-                            <Tooltip title="Bike There!">
-                                <IconButton styles={styles.button}
-                                            sx={{color: theme.palette.primary.dark}}
-                                            size={'medium'}
-                                            onClick={onClickUrl(directionsUrl + 'bicycling')}>
-                                    <DirectionsBikeIcon/>
-                                </IconButton>
-                            </Tooltip>
+                                <Tooltip title="Bike There!">
+                                    <IconButton styles={styles.button}
+                                                sx={{color: theme.palette.primary.dark}}
+                                                size={'medium'}
+                                                onClick={onClickUrl(directionsUrl + 'bicycling')}>
+                                        <DirectionsBikeIcon/>
+                                    </IconButton>
+                                </Tooltip>
 
-                            <Tooltip title="Bus There!">
-                                <IconButton styles={styles.button}
-                                            sx={{color: theme.palette.primary.dark}}
-                                            size={'medium'}
-                                            onClick={onClickUrl(directionsUrl + 'transit')}>
-                                    <DirectionsBusIcon/>
-                                </IconButton>
-                            </Tooltip>
+                                <Tooltip title="Bus There!">
+                                    <IconButton styles={styles.button}
+                                                sx={{color: theme.palette.primary.dark}}
+                                                size={'medium'}
+                                                onClick={onClickUrl(directionsUrl + 'transit')}>
+                                        <DirectionsBusIcon/>
+                                    </IconButton>
+                                </Tooltip>
 
-                            <Tooltip title="Drive There!">
-                                <IconButton styles={styles.button}
-                                            sx={{color: theme.palette.primary.dark}}
-                                            size={'medium'}
-                                            onClick={onClickUrl(directionsUrl + 'driving')}>
-                                    <DirectionsCarIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={'Report Issue'}>
-                                <IconButton sx={{color: theme.palette.primary.dark}}
-                                            size={'small'}
-                                            onClick={onClickUrl(fixURL)}>
-                                    <ReportProblemIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </ButtonGroup>
-                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-
-                        </Box>
+                                <Tooltip title="Drive There!">
+                                    <IconButton styles={styles.button}
+                                                sx={{color: theme.palette.primary.dark}}
+                                                size={'medium'}
+                                                onClick={onClickUrl(directionsUrl + 'driving')}>
+                                        <DirectionsCarIcon/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title={'Report Issue'}>
+                                    <IconButton sx={{color: theme.palette.primary.dark}}
+                                                size={'small'}
+                                                onClick={onClickUrl(fixURL)}>
+                                        <ReportProblemIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </ButtonGroup>
                     </CardActions>
                     <Divider/>
                 </CardContent>

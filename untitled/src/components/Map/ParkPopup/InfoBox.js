@@ -36,8 +36,8 @@ export default function InfoBox(props) {
                  hidden={value !== index}
             >
                 {value === index && (
-                    <Box sx={{p: 0}}>
-                        <Typography>{children}</Typography>
+                    <Box sx={{p: 1}}>
+                        <Typography component={'span'}>{children}</Typography>
                     </Box>
                 )}
             </div>

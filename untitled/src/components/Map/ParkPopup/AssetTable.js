@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 function createData(label, value) {
     const words = label.split("_")
@@ -58,7 +57,6 @@ export default function AssetTable(props) {
     alpha_keys.reverse()
     let alpha_sorted_rows = []
 
-
     for (let i = 0; i < alpha_keys.length; i++) {
         let rows = alpha_sort[alpha_keys[i]]
         for (let j = 0; j < rows.length; j++) {
@@ -68,7 +66,7 @@ export default function AssetTable(props) {
 
     return (
         <>
-        <TableContainer style={{maxHeight: 300}} component={Paper}>
+        <TableContainer style={{maxHeight: 300}}>
 
             <Table sx={{minWidth: 50}} stickyHeader aria-label="simple table">
 

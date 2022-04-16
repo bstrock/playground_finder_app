@@ -47,11 +47,9 @@ export default function EquipmentCard(props) {
                 }}>
 
                     <Box>
-                        <>
-                            <Divider/>
-                            <AssetTable data={data[whichOne]} whichOne={whichOne}/>
-                            <Divider/>
-                        </>
+                        <Divider/>
+                        <AssetTable data={data[whichOne]} whichOne={whichOne}/>
+                        <Divider/>
                     </Box>
 
                 </CardContent>
