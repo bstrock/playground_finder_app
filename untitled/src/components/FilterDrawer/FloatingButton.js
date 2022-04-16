@@ -1,28 +1,29 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {Fab, Tooltip} from "@mui/material";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
+import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 
 export default function FloatingButton(props) {
 
     // destructure props
     const {which, clickFunc} = props
     // styles object
+    const buttonColorStyle = {color: 'white'}
 
     const getButtonGuide = (which) => {
         let guide = {}
         // eslint-disable-next-line default-case
         switch (which) {
             case 'filter':
-                guide.icon = (<FilterAltIcon color={'white'}/>)
+                guide.icon = (<FilterAltIcon sx={buttonColorStyle}/>)
                 guide.tooltip = "Filter Playgrounds"
                 break
             case 'location':
-                guide.icon = (<MyLocationIcon color={'white'}/>)
+                guide.icon = (<MyLocationIcon sx={buttonColorStyle}/>)
                 guide.tooltip = "Find My Location"
                 break
             case 'reset':
-                guide.icon = (<FilterCenterFocusIcon color={'white'}/>)
+                guide.icon = (<ZoomOutMapIcon sx={buttonColorStyle}/>)
                 guide.tooltip = 'Reset Map View'
             }
             return guide

@@ -36,6 +36,16 @@ function App() {
     const maxNorthEast = L.latLng(44.38, -94.12)
     const maxBounds = L.latLngBounds(maxSouthWest, maxNorthEast)
 
+
+    // marker icon
+    const parkIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+    const parkIcon = new L.Icon({
+        iconUrl: parkIconURL,
+        iconRetinaUrl: parkIconURL,
+        iconAnchor: [15, 40],
+        popupAnchor: [0, 0]
+    })
+
     // starting position for the map and API query
     let initLocation = {
         latitude: 44.855,
@@ -123,6 +133,7 @@ function App() {
                                   setZoom={setZoom}
                                   zoomFunc={setInitialMapZoom}
                                   setLoading={setLoading}
+                                  parkIcon={parkIcon}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}

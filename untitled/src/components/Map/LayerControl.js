@@ -1,14 +1,14 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
 import React, {useState} from "react"
-import L from "leaflet";
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
-import {ButtonGroup, CircularProgress, LinearProgress} from "@mui/material"
+import {ButtonGroup} from "@mui/material"
 import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
 import {useTheme} from "@mui/styles"
 
+// HELPER FUNCTIONS
 function reverseCoordinates(coords) {
     // we take in the playgrounds as polygons, but need to find centerpoints for the markers
     // in order to do that, we need to switch all xys from the API, thanks to Leaflet's lovely
@@ -34,6 +34,7 @@ function findMeanCenter(coords) {
     return [average(xx), average(yy)]
 }
 
+// COMPONENT BODY
 export default function LayerControl(props) {
 
     // props destructuring
@@ -47,26 +48,27 @@ export default function LayerControl(props) {
         toggleDrawer,
         setZoom,
         zoomFunc,
-        setLoading
+        setLoading,
+        parkIcon
     } = props
 
+    // state
     const [showSearchRadius, setShowSearchRadius] = useState(true)
 
+    // hooks
     const map = useMap()
-    const centroids = []
     const theme = useTheme()
 
-    const pathOptions = {color: theme.palette.secondary.dark, fillColor: theme.palette.secondary.main, fillOpacity: 1, weight: 2}  // playground polygon styles
+    // container
+    const centroids = []
+
+    // ep boundary data
     const json = require('../../data/ep_boundary.json'); // eden prairie border
-    const boundaryPathOptions = {color: theme.palette.common.black, fillColor: 'white', fillOpacity: 0, weight: 2}  // ensure border polygon isn't filled
+
+    // path style options
+    const pathOptions = {color: theme.palette.secondary.dark, fillColor: theme.palette.secondary.main, fillOpacity: 1, weight: 2}  // playground polygon styles
+    const boundaryPathOptions = {color: '#212121', fillColor: 'white', fillOpacity: 0, weight: 2}  // ensure border polygon isn't filled
     const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, weight: 3}
-    const markerIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
-    const parkIcon = new L.Icon({
-        iconUrl: markerIconURL,
-        iconRetinaUrl: markerIconURL,
-        iconAnchor: [15, 40],
-        popupAnchor: [0, 0]
-    })
 
     const miles_to_meters = (radius) => radius * 1609.34
     const locateUserOnClickFunc = () => {

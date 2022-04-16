@@ -22,7 +22,7 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import Box from "@mui/material/Box"
 import {useMap} from "react-leaflet"
 import {useTheme} from "@mui/styles"
-import LocationOnIcon from '@mui/icons-material/LocationOn'
+import ZoomInMapIcon from '@mui/icons-material/ZoomInMap'
 
 export default function ParkCard(props) {
 
@@ -31,11 +31,12 @@ export default function ParkCard(props) {
     const map = useMap()
     const theme = useTheme()
 
-    const avatar = () => {
-        return (<Avatar sx={{bgcolor: theme.palette.primary.main}}>
-            <NaturePeopleIcon/>
-        </Avatar>)
-    }
+    const avatar = (
+            <Avatar sx={{bgcolor: theme.palette.primary.main}}>
+                <NaturePeopleIcon/>
+            </Avatar>
+        )
+
     const styles = {
         button: {
             mr: 1,
@@ -69,7 +70,7 @@ export default function ParkCard(props) {
                         subheader={`${distance} miles away`}
                         subheaderTypographyProps={{fontStyle: 'italic'}}
                         titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
-                        avatar={avatar()}/>
+                        avatar={avatar}/>
             <Fade in={true} timeout={700}>
 
                 <CardContent sx={{
@@ -92,7 +93,7 @@ export default function ParkCard(props) {
                                             map.flyTo([lat, lon], 18)
                                         }}
                             >
-                                <LocationOnIcon sx={{display: 'flex', alignSelf: 'left', m: 1}} color={'primary'}/>
+                                <ZoomInMapIcon sx={{display: 'flex', alignSelf: 'left', m: 1, color: 'primary.dark'}}/>
                             </IconButton>
                             <Typography display={'flex'} align={'left'} variant={'subtitle2'}>
                                 {`${data.addr_street1}`}

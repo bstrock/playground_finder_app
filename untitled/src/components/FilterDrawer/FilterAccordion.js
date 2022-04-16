@@ -12,6 +12,8 @@ import Button from "@mui/material/Button"
 import AccordionTemplate from "./AccordionTemplate"
 import {useTheme} from "@mui/styles";
 
+
+
 export default function FilterAccordion(props) {
 
     // props destructuring
