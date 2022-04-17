@@ -6,24 +6,23 @@ import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 export default function FloatingButton(props) {
 
     // destructure props
-    const {which, clickFunc} = props
+    const {which, clickFunc, buttonColor} = props
     // styles object
-    const buttonColorStyle = {color: 'white'}
 
     const getButtonGuide = (which) => {
         let guide = {}
         // eslint-disable-next-line default-case
         switch (which) {
             case 'filter':
-                guide.icon = (<FilterAltIcon sx={buttonColorStyle}/>)
+                guide.icon = (<FilterAltIcon sx={{color: 'white', borderColor: 'white'}}/>)
                 guide.tooltip = "Filter Playgrounds"
                 break
             case 'location':
-                guide.icon = (<MyLocationIcon sx={buttonColorStyle}/>)
+                guide.icon = (<MyLocationIcon sx={{color: 'black'}}/>)
                 guide.tooltip = "Find My Location"
                 break
             case 'reset':
-                guide.icon = (<ZoomOutMapIcon sx={buttonColorStyle}/>)
+                guide.icon = (<ZoomOutMapIcon sx={{color: 'white'}}/>)
                 guide.tooltip = 'Reset Map View'
             }
             return guide
@@ -33,8 +32,8 @@ export default function FloatingButton(props) {
 
     return (
 
-        <Fab sx={{mb: 5, ml: 3, mr: 3}}
-             color={'secondary'}
+        <Fab sx={{mb: 5, ml: 3, mr: 3, borderColor: 'white', borderWidth: 'thick'}}
+             color={buttonColor}
              size={'large'}
              onClick={clickFunc}
         >

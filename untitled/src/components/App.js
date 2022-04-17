@@ -145,7 +145,7 @@ function App() {
                 </MapContainer>
             </>
         </ThemeProvider>
-    );
+    )
 }
 
-export default App;
+export default App
