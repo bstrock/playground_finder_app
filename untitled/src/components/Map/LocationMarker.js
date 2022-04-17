@@ -47,11 +47,10 @@ export default function LocationMarker(props) {
             {
                 dragend() {
                     const marker = markerRef.current
-                    if (marker != null) {
-                        const latLng = marker.getLatLng()
-                        setQueryLocation({latitude: latLng.lat, longitude: latLng.lng})
-                    }
-                },
+                    console.log(marker)
+                    const latLng = marker.getLatLng()
+                    setQueryLocation({latitude: latLng.lat, longitude: latLng.lng})
+                }
             }
         ),
         [setQueryLocation]

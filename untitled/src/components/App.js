@@ -26,6 +26,9 @@ function App() {
                 dark: '#c17900',
                 light: '#f9a825'
             },
+            info: {
+                main: '#772B67'
+            },
             common: {
                 black: '#1D1D1D'
             }
