@@ -103,15 +103,25 @@ function App() {
     const markerRef = useRef(null)
 
     // DATA LOADING FROM API
-    useEffect(() => {
+    useEffect( () => {
+        // for some reason, leaflet decided to start firing clicks when dragend is triggered on a moveable marker
+        // this would cause the user location popup to open every time the marker was moved- no bueno.
+        // to fix this, we have to intercept the setState hook emanating from the LocationMarker component
+        // (setQueryLocation) and then remove the click handler from the marker.
+
         const marker = markerRef.current
         let e
+        // This works, but disables the popup permanently.
+        // Thus, we capture the event handler before removing it, allow the event to fire without being handled or
+        // causing a failure, then restore the event handler.
+
         if (marker != null) {
-            e = marker._events.click
-            console.log(e)
-            marker._events.click = []
+            // Naturally these two steps need to fall under a null check against the marker, so that the markerRef
+            // doesn't crash the site on load (since the marker doesn't exist yet).
+            e = marker._events.click  // capture
+            marker._events.click = []  // kill
         } else {
-            e = null
+            e = null  // first time loading
         }
         setLoading(true)
         apiQuery(queryLocation, queryParams)
@@ -119,7 +129,9 @@ function App() {
                 setData(data)
                 setLoading(false)
                 if (e !== null) {
-                    marker._events.click = e
+                    // given that the marker exists, the event handler is re-attached after the api data has been loaded.
+                    // problem solved.  That took like 3 hours to figure out.
+                    marker._events.click = e  // take your dirty event handler back, go on, take it
                 }
             })
     }, [setLoading, queryLocation, queryParams])
