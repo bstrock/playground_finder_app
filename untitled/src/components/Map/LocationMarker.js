@@ -18,11 +18,10 @@ import UserGuide from "./UserGuide"
 
 export default function LocationMarker(props) {
     // destructure props
-    const {setQueryLocation, userClickedLocate, queryLocation} = props
+    const {setQueryLocation, userClickedLocate, queryLocation, markerRef} = props
 
     // hooks
     const map = useMap()
-    const markerRef = useRef(null)
     const theme = useTheme()
 
     // get icons

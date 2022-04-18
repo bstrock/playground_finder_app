@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import L from 'leaflet'
 import '../App.css'
 import 'leaflet/dist/leaflet.css'
@@ -100,13 +100,27 @@ function App() {
         setDrawerOpen(open);
     }
 
+    const markerRef = useRef(null)
+
     // DATA LOADING FROM API
     useEffect(() => {
+        const marker = markerRef.current
+        let e
+        if (marker != null) {
+            e = marker._events.click
+            console.log(e)
+            marker._events.click = []
+        } else {
+            e = null
+        }
         setLoading(true)
         apiQuery(queryLocation, queryParams)
             .then((data) => {
                 setData(data)
                 setLoading(false)
+                if (e !== null) {
+                    marker._events.click = e
+                }
             })
     }, [setLoading, queryLocation, queryParams])
 
@@ -124,6 +138,7 @@ function App() {
                 <LocationMarker setQueryLocation={setQueryLocation}
                                 userClickedLocate={userClickedLocate}
                                 queryLocation={queryLocation}
+                                markerRef={markerRef}
                 />
                     <LayerControl data={data}
                                   loading={loading}

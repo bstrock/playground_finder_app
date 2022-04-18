@@ -8,8 +8,6 @@ import { useTheme } from '@mui/styles';
 export default function Navbar(props) {
     const {loading} = props
     const theme = useTheme()
-    console.log(theme.palette.secondary.main)
-    console.log(theme)
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static"
