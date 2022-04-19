@@ -1,25 +1,34 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Typography from "@mui/material/Typography";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import List from "@mui/material/List";
-import {Link, ListItem, ListItemIcon} from "@mui/material";
-import Box from "@mui/material/Box";
-import * as React from "react";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
-import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import MyLocationIcon from "@mui/icons-material/MyLocation";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import LinkIcon from "@mui/icons-material/Link";
-import {useTheme} from "@mui/styles";
+import Accordion from "@mui/material/Accordion"
+import AccordionSummary from "@mui/material/AccordionSummary"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import Typography from "@mui/material/Typography"
+import AccordionDetails from "@mui/material/AccordionDetails"
+import List from "@mui/material/List"
+import {Link, ListItem, ListItemIcon} from "@mui/material"
+import Box from "@mui/material/Box"
+import * as React from "react"
+import LocationOnIcon from "@mui/icons-material/LocationOn"
+import ZoomInMapIcon from "@mui/icons-material/ZoomInMap"
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import MyLocationIcon from "@mui/icons-material/MyLocation"
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk"
+import ReportProblemIcon from "@mui/icons-material/ReportProblem"
+import {useTheme} from "@mui/styles"
+import {useState} from "react"
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import LayersIcon from '@mui/icons-material/Layers'
+import HouseSidingIcon from '@mui/icons-material/HouseSiding'
 
 export default function UserGuide() {
 
     const theme = useTheme()
+
+    const [expanded, setExpanded] = useState(false)
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false)
+    }
 
     const avatars = {
         location: (
@@ -33,12 +42,13 @@ export default function UserGuide() {
             </ListItemIcon>
         ),
         zoomOut: (
-            <ListItemIcon sx={{color: theme.palette.secondary.dark, minWidth: 32}}>
+            <ListItemIcon sx={{color: theme.palette.info, minWidth: 32}}>
                 <ZoomOutMapIcon/>
             </ListItemIcon>
         ),
         filter: (
-            <ListItemIcon sx={{color: theme.palette.secondary.main, minWidth: 32}}>
+
+            <ListItemIcon sx={{color: theme.palette.primary.main, minWidth: 32}}>
                 <FilterAltIcon/>
             </ListItemIcon>
         ),
@@ -58,13 +68,23 @@ export default function UserGuide() {
             </ListItemIcon>
         ),
         problem: (
-            <ListItemIcon sx={{color: 'warning', minWidth: 32}}>
+            <ListItemIcon sx={{color: '#BCBE14', minWidth: 32}}>
                 <ReportProblemIcon/>
             </ListItemIcon>
         ),
-        link: (
+        directoryLink: (
             <ListItemIcon sx={{color: theme.palette.primary.dark, minWidth: 32}}>
-                <LinkIcon/>
+                <FormatListBulletedIcon/>
+            </ListItemIcon>
+        ),
+        parkFinderLink: (
+            <ListItemIcon sx={{color: theme.palette.secondary.main, minWidth: 32}}>
+                <LayersIcon/>
+            </ListItemIcon>
+        ),
+        rentalLink: (
+            <ListItemIcon sx={{color: theme.palette.info, minWidth: 32}}>
+                <HouseSidingIcon/>
             </ListItemIcon>
         ),
     }
@@ -80,11 +100,20 @@ export default function UserGuide() {
 
     const listItemStyles = {p: 1}
 
+    const styles = {
+        accordionSummary: {
+            height: '1em',
+            justifyContent: 'center',
+            alignContent: 'center',
+            width: 'fixed'
+        }
+    }
+
     return (
         <>
-            <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon/>}
-                                  aria-controls="panel1a-content"
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <AccordionSummary styles={styles.accordionSummary}
+                                  expandIcon={<ExpandMoreIcon/>}
                                   id="panel1a-header"
                 >
                     <Typography variant={'subtitle1'}>Explore</Typography>
@@ -115,10 +144,10 @@ export default function UserGuide() {
                     </List>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
                     <Typography variant={'subtitle1'}>Filter & Search</Typography>
@@ -149,11 +178,10 @@ export default function UserGuide() {
                     </List>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
+                    id="panel3a-header"
                 >
                     <Typography variant={'subtitle1'}>Go There!</Typography>
                 </AccordionSummary>
@@ -183,11 +211,10 @@ export default function UserGuide() {
                     </List>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
+                    id="panel4a-header"
                 >
                     <Typography variant={'subtitle1'}>Resources</Typography>
                 </AccordionSummary>
@@ -199,28 +226,28 @@ export default function UserGuide() {
                             of Eden Prairie:</Box>
                         </Typography>
                         <ListItem sx={listItemStyles}>
-                            {avatars.link}
+                            {avatars.directoryLink}
                             <Typography component={'div'} variant={'caption'}>
                                 The <Link href={urlHolder.parkDirectory}>EP Parks Directory</Link> provides a list of
                                 all parks in Eden Prairie.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
-                            {avatars.link}
+                            {avatars.parkFinderLink}
                             <Typography component={'div'} variant={'caption'}>
-                                The <Link href={urlHolder.parkFinder}>EP Park Finder</Link> is a moreo comprehensive
+                                The <Link href={urlHolder.parkFinder}>EP Park Finder</Link> is a more comprehensive
                                 tool to explore all of the city's outdoor activities.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
-                            {avatars.link}
+                            {avatars.rentalLink}
                             <Typography component={'div'} variant={'caption'}>
                                 Many parks offer <Link href={urlHolder.rentFacility}>Rental Facilities</Link> available
                                 to city residents.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
-                            {avatars.link}
+                            {avatars.problem}
                             <Typography component={'div'} variant={'caption'}>
                                 Eden Prairie's <Link href={urlHolder.seeClickFix}>SeeClickFix</Link> can be used to
                                 report maintenance problems throughout the city.

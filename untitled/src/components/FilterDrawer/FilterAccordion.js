@@ -12,8 +12,6 @@ import Button from "@mui/material/Button"
 import AccordionTemplate from "./AccordionTemplate"
 import {useTheme} from "@mui/styles";
 
-
-
 export default function FilterAccordion(props) {
 
     // props destructuring
@@ -81,7 +79,7 @@ export default function FilterAccordion(props) {
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false)
-    };
+    }
 
     // event handler to update display of slider distance value
     const updateDistVal = (val) => setDistValue(val)
@@ -142,6 +140,7 @@ export default function FilterAccordion(props) {
                 width: 'fixed'
             }
         }
+
     const theme = useTheme()
     return (
         <>
@@ -156,7 +155,6 @@ export default function FilterAccordion(props) {
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary style={styles.accordionSummary}
                                       expandIcon={<ExpandMoreIcon/>}
-                                      aria-controls="panel1bh-content"
                                       id="panel1bh-header"
                     >
                         {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE */}

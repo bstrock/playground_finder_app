@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import {useTheme} from "@mui/styles";
 
 function createData(label, value) {
     const words = label.split("_")
@@ -17,6 +18,8 @@ function createData(label, value) {
 
 export default function AssetTable(props) {
     const {data, whichOne} = props
+
+    const theme = useTheme()
 
     const headers = {
         equipment: ['Equipment', 'Quantity'],
@@ -68,15 +71,15 @@ export default function AssetTable(props) {
         <>
         <TableContainer style={{maxHeight: 300}}>
 
-            <Table sx={{minWidth: 50}} stickyHeader aria-label="simple table">
+            <Table sx={{minWidth: 50}} stickyHeader>
 
                 <TableHead>
                     <TableRow>
-                        <TableCell sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                        <TableCell sx={{fontWeight: 800, backgroundColor: theme.palette.primary.dark, color: 'white'}}>
                             {headers[whichOne][0]}
                         </TableCell>
                         <TableCell align="center"
-                                   sx={{fontWeight: 800, backgroundColor: '#157719', color: 'white'}}>
+                                   sx={{fontWeight: 800, backgroundColor: theme.palette.primary.dark, color: 'white'}}>
                             {headers[whichOne][1]}
                         </TableCell>
                     </TableRow>

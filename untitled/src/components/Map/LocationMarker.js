@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef} from "react"
+import {useEffect, useMemo} from "react"
 import {Marker, Popup, useMap} from "react-leaflet"
 import L from 'leaflet'
 import Typography from "@mui/material/Typography"
@@ -25,7 +25,7 @@ export default function LocationMarker(props) {
     const theme = useTheme()
 
     // get icons
-    const markerIcon = 'https://api.geoapify.com/v1/icon/?type=material&color=%23c000ff&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+    const markerIcon = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689`
     const userIcon = new L.Icon({
         iconUrl: markerIcon,
         iconRetinaUrl: markerIcon,
@@ -52,7 +52,7 @@ export default function LocationMarker(props) {
                 }
             }
         ),
-        [setQueryLocation]
+        [markerRef, setQueryLocation]
     )
 
     // location button callback
@@ -76,6 +76,7 @@ export default function LocationMarker(props) {
                 draggable={true}
                 eventHandlers={markerWasMoved}
                 ref={markerRef}
+                zIndexOffset={500}
         >
             <Popup>
                 <Box>

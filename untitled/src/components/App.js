@@ -27,7 +27,7 @@ function App() {
                 light: '#f9a825'
             },
             info: {
-                main: '#772B67'
+                main: '#c000ff'
             },
             common: {
                 black: '#1D1D1D'
@@ -41,7 +41,7 @@ function App() {
 
 
     // marker icon
-    const parkIconURL = 'https://api.geoapify.com/v1/icon/?type=material&color=%23ff9632&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+    const parkIconURL = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.secondary.main.replace("#", '%23')}&size=medium&icon=nature_people&scaleFactor=1&apiKey=2aa948af6f2d46f6b12acc10827cc689`
     const parkIcon = new L.Icon({
         iconUrl: parkIconURL,
         iconRetinaUrl: parkIconURL,
@@ -74,7 +74,7 @@ function App() {
             mapZoom = 11
         } else if (viewportWidth <= MEDIUM) {
             mapZoom = 12
-        }  else if (viewportWidth <= LARGE){
+        } else if (viewportWidth <= LARGE) {
             mapZoom = 13
         } else {
             mapZoom = 14
@@ -103,23 +103,23 @@ function App() {
     const markerRef = useRef(null)
 
     // DATA LOADING FROM API
-    useEffect( () => {
+    useEffect(() => {
+
+        const marker = markerRef.current
         // for some reason, leaflet decided to start firing clicks when dragend is triggered on a moveable marker
         // this would cause the user location popup to open every time the marker was moved- no bueno.
         // to fix this, we have to intercept the setState hook emanating from the LocationMarker component
         // (setQueryLocation) and then remove the click handler from the marker.
-
-        const marker = markerRef.current
-        let e
         // This works, but disables the popup permanently.
         // Thus, we capture the event handler before removing it, allow the event to fire without being handled or
         // causing a failure, then restore the event handler.
 
+        let e  // catches event
         if (marker != null) {
             // Naturally these two steps need to fall under a null check against the marker, so that the markerRef
             // doesn't crash the site on load (since the marker doesn't exist yet).
-            e = marker._events.click  // capture
-            marker._events.click = []  // kill
+            e = marker._events.click  // capture event handler
+            marker._events.click = []  // kill event handler
         } else {
             e = null  // first time loading
         }
@@ -129,8 +129,7 @@ function App() {
                 setData(data)
                 setLoading(false)
                 if (e !== null) {
-                    // given that the marker exists, the event handler is re-attached after the api data has been loaded.
-                    // problem solved.  That took like 3 hours to figure out.
+                    // given that the marker exists, the event handler is re-attached after the api data has been loaded
                     marker._events.click = e  // take your dirty event handler back, go on, take it
                 }
             })
@@ -147,11 +146,11 @@ function App() {
                               minZoom={10}
                               zoomControl={true}
                 >
-                <LocationMarker setQueryLocation={setQueryLocation}
-                                userClickedLocate={userClickedLocate}
-                                queryLocation={queryLocation}
-                                markerRef={markerRef}
-                />
+                    <LocationMarker setQueryLocation={setQueryLocation}
+                                    userClickedLocate={userClickedLocate}
+                                    queryLocation={queryLocation}
+                                    markerRef={markerRef}
+                    />
                     <LayerControl data={data}
                                   loading={loading}
                                   initLocation={initLocation}
