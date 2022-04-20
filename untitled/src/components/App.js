@@ -87,6 +87,7 @@ function App() {
     const [queryParams, setQueryParams] = useState(initQueryParams)  // selected parameters from filter menu
     const [data, setData] = useState(null)  // data retrieved from API
     const [userClickedLocate, setUserClickedLocate] = useState(false)  // if the user has clicked the locate button
+
     const [zoom, setZoom] = useState(setInitialMapZoom())  // leaflet zoom level (responsive)
     const [drawerOpen, setDrawerOpen] = useState(false)  // control drawer state
     const [loading, setLoading] = useState(false)  // whether not loading is currently occuring (triggers progress indicator)
@@ -150,6 +151,9 @@ function App() {
                                     userClickedLocate={userClickedLocate}
                                     queryLocation={queryLocation}
                                     markerRef={markerRef}
+                                    initLocation={initLocation}
+                                    setZoom={setZoom}
+                                    zoomFunc={setInitialMapZoom}
                     />
                     <LayerControl data={data}
                                   loading={loading}

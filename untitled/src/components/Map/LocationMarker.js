@@ -1,11 +1,11 @@
-import {useEffect, useMemo} from "react"
+import {useEffect, useMemo, useState} from "react"
 import {Marker, Popup, useMap} from "react-leaflet"
 import L from 'leaflet'
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import {
     Avatar,
-    Card,
+    Card, CardActions,
     CardContent,
     CardHeader,
     Fade,
@@ -15,14 +15,25 @@ import CardMedia from "@mui/material/CardMedia"
 import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import {useTheme} from "@mui/styles"
 import UserGuide from "./UserGuide"
+import Button from "@mui/material/Button";
 
 export default function LocationMarker(props) {
     // destructure props
-    const {setQueryLocation, userClickedLocate, queryLocation, markerRef} = props
+    const {
+        setQueryLocation,
+        userClickedLocate,
+        queryLocation,
+        markerRef,
+        initLocation,
+        zoomFunc,
+        setZoom
+    } = props
 
     // hooks
     const map = useMap()
     const theme = useTheme()
+
+    const [userClickedReset, setUserClickedReset] = useState(false)
 
     // get icons
     const markerIcon = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689`
@@ -70,6 +81,20 @@ export default function LocationMarker(props) {
         }, [userClickedLocate, setQueryLocation, map]
     )
 
+    // reset button callback
+    useEffect(
+        () => {
+            if (userClickedReset) {
+                setUserClickedReset(false)
+                map.closePopup()
+                const newZoom = zoomFunc()
+                setZoom(newZoom)
+                map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
+                setQueryLocation(initLocation)
+            }
+        }, [initLocation, setQueryLocation, userClickedReset, setUserClickedReset, map, zoomFunc, setZoom]
+    )
+
     return (
         <Marker position={{lat: queryLocation.latitude, lng: queryLocation.longitude}}
                 icon={userIcon}
@@ -113,6 +138,20 @@ export default function LocationMarker(props) {
 
                             </CardContent>
                         </Fade>
+                        <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
+                            <Box sx={{textAlign: 'center'}}>
+                                {//conditional rendering for reset marker button
+                                    (queryLocation.latitude !== initLocation.latitude && queryLocation.longitude !== initLocation.longitude) ? (
+                                    <Button variant={'outlined'}
+                                    onClick={() => setUserClickedReset(true)}
+                                    >
+                                    Reset Marker
+                                    </Button>
+                                    ) : null
+                                }
+
+                            </Box>
+                        </CardActions>
                     </Card>
                 </Box>
             </Popup>
