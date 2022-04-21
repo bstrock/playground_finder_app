@@ -6,7 +6,7 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import DistanceSlider from "./DistanceSlider"
-import {ButtonGroup, Divider} from "@mui/material"
+import {ButtonGroup} from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import AccordionTemplate from "./AccordionTemplate"
@@ -76,6 +76,7 @@ export default function FilterAccordion(props) {
     const [showAmenitiesCheckbox, setShowAmenitiesCheckbox] = useState(0)
     const [showSportsCheckbox, setShowSportsCheckbox] = useState(0)
 
+
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false)
@@ -98,6 +99,7 @@ export default function FilterAccordion(props) {
             sports_facilities: checkedSports.length > 0 ? checkedSports.toString() : []
         }
     }
+
 
     const filtersOnClick = (e) => {
         // filter apply/clear actions...
@@ -137,7 +139,6 @@ export default function FilterAccordion(props) {
                 height: '1em',
                 justifyContent: 'center',
                 alignContent: 'center',
-                width: 'fixed'
             }
         }
 
@@ -145,8 +146,7 @@ export default function FilterAccordion(props) {
     return (
         <>
             {/* This box contains the Accordion */}
-            <Box sx={{width: '19em', ml: 2, mr: 2}}>
-                <Divider sx={{mb: 3}} variant={'middle'}/>
+            <Box sx={{width: '18em'}}>
 
                 {/***********************************/}
                 {/* DISTANCE SLIDER ACCORDION PANEL */}
@@ -158,12 +158,17 @@ export default function FilterAccordion(props) {
                                       id="panel1bh-header"
                     >
                         {/* PANEL LABEL- UPDATES WITH SLIDER CHANGE */}
-                        <Typography sx={{mr: 1, flexShrink: 1, alignContent: 'left'}} variant={'h6'}>
-                            Distance (miles):
+                        <Box sx={{display: 'flex'}}>
+                            <Typography sx={{mr: 1, flexGrow: 1, justifyContent: 'flex-start'}} variant={'h6'}>
+                                Distance:
+                            </Typography>
+                            <Typography sx={{flexShrink: 1, justifyContent: 'flex-start', width: '2rem'}} variant={'h6'}>
+                                {` ${distValue}`}
+                            </Typography>
+                            <Typography sx={{flexShrink: 1, justifyContent: 'flex-end'}} variant={'h6'}>
+                                {distValue === 1 ? 'mile' : 'miles'}
                         </Typography>
-                        <Typography sx={{ml: 8, flexShrink: 1, alignContent: 'right'}} variant={'h6'}>
-                            {` ${distValue} `}
-                        </Typography>
+                        </Box>
 
                     </AccordionSummary>
 
@@ -211,7 +216,7 @@ export default function FilterAccordion(props) {
 
                 <AccordionTemplate expanded={expanded}
                                    panel={'panel4'}
-                                   title={'Sports Facilities'}
+                                   title={'Sports'}
                                    showCheckbox={showSportsCheckbox}
                                    setChecked={setCheckedSports}
                                    fullList={sportsList}
@@ -224,20 +229,18 @@ export default function FilterAccordion(props) {
 
             {/* APPLY/CLEAR FILTERS BUTTONS */}
             <Box sx={{textAlign: 'center'}}>
-                <ButtonGroup sx={{width: '17em', mb: 4}}>
+                <ButtonGroup sx={{width: '17em', mb: 4, justifyContent: 'center'}}>
                     <Button sx={{mt: 5, color: 'white'}}
                             key={'apply'}
                             variant={'contained'}
                             size={'medium'}
-                            onClick={e => {
-                                filtersOnClick(e)
-                            }}
+                            onClick={e => filtersOnClick(e)}
                     >
                         <Typography sx={{fontWeight: 500}}
                                     align={'center'}
                                     variant={'subtitle1'}
                         >
-                            Apply Filters
+                            Filter
                         </Typography>
                     </Button>
 
@@ -251,7 +254,7 @@ export default function FilterAccordion(props) {
                                     align={'center'}
                                     variant={'subtitle1'}
                         >
-                            Clear Filters
+                            Reset
                         </Typography>
                     </Button>
                 </ButtonGroup>

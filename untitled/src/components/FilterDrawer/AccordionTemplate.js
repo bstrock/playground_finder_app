@@ -35,12 +35,12 @@ export default function AccordionTemplate(props) {
             height: '1em',
             justifyContent: 'center',
             alignContent: 'center',
-            width: 'fixed'
+            width: 'fixed',
         },
         accordionButtonText: {
-            paddingTop: 1,
-            paddingBottom: 1,
-            width: '9rem'
+            pt: 1,
+            pb: 1,
+            mt: 1
         },
         checkbox: {
             paddingLeft: '5rem'
@@ -49,13 +49,14 @@ export default function AccordionTemplate(props) {
 
     return (
 <Accordion expanded={expanded === panel} onChange={handleChange(panel)}>
+
     <AccordionSummary
         style={styles.accordionSummary}
         expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel2bh-content"
         id="panel2bh-header"
     >
-        <Typography style={styles.accordionButtonText}
+        <Typography sx={{display: 'flex', alignSelf: 'center'}} style={styles.accordionButtonText}
                     variant={'h6'}>
             {title}
         </Typography>

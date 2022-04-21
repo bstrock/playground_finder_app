@@ -29,9 +29,9 @@ export default function FilterDrawer(props) {
                     mt: 5,
                     justifyContent: 'center',
                     alignContent: 'center',
-                    backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)',
-                    border: 1,
-                    borderRadius: '5px'
+                    border: 0,
+                    borderRadius: 0,
+                    boxShadow: 0
                 }}
                      role="presentation"
                      onKeyDown={toggleDrawer(false)}

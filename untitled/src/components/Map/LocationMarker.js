@@ -105,7 +105,7 @@ export default function LocationMarker(props) {
         >
             <Popup>
                 <Box>
-                    <Card sx={{display: 'block', border: 1, borderRadius: 2}} variant={'outlined'}>
+                    <Card sx={{display: 'block', border: 0, borderRadius: 0, boxShadow: 0}}>
                         <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'left', p: 1}}
                                     title={'Eden Prairie Playgrounds'}
                                     titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
@@ -118,7 +118,6 @@ export default function LocationMarker(props) {
                             <CardContent sx={{
                                 p: 1,
                                 minHeight: 350,
-                                backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'
                             }}>
                                 <CardMedia sx={{display: 'block', mb: 1}}
                                            component="img"
@@ -129,7 +128,7 @@ export default function LocationMarker(props) {
                                     This app will help you <Box component={"span"} fontWeight='fontWeightBold'>find and explore</Box> all 28 of the amazing public <Box component={"span"} fontWeight='fontWeightBold'>playgrounds</Box> in the community of Eden Prairie, Minnesota.
                                 </Typography>
                                 <br/>
-                                <Typography variant={'subtitle1'} fontWeight={'fontWeightBold'}>
+                                <Typography sx={{textAlign: 'center'}} variant={'subtitle1'} fontWeight={'fontWeightBold'}>
                                     User Guide
                                     <br/>
                                 </Typography>
@@ -140,8 +139,9 @@ export default function LocationMarker(props) {
                         </Fade>
                         <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
                             <Box sx={{textAlign: 'center'}}>
-                                {//conditional rendering for reset marker button
-                                    (queryLocation.latitude !== initLocation.latitude && queryLocation.longitude !== initLocation.longitude) ? (
+                                {//conditional rendering for reset marker button...only appears when marker is not in start location
+                                    (queryLocation.latitude !== initLocation.latitude &&
+                                        queryLocation.longitude !== initLocation.longitude) ? (
                                     <Button variant={'outlined'}
                                     onClick={() => setUserClickedReset(true)}
                                     >
