@@ -9,15 +9,15 @@ export default function Navbar(props) {
     const {loading} = props
     const theme = useTheme()
     return (
-        <Box sx={{flexGrow: 1}}>
-            <AppBar position="static"
-                    sx={{height: '3rem'}}
+        <Box sx={{mb: 3, display: 'flex'}}>
+            <AppBar position="absolute"
+                    sx={{height: '2rem'}}
                     color={'primary'}
             >
                     <Typography variant="h6"
-                                sx={{flexGrow: 2, color: 'black', pt: 1, ml: 2}}
+                                sx={{display: 'flex', color: 'black', alignSelf: 'center'}}
                     >
-                        EP Playground Finder
+                        Find Playgrounds in Eden Prairie
                     </Typography>
             </AppBar>
             <>
