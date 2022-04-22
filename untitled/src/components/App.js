@@ -14,6 +14,8 @@ import apiQuery from "./apiQuery";
 function App() {
     // here's the entrypoint for our app
 
+    const font = "'Signika', san-serif;"
+
     const theme = createTheme({
         palette: {
             primary: {
@@ -33,6 +35,10 @@ function App() {
                 black: '#1D1D1D'
             }
         },
+        typography: {
+            fontFamily: font,
+
+        }
     })
 
     const maxSouthWest = L.latLng(45.33, -92.8)
