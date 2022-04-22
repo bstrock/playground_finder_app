@@ -122,21 +122,21 @@ export default function UserGuide() {
                     <List>
                         <ListItem sx={listItemStyles}>
                             {avatars.location}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 To explore a playground, tap the <Box component={"span"} fontWeight='fontWeightBold'>Map
                                 Marker</Box> for an Overview.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.zoomIn}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 In the Overview, tap <Box component={"span"} fontWeight='fontWeightBold'>Zoom
                                 In</Box> to highlight the playground's location.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.zoomOut}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 Tap <Box component={"span"} fontWeight='fontWeightBold'>Reset View </Box> to return the
                                 map view to its original position.
                             </Typography>
@@ -156,21 +156,21 @@ export default function UserGuide() {
                     <List>
                         <ListItem sx={listItemStyles}>
                             {avatars.filter}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 Use the <Box component={"span"} fontWeight='fontWeightBold'>Filter</Box> button search
                                 by distance or attributes, like equipment.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.locateUser}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 Tap the <Box component={"span"} fontWeight='fontWeightBold'>Locate</Box> button to
                                 center the map on your location.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.userMarker}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 You can also drag the <Box component={"span"} fontWeight='fontWeightBold'>Location
                                 Marker</Box> to the area you'd like to search.
                             </Typography>
@@ -189,21 +189,21 @@ export default function UserGuide() {
                     <List>
                         <ListItem sx={listItemStyles}>
                             {avatars.directions}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 In the Overview, the <Box component={"span"} fontWeight='fontWeightBold'>Go
                                 There!</Box> buttons will direct you to the park using your preferred mode of transit.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.location}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 <Box component={"span"} fontWeight='fontWeightBold'>Directions</Box> always point
                                 directly to the playground. No more driving to the wrong side of the park!
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.problem}
-                            <Typography component={'div'} variant={'caption'}>
+                            <Typography component={'div'} variant={'body2'}>
                                 If you find a problem on site, tap <Box component={"span"} fontWeight='fontWeightBold'>Report
                                 Problem</Box> to open EP's SeeClickFix civic reporting tool.
                             </Typography>
@@ -220,41 +220,37 @@ export default function UserGuide() {
                 </AccordionSummary>
                 <AccordionDetails>
                     <List>
-                        <Typography component={'div'} variant={'caption'}>
+                        <Typography component={'div'} variant={'body2'}>
                             This tool compliments other resources offered by the <Box component={"span"}
                                                                                       fontWeight='fontWeightBold'>City
                             of Eden Prairie:</Box>
                         </Typography>
                         <ListItem sx={listItemStyles}>
                             {avatars.directoryLink}
-                            <Typography component={'div'} variant={'caption'}>
-                                The <Link href={urlHolder.parkDirectory}>EP Parks Directory</Link> provides a list of
-                                all parks in Eden Prairie.
+                            <Typography component={'div'} variant={'body2'}>
+                                <Link href={urlHolder.parkDirectory}>EP Parks Directory</Link>
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.parkFinderLink}
-                            <Typography component={'div'} variant={'caption'}>
-                                The <Link href={urlHolder.parkFinder}>EP Park Finder</Link> is a more comprehensive
-                                tool to explore all of the city's outdoor activities.
+                            <Typography component={'div'} variant={'body2'}>
+                                <Link href={urlHolder.parkFinder}>EP Park Finder</Link>
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.rentalLink}
-                            <Typography component={'div'} variant={'caption'}>
-                                Many parks offer <Link href={urlHolder.rentFacility}>Rental Facilities</Link> available
-                                to city residents.
+                            <Typography component={'div'} variant={'body2'}>
+                                <Link href={urlHolder.rentFacility}>Rental Facilities in EP Parks</Link>
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
                             {avatars.problem}
-                            <Typography component={'div'} variant={'caption'}>
-                                Eden Prairie's <Link href={urlHolder.seeClickFix}>SeeClickFix</Link> can be used to
-                                report maintenance problems throughout the city.
+                            <Typography component={'div'} variant={'body2'}>
+                                <Link href={urlHolder.seeClickFix}>SeeClickFix Home</Link>
                             </Typography>
                         </ListItem>
                     </List>
-                    <Typography sx={{fontStyle: 'italic'}} variant={'caption'}>
+                    <Typography sx={{fontStyle: 'italic'}} variant={'body2'}>
                         These sites were used as primary sources in the production of this app.
                         <br/><br/>
                         Many thanks to Eden Prairie's wonderful <Link href={urlHolder.parksAndRec}>Parks and
