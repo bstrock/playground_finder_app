@@ -17,8 +17,8 @@ export default function Navbar(props) {
                     <Typography variant="h6" sx={{color: 'black', ml: 1, flexGrow: 1}}>
                         Eden Prairie Playgrounds
                     </Typography>
-                    <Typography component={'span'} sx={{display: 'block', color: 'black', mr: 3, justifySelf: 'flex-end', alignSelf: 'flex-end', flexShrink: 1}} variant={'subtitle1'}>
-                        In View:  {loading ? (<CircularProgress sx={{alignSelf: 'center'}} color={'secondary'} variant={"indeterminate"} size={17}/>) : numberOfResults}
+                    <Typography component={'span'} sx={{display: 'block', color: 'black', mr: 3, justifyContent: 'flex-end', alignSelf: 'flex-end', flexShrink: 1, width: '5rem'}} variant={'subtitle1'}>
+                        In View: {'\u00A0'}{loading ? (<CircularProgress sx={{alignSelf: 'center'}} color={'secondary'} variant={"indeterminate"} size={17}/>) : numberOfResults}
                     </Typography>
 
                 </Box>

@@ -69,7 +69,7 @@ export default function FilterAccordion(props) {
     // tracks individual check boxes for filter criteria by category
     const [checkedEquipment, setCheckedEquipment] = useState(queryParams.equipment)
     const [checkedAmenities, setCheckedAmenities] = useState(queryParams.amenities)
-    const [checkedSports, setCheckedSports] = useState(queryParams.sports_facilities)
+    const [checkedSports, setCheckedSports] = useState(queryParams.sports_facilities)  // js guy says: what the heck is that line thing
 
     // tracks whether all boxes in a category are checked (also if no boxes are checked)
     const [showEquipmentCheckbox, setShowEquipmentCheckbox] = useState(0)
@@ -99,7 +99,6 @@ export default function FilterAccordion(props) {
             sports_facilities: checkedSports.length > 0 ? checkedSports.toString() : []
         }
     }
-
 
     const filtersOnClick = (e) => {
         // filter apply/clear actions...
