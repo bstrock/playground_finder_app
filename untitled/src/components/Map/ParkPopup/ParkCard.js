@@ -97,7 +97,7 @@ export default function ParkCard(props) {
                             </Typography>
                         </Box>
                         <CardActions sx={{align: 'center', justifyContent: 'center'}}>
-                            <ButtonGroup sx={{mt: 1}} variant={'contained'} size={'medium'} >
+                            <ButtonGroup sx={{mt: 1}} size={'medium'} >
                                 <Tooltip title={'Zoom to Site'}>
                                     <IconButton styles={styles.button}
                                                 sx={{color: theme.palette.info.main}}
@@ -110,6 +110,8 @@ export default function ParkCard(props) {
                                         <ZoomInMapIcon/>
                                     </IconButton>
                                 </Tooltip>
+                                <ButtonGroup sx={{}} variant={'contained'} size={'medium'} >
+
                                 <Tooltip title="Walk There!">
                                     <IconButton styles={styles.button}
                                                 sx={{color: theme.palette.primary.dark}}
@@ -136,7 +138,6 @@ export default function ParkCard(props) {
                                         <DirectionsBusIcon/>
                                     </IconButton>
                                 </Tooltip>
-
                                 <Tooltip title="Drive There!">
                                     <IconButton styles={styles.button}
                                                 sx={{color: theme.palette.primary.dark}}
@@ -145,6 +146,7 @@ export default function ParkCard(props) {
                                         <DirectionsCarIcon/>
                                     </IconButton>
                                 </Tooltip>
+                                </ButtonGroup>
                                 <Tooltip title={'Report Issue'}>
                                     <IconButton sx={{color: theme.palette.warning.main}}
                                                 size={'small'}
