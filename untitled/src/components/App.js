@@ -97,6 +97,7 @@ function App() {
     const [zoom, setZoom] = useState(setInitialMapZoom())  // leaflet zoom level (responsive)
     const [drawerOpen, setDrawerOpen] = useState(false)  // control drawer state
     const [loading, setLoading] = useState(false)  // whether not loading is currently occuring (triggers progress indicator)
+    const [numberOfResults, setNumberOfResults] = useState(null)
 
     // DRAWER OPEN/CLOSE CALLBACK
     const toggleDrawer = (open) => (e) => {
@@ -111,7 +112,7 @@ function App() {
 
     // DATA LOADING FROM API
     useEffect(() => {
-
+        // unfortunately this very short codeblock requires a great deal of commenting.
         const marker = markerRef.current
         // for some reason, leaflet decided to start firing clicks when dragend is triggered on a moveable marker
         // this would cause the user location popup to open every time the marker was moved- no bueno.
@@ -140,12 +141,20 @@ function App() {
                     marker._events.click = e  // take your dirty event handler back, go on, take it
                 }
             })
-    }, [setLoading, queryLocation, queryParams])
+    }, [setLoading, setData, queryLocation, queryParams])
+
+    useEffect(
+        () => {
+            if (data !== null) {
+                setNumberOfResults(data.features.length)
+            }
+        }, [data, setNumberOfResults]
+    )
 
     return (
         <ThemeProvider theme={theme}>
             <>
-                <Navbar loading={loading}/>
+                <Navbar loading={loading} numberOfResults={numberOfResults}/>
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={zoom}
