@@ -103,10 +103,10 @@ export default function FilterAccordion(props) {
 
     const filtersOnClick = (e) => {
         // filter apply/clear actions...
-        // 1. which button is it?  apply is a boolean where 'apply filters' is true
+        // 1. which button is it?  apply is a boolean where 'filter' is true
         e.preventDefault()
         setDrawerOpen(false)
-        const apply = e.target.outerText.toLowerCase() === 'apply filters'
+        const apply = e.target.outerText.toLowerCase() === 'filter'
 
         // 2. if we're applying, we poll the current checkbox state, otherwise for clear we use the initial state
         const params = apply ? getQueryParams() : initQueryParams

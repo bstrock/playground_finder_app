@@ -24,12 +24,12 @@ function App() {
                 light: '#99d066'
             },
             secondary: {
-                main: '#ffa726',
+                main: '#ffab00',
                 dark: '#c17900',
                 light: '#f9a825'
             },
             info: {
-                main: '#c000ff'
+                main: '#d273f3'
             },
             common: {
                 black: '#1D1D1D'

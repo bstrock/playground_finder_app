@@ -20,7 +20,7 @@ export default function Navbar(props) {
                 <>
                     {
                         !loading ? <Box sx={{height: 5, bgcolor: 'primary'}}/> :
-                            <LinearProgress sx={{height: 5}}
+                            <LinearProgress sx={{height: 8}}
                                             color={'primary'}
                                             variant={'indeterminate'}/>
                     }

@@ -56,7 +56,7 @@ export default function AccordionTemplate(props) {
         aria-controls="panel2bh-content"
         id="panel2bh-header"
     >
-        <Typography sx={{display: 'flex', alignSelf: 'center'}} style={styles.accordionButtonText}
+        <Typography sx={{display: 'flex', alignSelf: 'center', flexGrow: 1}} style={styles.accordionButtonText}
                     variant={'h6'}>
             {title}
         </Typography>
