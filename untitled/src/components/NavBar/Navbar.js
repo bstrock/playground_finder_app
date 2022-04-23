@@ -6,32 +6,50 @@ import {CircularProgress, LinearProgress} from "@mui/material";
 
 export default function Navbar(props) {
     const {loading, numberOfResults} = props
-    console.log(numberOfResults)
+
     return (
         <Box sx={{display: 'flex'}}>
             <AppBar position="relative"
-                    sx={{height: '2.1rem'}}
+                    sx={{height: '3rem', pt: 1}}
                     color={'primary'}
             >
                 <Box sx={{display: 'flex'}}>
-                    <Typography variant="h6" sx={{color: 'black', ml: 1, flexGrow: 1}}>
+                    <Typography variant="h6" sx={{color: 'black', ml: 2, flexGrow: 1}}>
                         Eden Prairie Playgrounds
                     </Typography>
-                    <Typography component={'span'} sx={{display: 'block', color: 'black', mr: 3, justifyContent: 'flex-end', alignSelf: 'flex-end', flexShrink: 1, width: '5rem'}} variant={'subtitle1'}>
-                        In View: {'\u00A0'}{loading ? (<CircularProgress sx={{alignSelf: 'center'}} color={'secondary'} variant={"indeterminate"} size={17}/>) : numberOfResults}
+                    <Typography component={'span'} sx={{
+                        display: 'block',
+                        color: 'black',
+                        bgcolor: 'white',
+                        borderRadius: '10px',
+                        mr:2,
+                        mb: 1,
+                        mt: .25,
+                        justifyContent: 'flex-end',
+                        alignSelf: 'center',
+                        flexShrink: 1,
+                        width: '6rem',
+                    }} variant={'subtitle1'}>
+                        {/*non-breaking space*/ '\u00A0'} In View: {'\u00A0'}
+                        {// conditional rendering for # of results/circular progress indicator
+                            loading ? (
+                                <CircularProgress sx={{alignSelf: 'center', justifySelf: 'center'}} color={'secondary'} variant={"indeterminate"}
+                                                  size={17}/>
+                            )
+                            : numberOfResults
+                        }
                     </Typography>
 
                 </Box>
                 <>
-                    {
+                    { // conditional rendering for linear progress indicator
                         !loading ? <Box sx={{height: 10, bgcolor: 'primary'}}/> :
                             <LinearProgress sx={{height: 10}}
-                                            color={'primary'}
+                                            color={'secondary'}
                                             variant={'indeterminate'}/>
                     }
                 </>
             </AppBar>
-
         </Box>
     )
 }
