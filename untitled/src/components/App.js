@@ -21,7 +21,8 @@ function App() {
             primary: {
                 main: '#66bb6a',
                 dark: '#387002',
-                light: '#99d066'
+                light: '#99d066',
+                contrastText: '#fff'
             },
             secondary: {
                 main: '#ffab00',
@@ -37,7 +38,6 @@ function App() {
         },
         typography: {
             fontFamily: font,
-
         }
     })
 

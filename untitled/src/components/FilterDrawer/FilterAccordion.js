@@ -25,14 +25,13 @@ export default function FilterAccordion(props) {
     // top-level lists of all filter assets
     const equipList = [
         'Bouncers',
-        'Bridges',
         'Climbers',
         'Diggers',
-        'Ladders',
-        'Musical',
-        'Sensory',
-        'Slides',
+        'Fire Poles',
+        'Monkey Bars',
         'Spinners',
+        'Tunnels',
+        'Seesaws',
         'Accessible Swings',
         'Standard Swings',
         'Toddler Swings'

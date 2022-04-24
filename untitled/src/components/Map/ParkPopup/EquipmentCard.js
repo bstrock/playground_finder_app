@@ -30,10 +30,10 @@ export default function EquipmentCard(props) {
     console.log(data)
 
     return (
-        <Card sx={{display: 'block', height: '22em', border: 0, borderRadius: 0, boxShadow: 0}}>
+        <Card sx={{display: 'block', height: '26em', border: 0, borderRadius: 0, boxShadow: 0}}>
             <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'left', p: 1}}
                         title={data.site_name}
-                        titleTypographyProps={{fontSize: '1.2rem'}}
+                        titleTypographyProps={{fontSize: '1.2rem', fontWeight: 1000}}
                         subheader={`${distance} miles away`}
                         subheaderTypographyProps={{fontStyle: 'italic'}}
                         avatar={avatar(whichOne)}/>
@@ -44,7 +44,6 @@ export default function EquipmentCard(props) {
                     maxHeight: 389,
                     p: 1,
                     pb: 0,
-                    //backgroundImage: 'linear-gradient(48deg, rgba(210,255,112,1) 0%, rgba(255,255,255,1) 47%, rgba(219,255,191,1) 100%)'
                 }}>
 
                     <Box>
