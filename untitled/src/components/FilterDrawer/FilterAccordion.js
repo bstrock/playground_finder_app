@@ -11,6 +11,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import AccordionTemplate from "./AccordionTemplate"
 import {useTheme} from "@mui/styles";
+import {useMap} from "react-leaflet";
 
 export default function FilterAccordion(props) {
 
@@ -19,8 +20,13 @@ export default function FilterAccordion(props) {
         queryParams,
         initQueryParams,
         setQueryParams,
-        setDrawerOpen
+        setDrawerOpen,
+        setShowSearchRadius,
+        distValue,
+        setDistValue
     } = props
+
+    const miles_to_meters = (radius) => radius * 1609.34
 
     // top-level lists of all filter assets
     const equipList = [
@@ -63,7 +69,6 @@ export default function FilterAccordion(props) {
     const [expanded, setExpanded] = useState(false)
 
     // tracks value of the slider, so it can be displayed in accordion description
-    const [distValue, setDistValue] = useState(4)
 
     // tracks individual check boxes for filter criteria by category
     const [checkedEquipment, setCheckedEquipment] = useState(queryParams.equipment)
@@ -75,6 +80,17 @@ export default function FilterAccordion(props) {
     const [showAmenitiesCheckbox, setShowAmenitiesCheckbox] = useState(0)
     const [showSportsCheckbox, setShowSportsCheckbox] = useState(0)
 
+    const map = useMap()
+
+    const checkSearchRadius = (radius) => {
+        const bbox = map.getBounds()
+        const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
+        const northeast = bbox.getNorthEast()
+        const aa = northeast.distanceTo(bbox.getNorthWest())
+        const bb = northeast.distanceTo(bbox.getSouthEast())
+        const boxArea = aa * bb
+        setShowSearchRadius(boxArea > searchArea)
+    }
 
     // event handler for clicking the filter button
     const handleChange = (panel) => (event, isExpanded) => {
@@ -82,7 +98,10 @@ export default function FilterAccordion(props) {
     }
 
     // event handler to update display of slider distance value
-    const updateDistVal = (val) => setDistValue(val)
+    const updateDistVal = (val) => {
+        setDistValue(val)
+        checkSearchRadius(val)
+    }
 
     // event handler to update state of checked value lists
     const updateCheckedEquipment = (val) => setCheckedEquipment(val)
@@ -108,6 +127,10 @@ export default function FilterAccordion(props) {
 
         // 2. if we're applying, we poll the current checkbox state, otherwise for clear we use the initial state
         const params = apply ? getQueryParams() : initQueryParams
+
+        if (!apply) {
+            setDistValue(4)
+        }
 
         // 3. we use the setter hooks as appropriate, and close the drawer either way
         setQueryParams(params)
@@ -172,7 +195,9 @@ export default function FilterAccordion(props) {
 
                     {/* SLIDER GOES HERE- TAKES IN UPDATE CALLBACK FUNCTION */}
                     <AccordionDetails>
-                        <DistanceSlider handleValueUpdate={updateDistVal}/>
+                        <DistanceSlider handleValueUpdate={updateDistVal}
+                                        distVal={distValue}
+                        />
                     </AccordionDetails>
                 </Accordion>
 

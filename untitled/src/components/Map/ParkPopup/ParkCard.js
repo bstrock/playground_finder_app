@@ -63,7 +63,7 @@ export default function ParkCard(props) {
                     </Box>
 
                     <Divider/>
-                    <Typography sx={{m:0}} fontStyle={'italic'} variant={'caption'}>
+                    <Typography sx={{m:0}} fontStyle={'italic'} variant={'subtitle2'}>
                     Go There!
                     </Typography>
                     <ParkCardActionBar lat={data.centroid[0]}

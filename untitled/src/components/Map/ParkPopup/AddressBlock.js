@@ -14,7 +14,7 @@ export default function AddressBlock(props) {
     return (
         <>
     <Divider/>
-    <Typography sx={{m:0}} fontStyle={'italic'} variant={'caption'}>
+    <Typography sx={{m:0}} fontStyle={'italic'} variant={'subtitle2'}>
         Overview
     </Typography>
     <Box sx={{display: 'flex', justifyContent: 'center', mr: 2, flexGrow: 1}}>

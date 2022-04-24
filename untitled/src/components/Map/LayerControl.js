@@ -1,6 +1,6 @@
 import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
-import React, {useState} from "react"
+import React from "react"
 import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
 import {ButtonGroup} from "@mui/material"
@@ -49,11 +49,13 @@ export default function LayerControl(props) {
         setZoom,
         zoomFunc,
         setLoading,
-        parkIcon
+        parkIcon,
+        showSearchRadius,
+        setShowSearchRadius
     } = props
 
     // state
-    const [showSearchRadius, setShowSearchRadius] = useState(true)
+
 
     // hooks
     const map = useMap()
@@ -76,15 +78,14 @@ export default function LayerControl(props) {
     const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, weight: 3}
 
     const miles_to_meters = (radius) => radius * 1609.34
+
     const locateUserOnClickFunc = () => {
         const newZoom = zoomFunc()
         setZoom(newZoom)
         map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
     }
 
-    useMapEvent('zoomend', () => {
-        // this map callback shows or hides the search radius based on the current zoom level
-        // this allows us to ensure the base layer is visible when the user zooms in enough that the view is contained by the search radius
+    const checkSearchRadius = () => {
         const bbox = map.getBounds()
         const searchArea = 3.14 * Math.pow(miles_to_meters(radius), 2)
         const northeast = bbox.getNorthEast()
@@ -92,6 +93,12 @@ export default function LayerControl(props) {
         const bb = northeast.distanceTo(bbox.getSouthEast())
         const boxArea = aa * bb
         setShowSearchRadius(boxArea > searchArea)
+    }
+
+    useMapEvent('zoomend', () => {
+        // this map callback shows or hides the search radius based on the current zoom level
+        // this allows us to ensure the base layer is visible when the user zooms in enough that the view is contained by the search radius
+        checkSearchRadius()
     })
 
     return (

@@ -14,7 +14,10 @@ export default function FilterDrawer(props) {
         setQueryParams,
         drawerOpen,
         setDrawerOpen,
-        toggleDrawer
+        toggleDrawer,
+        setShowSearchRadius,
+        distValue,
+        setDistValue
     } = props
 
 
@@ -47,6 +50,9 @@ export default function FilterDrawer(props) {
                                      initQueryParams={initQueryParams}
                                      setQueryParams={setQueryParams}
                                      setDrawerOpen={setDrawerOpen}
+                                     setShowSearchRadius={setShowSearchRadius}
+                                     distValue={distValue}
+                                     setDistValue={setDistValue}
                     />
                     <Divider/>
                 </Box>

@@ -22,6 +22,7 @@ export default function LocationMarker(props) {
     const {
         setQueryLocation,
         userClickedLocate,
+        setUserClickedLocate,
         queryLocation,
         markerRef,
         initLocation,
@@ -36,10 +37,18 @@ export default function LocationMarker(props) {
     const [userClickedReset, setUserClickedReset] = useState(false)
 
     // get icons
-    const markerIcon = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689`
+    const userIconURL = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689`
+    const searchIconURL = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=search&apiKey=2aa948af6f2d46f6b12acc10827cc689`
     const userIcon = new L.Icon({
-        iconUrl: markerIcon,
-        iconRetinaUrl: markerIcon,
+        iconUrl: userIconURL,
+        iconRetinaUrl: userIconURL,
+        iconAnchor: [15, 40],
+        popupAnchor: [0, 0]
+    })
+
+    const searchIcon = new L.Icon({
+        iconUrl: searchIconURL,
+        iconRetinaUrl: searchIconURL,
         iconAnchor: [15, 40],
         popupAnchor: [0, 0]
     })
@@ -57,13 +66,14 @@ export default function LocationMarker(props) {
             {
                 dragend() {
                     const marker = markerRef.current
-                    console.log(marker)
                     const latLng = marker.getLatLng()
                     setQueryLocation({latitude: latLng.lat, longitude: latLng.lng})
+                    setUserClickedLocate(false)
+
                 }
             }
         ),
-        [markerRef, setQueryLocation]
+        [markerRef, setQueryLocation, setUserClickedLocate]
     )
 
     // location button callback
@@ -75,7 +85,7 @@ export default function LocationMarker(props) {
                 map.locate().on("locationfound", function (e) {
                     let latlng = e.latlng
                     setQueryLocation({latitude: latlng.lat, longitude: latlng.lng})
-                    map.flyTo(latlng, 13);
+                    map.flyTo(latlng, 13)
                 })
             }
         }, [userClickedLocate, setQueryLocation, map]
@@ -86,18 +96,19 @@ export default function LocationMarker(props) {
         () => {
             if (userClickedReset) {
                 setUserClickedReset(false)
+                setUserClickedLocate(false)
                 map.closePopup()
                 const newZoom = zoomFunc()
                 setZoom(newZoom)
                 map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
                 setQueryLocation(initLocation)
             }
-        }, [initLocation, setQueryLocation, userClickedReset, setUserClickedReset, map, zoomFunc, setZoom]
+        }, [initLocation, setQueryLocation, userClickedReset, setUserClickedReset, map, zoomFunc, setZoom, setUserClickedLocate]
     )
 
     return (
         <Marker position={{lat: queryLocation.latitude, lng: queryLocation.longitude}}
-                icon={userIcon}
+                icon={userClickedLocate ? userIcon : searchIcon}
                 draggable={true}
                 eventHandlers={markerWasMoved}
                 ref={markerRef}

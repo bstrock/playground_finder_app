@@ -98,6 +98,7 @@ function App() {
     const [drawerOpen, setDrawerOpen] = useState(false)  // control drawer state
     const [loading, setLoading] = useState(false)  // whether not loading is currently occuring (triggers progress indicator)
     const [numberOfResults, setNumberOfResults] = useState(null)
+    const [distValue, setDistValue] = useState(4)
 
     // DRAWER OPEN/CLOSE CALLBACK
     const toggleDrawer = (open) => (e) => {
@@ -109,6 +110,7 @@ function App() {
     }
 
     const markerRef = useRef(null)
+    const [showSearchRadius, setShowSearchRadius] = useState(true)
 
     // DATA LOADING FROM API
     useEffect(() => {
@@ -164,6 +166,7 @@ function App() {
                 >
                     <LocationMarker setQueryLocation={setQueryLocation}
                                     userClickedLocate={userClickedLocate}
+                                    setUserClickedLocate={setUserClickedLocate}
                                     queryLocation={queryLocation}
                                     markerRef={markerRef}
                                     initLocation={initLocation}
@@ -174,7 +177,7 @@ function App() {
                                   loading={loading}
                                   initLocation={initLocation}
                                   queryLocation={queryLocation}
-                                  radius={queryParams.radius}
+                                  radius={distValue}
                                   userClickedLocate={userClickedLocate}
                                   setUserClickedLocate={setUserClickedLocate}
                                   toggleDrawer={toggleDrawer}
@@ -182,6 +185,8 @@ function App() {
                                   zoomFunc={setInitialMapZoom}
                                   setLoading={setLoading}
                                   parkIcon={parkIcon}
+                                  showSearchRadius={showSearchRadius}
+                                  setShowSearchRadius={setShowSearchRadius}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
@@ -189,6 +194,9 @@ function App() {
                                   drawerOpen={drawerOpen}
                                   setDrawerOpen={setDrawerOpen}
                                   toggleDrawer={toggleDrawer}
+                                  setShowSearchRadius={setShowSearchRadius}
+                                  distValue={distValue}
+                                  setDistValue={setDistValue}
                     />
                 </MapContainer>
             </>

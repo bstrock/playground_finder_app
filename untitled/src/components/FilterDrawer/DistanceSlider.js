@@ -8,14 +8,14 @@ function valuetext(value) {
 
 export default function DistanceSlider(props) {
 
-    const {handleValueUpdate} = props
+    const {handleValueUpdate, distVal} = props
 
     return (
         <Box sx={{width: 'auto', mt: 2}}>
 
             <Slider sx={{p: 2, ml: 2, width: '75%'}}
                     aria-label="Miles"
-                    defaultValue={4}
+                    value={distVal}
                     getAriaValueText={valuetext}
                     valueLabelDisplay="auto"
                     step={.5}
