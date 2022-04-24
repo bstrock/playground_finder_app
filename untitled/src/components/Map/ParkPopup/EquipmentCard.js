@@ -20,7 +20,7 @@ export default function EquipmentCard(props) {
         }
 
         return (
-            <Avatar sx={{bgcolor: theme.palette.primary.dark}}>
+            <Avatar sx={{bgcolor: theme.palette.primary.main}}>
                 {avatarStore[whichOne]}
             </Avatar>
         )

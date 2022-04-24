@@ -125,7 +125,7 @@ export default function LocationMarker(props) {
                                            image={require("../../images/hero.png")}
                                            alt={'child climbing on playground'}/>
                                 <Typography variant={'subtitle2'}>
-                                    This app will help you <Box component={"span"} fontWeight='fontWeightBold'>find and explore</Box> all 28 of the amazing public <Box component={"span"} fontWeight='fontWeightBold'>playgrounds</Box> in the community of Eden Prairie, Minnesota.
+                                    This app will help you <Box component={"span"} fontWeight='fontWeightBold'>find and explore</Box> all 29 of the amazing public <Box component={"span"} fontWeight='fontWeightBold'>playgrounds</Box> in the community of Eden Prairie, Minnesota.
                                 </Typography>
                                 <br/>
                                 <Typography sx={{textAlign: 'center'}} variant={'subtitle1'} fontWeight={'fontWeightBold'}>

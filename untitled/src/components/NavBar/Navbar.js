@@ -14,7 +14,7 @@ export default function Navbar(props) {
                     color={'primary'}
             >
                 <Box sx={{display: 'flex'}}>
-                    <Typography variant="h6" sx={{color: 'black', ml: 2, flexGrow: 1}}>
+                    <Typography variant="h6" sx={{color: 'white', ml: 2, flexGrow: 1}}>
                         Eden Prairie Playgrounds
                     </Typography>
                     <Typography component={'span'} sx={{

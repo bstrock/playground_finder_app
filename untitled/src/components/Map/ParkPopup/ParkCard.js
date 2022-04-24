@@ -26,7 +26,7 @@ export default function ParkCard(props) {
     const theme = useTheme()
 
     const avatar = (
-            <Avatar sx={{bgcolor: theme.palette.primary.dark}}>
+            <Avatar sx={{bgcolor: theme.palette.primary.main}}>
                 <NaturePeopleIcon/>
             </Avatar>
         )

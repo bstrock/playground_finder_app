@@ -19,6 +19,7 @@ import {useState} from "react"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import LayersIcon from '@mui/icons-material/Layers'
 import HouseSidingIcon from '@mui/icons-material/HouseSiding'
+import StairsIcon from '@mui/icons-material/Stairs';
 
 export default function UserGuide() {
 
@@ -37,23 +38,27 @@ export default function UserGuide() {
             </ListItemIcon>
         ),
         zoomIn: (
-            <ListItemIcon sx={{color: theme.palette.primary.dark, minWidth: 32}}>
+            <ListItemIcon sx={{color: theme.palette.info.main, minWidth: 32}}>
                 <ZoomInMapIcon/>
             </ListItemIcon>
         ),
+        stairs: (
+            <ListItemIcon sx={{color: theme.palette.primary.main, minWidth: 32}}>
+                <StairsIcon/>
+            </ListItemIcon>
+        ),
         zoomOut: (
-            <ListItemIcon sx={{color: theme.palette.info, minWidth: 32}}>
+            <ListItemIcon sx={{color: theme.palette.info.main, minWidth: 32}}>
                 <ZoomOutMapIcon/>
             </ListItemIcon>
         ),
         filter: (
-
             <ListItemIcon sx={{color: theme.palette.primary.main, minWidth: 32}}>
                 <FilterAltIcon/>
             </ListItemIcon>
         ),
         userMarker: (
-            <ListItemIcon sx={{color: 'purple', minWidth: 32}}>
+            <ListItemIcon sx={{color: theme.palette.info.main, minWidth: 32}}>
                 <LocationOnIcon/>
             </ListItemIcon>
         ),
@@ -68,7 +73,7 @@ export default function UserGuide() {
             </ListItemIcon>
         ),
         problem: (
-            <ListItemIcon sx={{color: '#BCBE14', minWidth: 32}}>
+            <ListItemIcon sx={{color: theme.palette.secondary.dark, minWidth: 32}}>
                 <ReportProblemIcon/>
             </ListItemIcon>
         ),
@@ -128,10 +133,16 @@ export default function UserGuide() {
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
+                            {avatars.stairs}
+                            <Typography component={'div'} variant={'body2'}>
+                                To give you a sense of playground size, the Overview tells you how many <Box component={"span"} fontWeight='fontWeightBold'>Play Towers, Slides, and Stairs</Box> you'll find there.
+                            </Typography>
+                        </ListItem>
+                        <ListItem sx={listItemStyles}>
                             {avatars.zoomIn}
                             <Typography component={'div'} variant={'body2'}>
                                 In the Overview, tap <Box component={"span"} fontWeight='fontWeightBold'>Zoom
-                                In</Box> to highlight the playground's location.
+                                In</Box> to highlight the playground on the map.
                             </Typography>
                         </ListItem>
                         <ListItem sx={listItemStyles}>
@@ -219,7 +230,7 @@ export default function UserGuide() {
                     <Typography variant={'subtitle1'}>Resources</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <List>
+                    <List sx={{mb: 1}}>
                         <Typography component={'div'} variant={'body2'}>
                             This tool compliments other resources offered by the <Box component={"span"}
                                                                                       fontWeight='fontWeightBold'>City
@@ -250,7 +261,7 @@ export default function UserGuide() {
                             </Typography>
                         </ListItem>
                     </List>
-                    <Typography sx={{fontStyle: 'italic'}} variant={'body2'}>
+                    <Typography sx={{fontStyle: 'italic', mt: 1}} variant={'body2'}>
                         These sites were used as primary sources in the production of this app.
                         <br/><br/>
                         Many thanks to Eden Prairie's wonderful <Link href={urlHolder.parksAndRec}>Parks and
