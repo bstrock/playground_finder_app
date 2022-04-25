@@ -163,6 +163,7 @@ function App() {
                               maxBounds={maxBounds}
                               minZoom={10}
                               zoomControl={true}
+                              tap={false}  // this fixes the safari double-click issue
                 >
                     <LocationMarker setQueryLocation={setQueryLocation}
                                     userClickedLocate={userClickedLocate}

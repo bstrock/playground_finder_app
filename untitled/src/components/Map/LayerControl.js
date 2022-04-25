@@ -1,4 +1,4 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent} from 'react-leaflet'
+import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent, Tooltip} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
 import React from "react"
 import InfoBox from './ParkPopup/InfoBox'
@@ -7,6 +7,7 @@ import {ButtonGroup} from "@mui/material"
 import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
 import {useTheme} from "@mui/styles"
+import Typography from "@mui/material/Typography";
 
 // HELPER FUNCTIONS
 function reverseCoordinates(coords) {
@@ -173,8 +174,14 @@ export default function LayerControl(props) {
                                                         // generate marker
                                                         <Marker key={centroid.pointKey}
                                                                 icon={parkIcon}
-                                                                position={centroid.geom}>
-
+                                                                position={centroid.geom}
+                                                                alt={centroid.data.site_name}
+                                                        >
+                                                            <Tooltip>
+                                                                <Typography>
+                                                                    {centroid.data.site_name}
+                                                                </Typography>
+                                                            </Tooltip>
                                                             {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
                                                             <Popup>
                                                                 <InfoBox data={centroid.data}
