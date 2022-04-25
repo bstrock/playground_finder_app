@@ -1,8 +1,8 @@
 {
   "name": "edenprairieplaygrounds",
   "version": "1.0",
-  "private": true,
-  "homepage": "https://bstrock.github.io/eden_prairie_playground_finder",
+  "private": false,
+  "homepage": "epplay.today",
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
