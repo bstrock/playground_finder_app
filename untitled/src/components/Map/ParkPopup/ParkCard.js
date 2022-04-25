@@ -22,7 +22,6 @@ import Typography from "@mui/material/Typography";
 export default function ParkCard(props) {
 
     const {data, distance} = props
-    console.log(data)
     const theme = useTheme()
 
     const avatar = (

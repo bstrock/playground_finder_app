@@ -1,4 +1,15 @@
-import {LayersControl, LayerGroup, Polygon, Popup, Marker, GeoJSON, Circle, useMap, useMapEvent, Tooltip} from 'react-leaflet'
+import {
+    LayersControl,
+    LayerGroup,
+    Polygon,
+    Popup,
+    Marker,
+    GeoJSON,
+    Circle,
+    useMap,
+    Tooltip,
+    useMapEvents
+} from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
 import React from "react"
 import InfoBox from './ParkPopup/InfoBox'
@@ -8,6 +19,7 @@ import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
 import {useTheme} from "@mui/styles"
 import Typography from "@mui/material/Typography";
+import L from "leaflet";
 
 // HELPER FUNCTIONS
 function reverseCoordinates(coords) {
@@ -50,17 +62,28 @@ export default function LayerControl(props) {
         setZoom,
         zoomFunc,
         setLoading,
-        parkIcon,
         showSearchRadius,
-        setShowSearchRadius
+        setShowSearchRadius,
+        showFabs,
+        setShowFabs
     } = props
-
-    // state
-
 
     // hooks
     const map = useMap()
     const theme = useTheme()
+
+    const markerURLBase = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.secondary.main.replace("#", '%23')}&size=medium&icon=nature_people`
+    const apiKey = '&apiKey=2aa948af6f2d46f6b12acc10827cc689'
+
+    // marker
+
+    const parkIcon = new L.Icon({
+        iconUrl: `${markerURLBase}${apiKey}`,
+        iconRetinaUrl: `${markerURLBase}&ScaleFactor=2${apiKey}`,
+        iconAnchor: [15, 40],
+        popupAnchor: [0, 0]
+    })
+
 
     // container
     const centroids = []
@@ -96,11 +119,13 @@ export default function LayerControl(props) {
         setShowSearchRadius(boxArea > searchArea)
     }
 
-    useMapEvent('zoomend', () => {
-        // this map callback shows or hides the search radius based on the current zoom level
-        // this allows us to ensure the base layer is visible when the user zooms in enough that the view is contained by the search radius
-        checkSearchRadius()
-    })
+    useMapEvents(
+        {
+            popupopen: () => setShowFabs(!showFabs),
+            popupclose: () => setShowFabs(!showFabs),
+            zoomend: () => checkSearchRadius()
+        }
+    )
 
     return (
         /* LAYERS CONTROL MAIN STRUCTURE */
@@ -208,25 +233,28 @@ export default function LayerControl(props) {
             </LayersControl>
             <Box sx={{display: 'flex', flexGrow: 1, height: '100%', justifyContent: 'center'}}>
                 <Box sx={{display: 'flex', mt: 'auto', mb: 1}}>
-                    <ButtonGroup>
-                        <FloatingButton clickFunc={toggleDrawer(true)}
-                                        which={'filter'}
-                                        buttonColor={'primary'}
-                        />
-                        <FloatingButton clickFunc={
-                            () => {
-                                setLoading(true)
-                                userClickedLocate ? map.locate() : setUserClickedLocate(true)
+                    {
+                        !showFabs ? null :
+                        <ButtonGroup>
+                            <FloatingButton clickFunc={toggleDrawer(true)}
+                                            which={'filter'}
+                                            buttonColor={'primary'}
+                            />
+                            <FloatingButton clickFunc={
+                                () => {
+                                    setLoading(true)
+                                    userClickedLocate ? map.locate() : setUserClickedLocate(true)
+                                }
                             }
-                        }
-                                        which={'location'}
-                                        buttonColor={'secondary'}
-                        />
-                        <FloatingButton clickFunc={locateUserOnClickFunc}
-                                        which={'reset'}
-                                        buttonColor={'info'}
-                        />
-                    </ButtonGroup>
+                                            which={'location'}
+                                            buttonColor={'secondary'}
+                            />
+                            <FloatingButton clickFunc={locateUserOnClickFunc}
+                                            which={'reset'}
+                                            buttonColor={'info'}
+                            />
+                        </ButtonGroup>
+                    }
                 </Box>
             </Box>
         </>

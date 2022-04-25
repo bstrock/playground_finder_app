@@ -8,6 +8,7 @@ export default function FloatingButton(props) {
     // destructure props
     const {which, clickFunc, buttonColor} = props
     // styles object
+    const width = window.innerWidth
 
     const getButtonGuide = (which) => {
         let guide = {}
@@ -32,7 +33,7 @@ export default function FloatingButton(props) {
 
     return (
 
-        <Fab sx={{mb: 5, ml: 3, mr: 3, borderColor: 'white', borderWidth: 'thick'}}
+        <Fab sx={{mb: width < 500 ? '16vh' : '8vh', ml: 3, mr: 3, borderColor: 'white', borderWidth: 'thick'}}
              color={buttonColor}
              size={'large'}
              onClick={clickFunc}

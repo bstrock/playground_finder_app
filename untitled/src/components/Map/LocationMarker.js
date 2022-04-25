@@ -35,23 +35,27 @@ export default function LocationMarker(props) {
     const theme = useTheme()
 
     const [userClickedReset, setUserClickedReset] = useState(false)
+    const [whichMarker, setWhichMarker] = useState('info')
+
+    const markerURLBase = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}`
+    const apiKey = '&apiKey=2aa948af6f2d46f6b12acc10827cc689'
 
     // get icons
-    const userIconURL = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=person&noWhiteCircle&apiKey=2aa948af6f2d46f6b12acc10827cc689`
-    const searchIconURL = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.info.main.replace("#", '%23')}&icon=search&apiKey=2aa948af6f2d46f6b12acc10827cc689`
-    const userIcon = new L.Icon({
-        iconUrl: userIconURL,
-        iconRetinaUrl: userIconURL,
-        iconAnchor: [15, 40],
-        popupAnchor: [0, 0]
-    })
+    const iconKey = {
+        user: `&icon=person&noWhiteCircle`,
+        search: `&icon=search`,
+        info: `&icon=info&noWhiteCircle`,
+    }
 
-    const searchIcon = new L.Icon({
-        iconUrl: searchIconURL,
-        iconRetinaUrl: searchIconURL,
-        iconAnchor: [15, 40],
-        popupAnchor: [0, 0]
-    })
+    const getIcon = () => {
+
+        return new L.Icon({
+            iconUrl: `${markerURLBase}${iconKey[whichMarker]}${apiKey}`,
+            iconRetinaUrl: `${markerURLBase}${iconKey[whichMarker]}&ScaleFactor=2${apiKey}`,
+            iconAnchor: [15, 40],
+            popupAnchor: [0, 0]
+        })
+    }
 
     const cardHeaderAvatar = (
         <Avatar sx={{bgcolor: theme.palette.primary.main}}>
@@ -69,7 +73,7 @@ export default function LocationMarker(props) {
                     const latLng = marker.getLatLng()
                     setQueryLocation({latitude: latLng.lat, longitude: latLng.lng})
                     setUserClickedLocate(false)
-
+                    setWhichMarker('search')
                 }
             }
         ),
@@ -86,9 +90,10 @@ export default function LocationMarker(props) {
                     let latlng = e.latlng
                     setQueryLocation({latitude: latlng.lat, longitude: latlng.lng})
                     map.flyTo(latlng, 13)
+                    setWhichMarker('user')
                 })
             }
-        }, [userClickedLocate, setQueryLocation, map]
+        }, [userClickedLocate, setQueryLocation, map, setWhichMarker]
     )
 
     // reset button callback
@@ -102,19 +107,20 @@ export default function LocationMarker(props) {
                 setZoom(newZoom)
                 map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
                 setQueryLocation(initLocation)
+                setWhichMarker('info')
             }
         }, [initLocation, setQueryLocation, userClickedReset, setUserClickedReset, map, zoomFunc, setZoom, setUserClickedLocate]
     )
 
     return (
         <Marker position={{lat: queryLocation.latitude, lng: queryLocation.longitude}}
-                icon={userClickedLocate ? userIcon : searchIcon}
+                icon={getIcon(whichMarker)}
                 draggable={true}
                 eventHandlers={markerWasMoved}
                 ref={markerRef}
                 zIndexOffset={500}
         >
-            <Popup>
+            <Popup zIndexOffset={1000}>
                 <Box>
                     <Card sx={{display: 'block', border: 0, borderRadius: 0, boxShadow: 0}}>
                         <CardHeader sx={{borderBottom: 1, borderColor: 'divider', textAlign: 'left', p: 1}}
