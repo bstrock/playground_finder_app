@@ -46,17 +46,23 @@ export default function FilterAccordion(props) {
     const amenitiesList = [
         'Beach',
         'Benches',
+        'Changing Rooms',
         'Concessions',
         'Grills',
         'Picnic Tables',
         'Indoor Restroom',
+        'Portable Restroom',
         'Shelter',
+        'Splash Pad',
         'Sun Shades'
     ]
 
     const sportsList = [
+        'Badminton',
         'Baseball Diamond',
         'Basketball Court',
+        'Disc Golf',
+        'Foursquare',
         'Hockey Rink',
         'Horseshoes',
         'Skate Park',
