@@ -107,6 +107,8 @@ export default function LayerControl(props) {
         const newZoom = zoomFunc()
         setZoom(newZoom)
         map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
+        map.closePopup()
+        setShowFabs(true)
     }
 
     const checkSearchRadius = () => {
@@ -121,8 +123,8 @@ export default function LayerControl(props) {
 
     useMapEvents(
         {
-            popupopen: () => setShowFabs(!showFabs),
-            popupclose: () => setShowFabs(!showFabs),
+            popupopen: () => setShowFabs(false),
+            popupclose: () => setShowFabs(true),
             zoomend: () => checkSearchRadius()
         }
     )
