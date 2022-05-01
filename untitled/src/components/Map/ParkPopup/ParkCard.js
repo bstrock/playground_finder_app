@@ -5,7 +5,7 @@ import {
     Card,
     CardContent,
     CardHeader, Chip,
-    Fade,
+    Fade, Tooltip,
 } from "@mui/material"
 import NaturePeopleIcon from "@mui/icons-material/NaturePeople"
 import AddressBlock from './AddressBlock'
@@ -13,9 +13,8 @@ import {useTheme} from "@mui/styles"
 import ParkCardActionBar from "./ParkCardActionBar";
 import Box from "@mui/material/Box";
 import StairsIcon from '@mui/icons-material/Stairs';
-import { mdiSlide } from '@mdi/js';
 import Icon from "@mdi/react";
-import { mdiTowerFire } from '@mdi/js';
+import { mdiTowerFire, mdiSlide, mdiLadder } from '@mdi/js';
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
@@ -56,9 +55,18 @@ export default function ParkCard(props) {
                     />
 
                     <Box sx={{mt: 1, mb: 1, display: 'flex', justifyContent: 'center'}}>
-                        <Chip sx={{mr: 1}} color={'primary'} icon={<Icon size={1} path={mdiTowerFire} color={'white'}/>} size='large' label={data.equipment['play_towers']}/>
-                        <Chip sx={{mr: 1}} color={'primary'} icon={<Icon size={1} path={mdiSlide} color={'white'}/>} size='large' label={data.equipment['slides']}/>
-                        <Chip sx={{mr: 1}} color={'primary'} icon={<StairsIcon color={'white'}/>} size='large' label={data.equipment['staircases']}/>
+                        <Tooltip title={'Play Towers'}>
+                            <Chip sx={{mr: 1}} color={'primary'} icon={<Icon size={1} path={mdiTowerFire} color={'white'}/>} size='large' label={data.equipment['play_towers']}/>
+                        </Tooltip>
+                        <Tooltip title={'Slides'}>
+                            <Chip sx={{mr: 1}} color={'primary'} icon={<Icon size={1} path={mdiSlide} color={'white'}/>} size='large' label={data.equipment['slides']}/>
+                        </Tooltip>
+                        <Tooltip title={'Staircases'}>
+                            <Chip sx={{mr: 1}} color={'primary'} icon={<StairsIcon color={'white'}/>} size='large' label={data.equipment['staircases']}/>
+                        </Tooltip>
+                        <Tooltip title={'Climbers'}>
+                            <Chip sx={{mr: 1}} color={'primary'} icon={<Icon size={1} path={mdiLadder} color={'white'}/>} size='large' label={data.equipment['climbers']}/>
+                        </Tooltip>
                     </Box>
 
                     <Divider/>

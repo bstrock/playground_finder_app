@@ -59,8 +59,8 @@ export default function ParkList(props) {
                     sx={{justifySelf: 'flex-start', width: '15em', height: '3rem'}}
                     onChange={onChange}
                     renderInput={(params) => <TextField {...params}
-                                                        label="Playground"
-                                                        placeholder={'Search for a Park'}
+                                                        label="Search for a park..."
+                                                        placeholder={'Search for a park...'}
                     />}
                 />
                     <Button sx={{justifySelf: 'flex-end', flexShrink: 1, width: '3rem', height: '2.9rem'}}
