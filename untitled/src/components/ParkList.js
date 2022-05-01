@@ -12,9 +12,7 @@ export default function ParkList(props) {
     const map = useMap()
     const [selected, setSelected] = useState(null)
 
-    const onChange = (e, value) => {
-        value === null ? setSelected(null) : setSelected(value.id)
-    }
+    const onChange = (e, value) => value === null ? setSelected(null) : setSelected(value.id)
 
     useEffect(
         () => {
@@ -54,14 +52,17 @@ export default function ParkList(props) {
         searchList.length === 0 ? null :
             <Box sx={{display: 'flex', width: '18em', height: '5rem'}}>
                 <Autocomplete
-                    autoComplete
-                    clearOnBlur
+                    autoComplete={true}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    value={selected}
                     id="search-by-name"
                     options={searchList}
-                    filterOptions={(x) => x}
                     sx={{justifySelf: 'flex-start', width: '15em', height: '3rem'}}
                     onChange={onChange}
-                    renderInput={(params) => <TextField {...params} label="Playground"/>}
+                    renderInput={(params) => <TextField {...params}
+                                                        label="Playground"
+                                                        placeholder={'Search for a Park'}
+                    />}
                 />
                     <Button sx={{justifySelf: 'flex-end', flexShrink: 1, width: '3rem', height: '2.9rem'}}
                             color={'primary'}

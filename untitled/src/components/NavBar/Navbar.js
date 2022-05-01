@@ -15,7 +15,7 @@ export default function Navbar(props) {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <AppBar position=" relative"
+            <AppBar position="relative"
                     sx={{height: '3.15rem', pt: 1}}
                     color={'primary'}
             >
