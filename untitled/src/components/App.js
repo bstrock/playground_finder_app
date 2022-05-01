@@ -82,6 +82,8 @@ function App() {
     const [queryLocation, setQueryLocation] = useState(initLocation)  // point being queried
     const [queryParams, setQueryParams] = useState(initQueryParams)  // selected parameters from filter menu
     const [data, setData] = useState(null)  // data retrieved from API
+    const [allData, setAllData] = useState(null)
+
     const [userClickedLocate, setUserClickedLocate] = useState(false)  // if the user has clicked the locate button
 
     const [zoom, setZoom] = useState(setInitialMapZoom())  // leaflet zoom level (responsive)
@@ -90,6 +92,7 @@ function App() {
     const [numberOfResults, setNumberOfResults] = useState(null)
     const [distValue, setDistValue] = useState(4)
     const [showFabs, setShowFabs] = useState(true)
+    const [openSite, setOpenSite] = useState(null)
 
     // DRAWER OPEN/CLOSE CALLBACK
     const toggleDrawer = (open) => (e) => {
@@ -102,8 +105,10 @@ function App() {
 
     const markerRef = useRef(null)
     const [showSearchRadius, setShowSearchRadius] = useState(true)
-
+    const [loadingProgress, setLoadingProgress] = useState(0)
+    const [searchList, setSearchList] = useState([])
     // DATA LOADING FROM API
+
     useEffect(() => {
         // unfortunately this very short codeblock requires a great deal of commenting.
         const marker = markerRef.current
@@ -125,16 +130,21 @@ function App() {
             e = null  // first time loading
         }
         setLoading(true)
-        apiQuery(queryLocation, queryParams)
+        apiQuery(queryLocation, queryParams, setLoadingProgress)
             .then((data) => {
-                setData(data)
+                const fr = new FileReader()
+                fr.onload = (e) => {
+                    setData(JSON.parse(e.target.result))
+                }
+                fr.readAsText(data)
                 setLoading(false)
+                setLoadingProgress(0)
                 if (e !== null) {
                     // given that the marker exists, the event handler is re-attached after the api data has been loaded
                     marker._events.click = e  // take your dirty event handler back, go on, take it
                 }
             })
-    }, [setLoading, setData, queryLocation, queryParams])
+    }, [setLoading, setData, queryLocation, queryParams, setLoadingProgress])
 
     useEffect(
         () => {
@@ -144,10 +154,18 @@ function App() {
         }, [data, setNumberOfResults]
     )
 
+    useEffect(
+        () => {
+            if (allData == null) {
+                setAllData(data)
+            }
+        }, [setAllData, allData, data]
+    )
+
     return (
         <ThemeProvider theme={theme}>
             <>
-                <Navbar loading={loading} numberOfResults={numberOfResults}/>
+                <Navbar loading={loading} numberOfResults={numberOfResults} loadingProgress={loadingProgress}/>
                 <MapContainer style={{height: "96vh"}}
                               center={[queryLocation.latitude, queryLocation.longitude]}
                               zoom={zoom}
@@ -164,6 +182,7 @@ function App() {
                                     initLocation={initLocation}
                                     setZoom={setZoom}
                                     zoomFunc={setInitialMapZoom}
+                                    setLoadingProgress={setLoadingProgress}
                     />
                     <LayerControl data={data}
                                   loading={loading}
@@ -180,6 +199,9 @@ function App() {
                                   setShowSearchRadius={setShowSearchRadius}
                                   showFabs={showFabs}
                                   setShowFabs={setShowFabs}
+                                  setLoadingProgress={setLoadingProgress}
+                                  openSite={openSite}
+                                  setOpenSite={setOpenSite}
                     />
                     <FilterDrawer queryParams={queryParams}
                                   initQueryParams={initQueryParams}
@@ -190,6 +212,10 @@ function App() {
                                   setShowSearchRadius={setShowSearchRadius}
                                   distValue={distValue}
                                   setDistValue={setDistValue}
+                                  allData={allData}
+                                  searchList={searchList}
+                                  setSearchList={setSearchList}
+                                  setOpenSite={setOpenSite}
                     />
                 </MapContainer>
             </>

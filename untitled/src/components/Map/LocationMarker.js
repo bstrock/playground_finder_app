@@ -27,7 +27,8 @@ export default function LocationMarker(props) {
         markerRef,
         initLocation,
         zoomFunc,
-        setZoom
+        setZoom,
+        setLoadingProgress
     } = props
 
     // hooks
@@ -91,9 +92,10 @@ export default function LocationMarker(props) {
                     setQueryLocation({latitude: latlng.lat, longitude: latlng.lng})
                     map.flyTo(latlng, 13)
                     setWhichMarker('user')
+                    setLoadingProgress(0)
                 })
             }
-        }, [userClickedLocate, setQueryLocation, map, setWhichMarker]
+        }, [userClickedLocate, setQueryLocation, map, setWhichMarker, setLoadingProgress]
     )
 
     // reset button callback

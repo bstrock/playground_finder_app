@@ -1,20 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {CircularProgress, LinearProgress} from "@mui/material";
 
 export default function Navbar(props) {
-    const {loading, numberOfResults} = props
+    const {loading, numberOfResults, loadingProgress} = props
+
+    useEffect(
+        () => {
+            console.log(loadingProgress)
+        }, [loadingProgress]
+    )
 
     return (
         <Box sx={{display: 'flex'}}>
-            <AppBar position="relative"
-                    sx={{height: '3rem', pt: 1}}
+            <AppBar position=" relative"
+                    sx={{height: '3.15rem', pt: 1}}
                     color={'primary'}
             >
                 <Box sx={{display: 'flex'}}>
-                    <Typography variant="h6" sx={{color: 'white', ml: 2, flexGrow: 1}}>
+                    <Typography sx={{fontSize: '1.18rem', color: 'white', ml: 1, flexGrow: 1}}>
                         Eden Prairie Playgrounds
                     </Typography>
                     <Typography component={'span'} sx={{
@@ -22,7 +28,7 @@ export default function Navbar(props) {
                         color: 'black',
                         bgcolor: 'white',
                         borderRadius: '10px',
-                        mr:2,
+                        mr:1,
                         mb: 1,
                         mt: .25,
                         justifyContent: 'flex-end',
@@ -46,7 +52,9 @@ export default function Navbar(props) {
                         !loading ? <Box sx={{height: 10, bgcolor: 'primary'}}/> :
                             <LinearProgress sx={{height: 10}}
                                             color={'secondary'}
-                                            variant={'indeterminate'}/>
+                                            variant={loadingProgress <= 100 ? 'determinate' : 'indeterminate'}
+                                            value={loadingProgress}
+                            />
                     }
                 </>
             </AppBar>

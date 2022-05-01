@@ -4,6 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
+import ParkList from "../ParkList";
 
 export default function FilterDrawer(props) {
 
@@ -17,7 +18,11 @@ export default function FilterDrawer(props) {
         toggleDrawer,
         setShowSearchRadius,
         distValue,
-        setDistValue
+        setDistValue,
+        allData,
+        searchList,
+        setSearchList,
+        setOpenSite
     } = props
 
 
@@ -37,7 +42,6 @@ export default function FilterDrawer(props) {
                     boxShadow: 0
                 }}
                      role="presentation"
-                     onKeyDown={toggleDrawer(false)}
                 >
                     <Typography sx={{mt: 5, mb: 3}}
                                 align={'center'}
@@ -55,6 +59,18 @@ export default function FilterDrawer(props) {
                                      setDistValue={setDistValue}
                     />
                     <Divider/>
+                    <Typography sx={{mt: 5, mb: 3}}
+                                align={'center'}
+                                variant={'h4'}
+                    >
+                        Search By Name
+                    </Typography>
+                <ParkList data={allData}
+                          searchList={searchList}
+                          setSearchList={setSearchList}
+                          setOpenSite={setOpenSite}
+                          setDrawerOpen={setDrawerOpen}
+                />
                 </Box>
             </Drawer>
         </>
