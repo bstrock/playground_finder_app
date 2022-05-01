@@ -54,7 +54,6 @@ export default function ParkList(props) {
                 <Autocomplete
                     autoComplete={true}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
-                    value={selected}
                     id="search-by-name"
                     options={searchList}
                     sx={{justifySelf: 'flex-start', width: '15em', height: '3rem'}}
