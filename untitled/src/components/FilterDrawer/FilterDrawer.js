@@ -70,6 +70,8 @@ export default function FilterDrawer(props) {
                           setSearchList={setSearchList}
                           setOpenSite={setOpenSite}
                           setDrawerOpen={setDrawerOpen}
+                          setQueryParams={setQueryParams}
+                          initQueryParams={initQueryParams}
                 />
                 </Box>
             </Drawer>

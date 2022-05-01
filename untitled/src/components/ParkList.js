@@ -6,11 +6,13 @@ import {useMap} from "react-leaflet";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import {Popper} from "@mui/material";
 
 export default function ParkList(props) {
-    const {data, searchList, setSearchList, setOpenSite, setDrawerOpen} = props
+    const {data, searchList, setSearchList, setOpenSite, setDrawerOpen, initQueryParams, setQueryParams} = props
     const map = useMap()
     const [selected, setSelected] = useState(null)
+
 
     const onChange = (e, value) => value === null ? setSelected(null) : setSelected(value.id)
 
@@ -39,6 +41,7 @@ export default function ParkList(props) {
             if (data.features[i].properties.site_id === selected) {
                 setDrawerOpen(false)
                 map.closePopup()
+                setQueryParams(initQueryParams)
                 const selectedPark = data.features[i].properties
                 const centroid = selectedPark.centroid
                 setOpenSite(selectedPark.site_id)
@@ -46,6 +49,10 @@ export default function ParkList(props) {
                 break
             }
         }
+    }
+
+    const autoCompletePopper = function (props) {
+        return (<Popper {...props} style={{ width: 250 }} placement='top-start' />)
     }
 
     return (
@@ -58,6 +65,7 @@ export default function ParkList(props) {
                     options={searchList}
                     sx={{justifySelf: 'flex-start', width: '15em', height: '3rem'}}
                     onChange={onChange}
+                    componentsProps={autoCompletePopper()}
                     renderInput={(params) => <TextField {...params}
                                                         label="Search for a park..."
                                                         placeholder={'Search for a park...'}
