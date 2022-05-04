@@ -4,7 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import FilterAccordion from "./FilterAccordion";
 import Typography from "@mui/material/Typography";
-import ParkList from "../ParkList";
+import ParkList from "./ParkList";
 
 export default function FilterDrawer(props) {
 
