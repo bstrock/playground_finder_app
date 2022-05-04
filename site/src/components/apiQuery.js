@@ -1,16 +1,20 @@
 import axios from 'axios'
 
 export default async function apiQuery (queryLocation, queryParams, setLoadingProgress) {
-
+    // unpack parameters
     let inParams = {...queryLocation, ...queryParams}
 
-    let outParams = {}
+    let outParams = {}  // container for query string parameter values
 
     let errorHappened = false
     /* eslint-disable */
+    // switch this value for local dev
     const devUrl = 'http://localhost:8001'
     const apiUrl = 'https://eden-prairie-playgrounds.herokuapp.com'
 
+    // inParams represents the state of our checkboxes from the filter drawer
+    // we're going to loop through the keys and see which are checked
+    // those keys are then appended to outParams
     for (const [key, val] of Object.entries(inParams)) {
         const outKey = key.toLowerCase().replace(/ /g,"_")
         if (typeof val === 'number') {
@@ -20,10 +24,11 @@ export default async function apiQuery (queryLocation, queryParams, setLoadingPr
             }
         }
 
+    // api query happens here
     let response = await axios.get(`${apiUrl}/query`, {
-        params: outParams,
-        responseType: 'blob',
-        onDownloadProgress: (progressEvent) => {
+        params: outParams,  // query string parameters
+        responseType: 'blob',  // necessary to track loading progress
+        onDownloadProgress: (progressEvent) => {  // tracks loading progress as value from 0-100
             let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
             setLoadingProgress(progress)
             }
@@ -33,6 +38,7 @@ export default async function apiQuery (queryLocation, queryParams, setLoadingPr
             errorHappened = true
         })
 
+    // retry logic
     if (errorHappened) {
         response = await axios.get(`http://localhost:8001/query`, {
             params: outParams,
@@ -48,8 +54,9 @@ export default async function apiQuery (queryLocation, queryParams, setLoadingPr
             })
         errorHappened = false
     }
-    const fr = new FileReader()
 
+    // read blob data as text to extract json and return
+    const fr = new FileReader()
     fr.readAsText(response.data)
     return response.data
 }
