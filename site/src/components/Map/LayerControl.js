@@ -2,24 +2,19 @@ import {
     LayersControl,
     LayerGroup,
     Polygon,
-    Popup,
-    Marker,
     GeoJSON,
     Circle,
     useMap,
-    Tooltip,
     useMapEvents
 } from 'react-leaflet'
 import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
 import React from "react"
-import InfoBox from './ParkPopup/InfoBox'
 import 'leaflet/dist/leaflet.css'
 import {ButtonGroup} from "@mui/material"
 import Box from "@mui/material/Box"
 import FloatingButton from "../FilterDrawer/FloatingButton";
 import {useTheme} from "@mui/styles"
-import Typography from "@mui/material/Typography";
-import L from "leaflet";
+import PlaygroundMarker from "./PlaygroundMarker";
 
 // HELPER FUNCTIONS
 function reverseCoordinates(coords) {
@@ -65,25 +60,15 @@ export default function LayerControl(props) {
         showSearchRadius,
         setShowSearchRadius,
         showFabs,
-        setShowFabs
+        setShowFabs,
+        setLoadingProgress,
+        openSite,
+        setOpenSite
     } = props
 
     // hooks
     const map = useMap()
     const theme = useTheme()
-
-    const markerURLBase = `https://api.geoapify.com/v1/icon/?type=material&color=${theme.palette.secondary.main.replace("#", '%23')}&size=medium&icon=nature_people`
-    const apiKey = '&apiKey=2aa948af6f2d46f6b12acc10827cc689'
-
-    // marker
-
-    const parkIcon = new L.Icon({
-        iconUrl: `${markerURLBase}${apiKey}`,
-        iconRetinaUrl: `${markerURLBase}&ScaleFactor=2${apiKey}`,
-        iconAnchor: [15, 40],
-        popupAnchor: [0, 0]
-    })
-
 
     // container
     const centroids = []
@@ -107,6 +92,8 @@ export default function LayerControl(props) {
         const newZoom = zoomFunc()
         setZoom(newZoom)
         map.flyTo([initLocation.latitude, initLocation.longitude], newZoom)
+        map.closePopup()
+        setShowFabs(true)
     }
 
     const checkSearchRadius = () => {
@@ -121,9 +108,13 @@ export default function LayerControl(props) {
 
     useMapEvents(
         {
-            popupopen: () => setShowFabs(!showFabs),
-            popupclose: () => setShowFabs(!showFabs),
-            zoomend: () => checkSearchRadius()
+            popupopen: () => setShowFabs(false),
+            popupclose: () => setShowFabs(true),
+            zoomend: () => checkSearchRadius(),
+            locationerror: () => {
+                setLoadingProgress(0)
+                setLoading(false)
+            }
         }
     )
 
@@ -197,23 +188,15 @@ export default function LayerControl(props) {
                                             centroids.map((centroid) => {
                                                     return (
                                                         // generate marker
-                                                        <Marker key={centroid.pointKey}
-                                                                icon={parkIcon}
-                                                                position={centroid.geom}
-                                                                alt={centroid.data.site_name}
-                                                        >
-                                                            <Tooltip>
-                                                                <Typography>
-                                                                    {centroid.data.site_name}
-                                                                </Typography>
-                                                            </Tooltip>
-                                                            {/* Generate Popup- the InfoBox is a complex object which displays our API attribute data */}
-                                                            <Popup>
-                                                                <InfoBox data={centroid.data}
-                                                                         queryLocation={queryLocation}/>
-                                                            </Popup>
-
-                                                        </Marker>
+                                                        <PlaygroundMarker key={centroid.pointKey}
+                                                                          geom={centroid.geom}
+                                                                          map={map}
+                                                                          siteName={centroid.data.site_name}
+                                                                          data={centroid.data}
+                                                                          queryLocation={queryLocation}
+                                                                          openSite={openSite}
+                                                                          setOpenSite={setOpenSite}
+                                                        />
                                                     )
                                                 }
                                             )
@@ -243,6 +226,7 @@ export default function LayerControl(props) {
                             <FloatingButton clickFunc={
                                 () => {
                                     setLoading(true)
+                                    setLoadingProgress(101)
                                     userClickedLocate ? map.locate() : setUserClickedLocate(true)
                                 }
                             }

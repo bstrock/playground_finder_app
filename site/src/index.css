@@ -73,3 +73,7 @@ code {
     display: none
   }
 }
+
+.MuiAutocomplete-inputRoot {
+  height: 3rem
+}

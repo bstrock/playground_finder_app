@@ -19,6 +19,8 @@ function createData(label, value) {
 export default function AssetTable(props) {
     const {data, whichOne} = props
 
+    console.log(whichOne)
+
     const theme = useTheme()
 
     const headers = {
@@ -93,7 +95,7 @@ export default function AssetTable(props) {
                             {row.label}
                         </TableCell>
                         <TableCell sx={{p: 2, width: '1%'}} align="center">
-                            {row.value}
+                            {whichOne === 'equipment' ? row.value : ''}
                         </TableCell>
                     </TableRow>))}
                 </TableBody>
