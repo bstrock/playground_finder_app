@@ -19,24 +19,15 @@ function App() {
     const theme = createTheme({
         palette: {
             primary: {
-                main: '#66bb6a',
-                dark: '#387002',
-                light: '#99d066',
-                contrastText: '#fff'
-            },
-            secondary: {
-                main: '#ffab00',
-                dark: '#c17900',
-                light: '#f9a825'
-            },
-            info: {
+                main: '#66bb6a', dark: '#387002', light: '#99d066', contrastText: '#fff'
+            }, secondary: {
+                main: '#ffab00', dark: '#c17900', light: '#f9a825'
+            }, info: {
                 main: '#d273f3'
-            },
-            common: {
+            }, common: {
                 black: '#1D1D1D'
             }
-        },
-        typography: {
+        }, typography: {
             fontFamily: font,
         }
     })
@@ -48,16 +39,12 @@ function App() {
 
     // starting position for the map and API query
     let initLocation = {
-        latitude: 44.855,
-        longitude: -93.46,
+        latitude: 44.855, longitude: -93.46,
     }
 
     // starting values for query parameters
     let initQueryParams = {
-        radius: 4,
-        equipment: [],
-        amenities: [],
-        sports_facilities: []
+        radius: 4, equipment: [], amenities: [], sports_facilities: []
     }
 
     const setInitialMapZoom = () => {
@@ -149,22 +136,18 @@ function App() {
     }, [setLoading, setData, queryLocation, queryParams, setLoadingProgress])
 
     // effect to set number of shown filter results
-    useEffect(
-        () => {
-            if (data !== null) {
-                setNumberOfResults(data.features.length)
-            }
-        }, [data, setNumberOfResults]
-    )
+    useEffect(() => {
+        if (data !== null) {
+            setNumberOfResults(data.features.length)
+        }
+    }, [data, setNumberOfResults])
 
     // effect to capture all results on first load, in order to populate seearch list
-    useEffect(
-        () => {
-            if (allData == null) {
-                setAllData(data)
-            }
-        }, [setAllData, allData, data]
-    )
+    useEffect(() => {
+        if (allData == null) {
+            setAllData(data)
+        }
+    }, [setAllData, allData, data])
 
     // everybody gets all the props in this app
 

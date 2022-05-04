@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,12 +6,6 @@ import {CircularProgress, LinearProgress} from "@mui/material";
 
 export default function Navbar(props) {
     const {loading, numberOfResults, loadingProgress} = props
-
-    useEffect(
-        () => {
-            console.log(loadingProgress)
-        }, [loadingProgress]
-    )
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -28,7 +22,7 @@ export default function Navbar(props) {
                         color: 'black',
                         bgcolor: 'white',
                         borderRadius: '10px',
-                        mr:1,
+                        mr: 1,
                         mb: 1,
                         mt: .25,
                         justifyContent: 'flex-end',
@@ -39,22 +33,19 @@ export default function Navbar(props) {
                         {/*non-breaking space*/ '\u00A0'} In View: {'\u00A0'}
                         {// conditional rendering for # of results/circular progress indicator
                             loading ? (
-                                <CircularProgress sx={{alignSelf: 'center', justifySelf: 'center'}} color={'secondary'} variant={"indeterminate"}
-                                                  size={17}/>
-                            )
-                            : numberOfResults
-                        }
+                                <CircularProgress sx={{alignSelf: 'center', justifySelf: 'center'}} color={'secondary'}
+                                                  variant={"indeterminate"}
+                                                  size={17}/>) : numberOfResults}
                     </Typography>
 
                 </Box>
                 <>
                     { // conditional rendering for linear progress indicator
-                        !loading ? <Box sx={{height: 10, bgcolor: 'primary'}}/> :
-                            <LinearProgress sx={{height: 10}}
-                                            color={'secondary'}
-                                            variant={loadingProgress <= 100 ? 'determinate' : 'indeterminate'}
-                                            value={loadingProgress}
-                            />
+                        !loading ? <Box sx={{height: 10, bgcolor: 'primary'}}/> : <LinearProgress sx={{height: 10}}
+                                                                                                  color={'secondary'}
+                                                                                                  variant={loadingProgress <= 100 ? 'determinate' : 'indeterminate'}
+                                                                                                  value={loadingProgress}
+                        />
                     }
                 </>
             </AppBar>

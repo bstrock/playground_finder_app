@@ -42,6 +42,8 @@ function findMeanCenter(coords) {
     return [average(xx), average(yy)]
 }
 
+const miles_to_meters = (radius) => radius * 1609.34
+
 // COMPONENT BODY
 export default function LayerControl(props) {
 
@@ -76,17 +78,17 @@ export default function LayerControl(props) {
     // ep boundary data
     const json = require('../../data/ep_boundary.json'); // eden prairie border
 
-    // path style options
+    // PATH STYLE OPTIONS
+
+    // playground polygon styles
     const pathOptions = {
         color: theme.palette.secondary.dark,
         fillColor: theme.palette.secondary.main,
         fillOpacity: 1,
         weight: 2
-    }  // playground polygon styles
+    }
     const boundaryPathOptions = {color: '#212121', fillColor: 'white', fillOpacity: 0, weight: 2}  // ensure border polygon isn't filled
     const searchRadiusPathOptions = {color: 'grey', fillColor: 'grey', opacity: .7, fillOpacity: .2, weight: 3}
-
-    const miles_to_meters = (radius) => radius * 1609.34
 
     const locateUserOnClickFunc = () => {
         const newZoom = zoomFunc()
