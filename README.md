@@ -8,10 +8,15 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 <h2>App Features</h2>
 
 :round_pushpin: Find all 29 Playgrounds in Eden Prairie, even the ones that don't show up on Google Maps
+
 :mag: Search for Playgrounds based on Distance, Equipment, Amenities, and Sports
+
 :person_in_manual_wheelchair: Locate Playgrounds with Accessible Features to find the best place to play
+
 :parking: Get directions to the exact location of the Playground, not the park's street address
+
 :bike: Choose your route based on your preferred mode of travel
+
 :warning: Report on-site maintenance issues directly to the city
 
 <h2>Project Materials</h2>
