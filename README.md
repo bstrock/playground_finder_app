@@ -53,7 +53,7 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 |       ├── favicon.ico
 │       ├── index.html
 │       ├── manifest.json
-│       ├── logo.txt
+│       └── logo.txt
 └── src/
         ├── /components
         |     ├── /FilterDrawer
@@ -77,12 +77,12 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
         |     |      |     ├── InfoBox.js
         |     |      |     ├── ParkCard.js
         |     |      |     └── ParkCardActionBar.js
-        |     |      ├── /StaticLayers
+        |     |      └── /StaticLayers
         |     |            ├── PlaygroundPolygons.js
         |     |            └── TileLayers.js
         |     ├── App.js
         |     ├── NavBar.js
-        |     ├── ApiQuery.js
+        |     └── ApiQuery.js
         ├── /data
         |     └── ep_boundary.json
         ├── /images
