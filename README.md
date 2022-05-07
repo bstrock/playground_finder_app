@@ -1,4 +1,4 @@
-<h1>Eden Prairie Playground Finder API</h1>
+<h1>Eden Prairie Playground Finder App</h1>
 This repo is for the frontend user interface for my MS Capstone Project, Eden Prairie Playgrounds.  This web app is designed to allow families and outdoor enthusiasts with the opportunity to find and explore all 29 public playgrounds in the community of Eden Prairie, Minnesota.
 
 <h2>Link to live project</h2>
@@ -57,7 +57,8 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 <h2>Project Structure and Contents</h2>
 
-```site/
+```
+site/
 ├── public/
 │       ├── CNAME
 |       ├── favicon.ico
