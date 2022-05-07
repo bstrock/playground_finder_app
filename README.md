@@ -23,11 +23,11 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 ![main app screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-hero.png200x600)
 
-![overview window screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/main/site/src/images/screenshots/playgrounds-overview.png200x600)
+![overview window screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-overview.png)
 
-![filter view screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/main/site/src/images/screenshots/playgrounds-filter.png200x600)
+![filter view screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-filter.png)
 
-![zoom to playground screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/main/site/src/images/screenshots/playgrounds-zoomto.png200x600)
+![zoom to playground screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-zoomto.png)
 
 
 
