@@ -19,6 +19,11 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 :warning: Report on-site maintenance issues directly to the city
 
+<h2>Screenshots</h2>
+
+![main app screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/main/playground-hero.png?raw=true)
+
+
 <h2>Project Materials</h2>
 
 [Watch a short project overview walkthrough](https://youtu.be/EvkzLfWa2Ko)
