@@ -33,7 +33,7 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 [Watch a short project overview walkthrough](https://youtu.be/EvkzLfWa2Ko)
 
-[Check out the backend FastAPI app repo](https://github.com/bstrock/playground_finder)
+[Check out the backend FastAPI app repo](https://github.com/bstrock/playground_finder_api)
 
 [Use the interactive API documentation](https://eden-prairie-playgrounds.herokuapp.com/docs#/)
 
