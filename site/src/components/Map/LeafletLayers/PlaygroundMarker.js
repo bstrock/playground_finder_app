@@ -1,6 +1,6 @@
 import {Marker, Popup, Tooltip, useMap} from "react-leaflet";
 import Typography from "@mui/material/Typography";
-import InfoBox from "./ParkPopup/InfoBox";
+import InfoBox from "../ParkPopup/InfoBox";
 import React, {useEffect, useRef, useState} from "react";
 import L from "leaflet";
 import {useTheme} from "@mui/styles";

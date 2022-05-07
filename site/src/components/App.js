@@ -4,10 +4,10 @@ import '../App.css'
 import 'leaflet/dist/leaflet.css'
 import '../index.css'
 import {MapContainer} from 'react-leaflet'
-import LayerControl from "./Map/LayerControl";
+import LayerControl from "./Map/LeafletLayers/LayerControl";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
-import Navbar from "./NavBar/Navbar";
-import LocationMarker from "./Map/LocationMarker";
+import Navbar from "./Navbar";
+import LocationMarker from "./Map/LeafletLayers/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
 import apiQuery from "./apiQuery";
 

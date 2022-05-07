@@ -7,12 +7,12 @@ import {
     useMap,
     useMapEvents
 } from 'react-leaflet'
-import {StreetLayer, SatelliteLayer, OutdoorLayer} from "./StaticLayers/TileLayers"
+import {StreetLayer, SatelliteLayer, OutdoorLayer} from "../StaticLayers/TileLayers"
 import React from "react"
 import 'leaflet/dist/leaflet.css'
 import {ButtonGroup} from "@mui/material"
 import Box from "@mui/material/Box"
-import FloatingButton from "../FilterDrawer/FloatingButton";
+import FloatingButton from "../../FilterDrawer/FloatingButton";
 import {useTheme} from "@mui/styles"
 import PlaygroundMarker from "./PlaygroundMarker";
 
@@ -76,7 +76,7 @@ export default function LayerControl(props) {
     const centroids = []
 
     // ep boundary data
-    const json = require('../../data/ep_boundary.json'); // eden prairie border
+    const json = require('../../../data/ep_boundary.json'); // eden prairie border
 
     // PATH STYLE OPTIONS
 

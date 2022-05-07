@@ -141,7 +141,7 @@ export default function LocationMarker(props) {
                                 <CardMedia sx={{display: 'block', mb: 1}}
                                            component="img"
                                            height="90em"
-                                           image={require("../../images/hero.png")}
+                                           image={require("../../../images/hero.png")}
                                            alt={'child climbing on playground'}/>
                                 <Typography variant={'subtitle2'}>
                                     This app will help you <Box component={"span"} fontWeight='fontWeightBold'>find and explore</Box> all 29 of the amazing public <Box component={"span"} fontWeight='fontWeightBold'>playgrounds</Box> in the community of Eden Prairie, Minnesota.
