@@ -21,7 +21,7 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 <h2>Screenshots</h2>
 
-![main app screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/main/playground-hero.png?raw=true)
+![main app screenshot](https://github.com/bstrock/eden_prairie_playground_finder/blob/86891a08bdb5aba9f83d994358ee6a37e16bdb9c/site/src/images/screenshots/playgrounds-hero.png)
 
 
 <h2>Project Materials</h2>
