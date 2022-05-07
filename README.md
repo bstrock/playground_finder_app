@@ -21,10 +21,12 @@ This repo is for the frontend user interface for my MS Capstone Project, Eden Pr
 
 <h2>Screenshots</h2>
 
-<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-hero.png" width="15%"></img> 
-<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-overview.png" width="15%"></img>
-<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-filter.png" width="15%"></img> 
-<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playgrounds-zoomto.png" width="15%"></img> 
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-hero.png" width="15%"></img> 
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-overview.png" width="15%"></img>
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-filter.png" width="15%"></img>
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-search.png" width="15%"></img>
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-zoomto.png" width="15%"></img> 
+<img src="https://github.com/bstrock/eden_prairie_playground_finder/blob/dev/site/src/images/screenshots/playground-userguide.png" width="15%"></img>
 
 
 
