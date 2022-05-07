@@ -4,10 +4,10 @@ import '../App.css'
 import 'leaflet/dist/leaflet.css'
 import '../index.css'
 import {MapContainer} from 'react-leaflet'
-import LayerControl from "./Map/LayerControl";
+import LayerControl from "./Map/LeafletLayers/LayerControl";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
-import Navbar from "./NavBar/Navbar";
-import LocationMarker from "./Map/LocationMarker";
+import Navbar from "./Navbar";
+import LocationMarker from "./Map/LeafletLayers/LocationMarker";
 import FilterDrawer from "./FilterDrawer/FilterDrawer";
 import apiQuery from "./apiQuery";
 
@@ -19,47 +19,37 @@ function App() {
     const theme = createTheme({
         palette: {
             primary: {
-                main: '#66bb6a',
-                dark: '#387002',
-                light: '#99d066',
-                contrastText: '#fff'
-            },
-            secondary: {
-                main: '#ffab00',
-                dark: '#c17900',
-                light: '#f9a825'
-            },
-            info: {
+                main: '#66bb6a', dark: '#387002', light: '#99d066', contrastText: '#fff'
+            }, secondary: {
+                main: '#ffab00', dark: '#c17900', light: '#f9a825'
+            }, info: {
                 main: '#d273f3'
-            },
-            common: {
+            }, common: {
                 black: '#1D1D1D'
             }
-        },
-        typography: {
+        }, typography: {
             fontFamily: font,
         }
     })
 
+    // SET BOUNDS
     const maxSouthWest = L.latLng(45.33, -92.8)
     const maxNorthEast = L.latLng(44.38, -94.12)
     const maxBounds = L.latLngBounds(maxSouthWest, maxNorthEast)
 
     // starting position for the map and API query
     let initLocation = {
-        latitude: 44.855,
-        longitude: -93.46,
+        latitude: 44.855, longitude: -93.46,
     }
 
     // starting values for query parameters
     let initQueryParams = {
-        radius: 4,
-        equipment: [],
-        amenities: [],
-        sports_facilities: []
+        radius: 4, equipment: [], amenities: [], sports_facilities: []
     }
 
     const setInitialMapZoom = () => {
+        // this function uses the device width to set map zoom level
+        // also called when view is reset via button
         const viewportWidth = window.innerWidth;
         const SMALL = 320
         const MEDIUM = 1023
@@ -82,17 +72,18 @@ function App() {
     const [queryLocation, setQueryLocation] = useState(initLocation)  // point being queried
     const [queryParams, setQueryParams] = useState(initQueryParams)  // selected parameters from filter menu
     const [data, setData] = useState(null)  // data retrieved from API
-    const [allData, setAllData] = useState(null)
-
+    const [allData, setAllData] = useState(null)  // stored upon first api query call
     const [userClickedLocate, setUserClickedLocate] = useState(false)  // if the user has clicked the locate button
-
     const [zoom, setZoom] = useState(setInitialMapZoom())  // leaflet zoom level (responsive)
     const [drawerOpen, setDrawerOpen] = useState(false)  // control drawer state
     const [loading, setLoading] = useState(false)  // whether not loading is currently occuring (triggers progress indicator)
-    const [numberOfResults, setNumberOfResults] = useState(null)
-    const [distValue, setDistValue] = useState(4)
-    const [showFabs, setShowFabs] = useState(true)
-    const [openSite, setOpenSite] = useState(null)
+    const [numberOfResults, setNumberOfResults] = useState(null)  // shown in navbar
+    const [distValue, setDistValue] = useState(4)  // value of distance slider
+    const [showFabs, setShowFabs] = useState(true)  // whether to show floating buttons
+    const [openSite, setOpenSite] = useState(null)  // used to open popup when using list search
+    const [showSearchRadius, setShowSearchRadius] = useState(true)  // show or hide radius on map based on view zoom level
+    const [loadingProgress, setLoadingProgress] = useState(0)  // used to inform progress loading bar
+    const [searchList, setSearchList] = useState([])  // generated list of parks for search component
 
     // DRAWER OPEN/CLOSE CALLBACK
     const toggleDrawer = (open) => (e) => {
@@ -104,9 +95,7 @@ function App() {
     }
 
     const markerRef = useRef(null)
-    const [showSearchRadius, setShowSearchRadius] = useState(true)
-    const [loadingProgress, setLoadingProgress] = useState(0)
-    const [searchList, setSearchList] = useState([])
+
     // DATA LOADING FROM API
 
     useEffect(() => {
@@ -146,21 +135,21 @@ function App() {
             })
     }, [setLoading, setData, queryLocation, queryParams, setLoadingProgress])
 
-    useEffect(
-        () => {
-            if (data !== null) {
-                setNumberOfResults(data.features.length)
-            }
-        }, [data, setNumberOfResults]
-    )
+    // effect to set number of shown filter results
+    useEffect(() => {
+        if (data !== null) {
+            setNumberOfResults(data.features.length)
+        }
+    }, [data, setNumberOfResults])
 
-    useEffect(
-        () => {
-            if (allData == null) {
-                setAllData(data)
-            }
-        }, [setAllData, allData, data]
-    )
+    // effect to capture all results on first load, in order to populate seearch list
+    useEffect(() => {
+        if (allData == null) {
+            setAllData(data)
+        }
+    }, [setAllData, allData, data])
+
+    // everybody gets all the props in this app
 
     return (
         <ThemeProvider theme={theme}>
